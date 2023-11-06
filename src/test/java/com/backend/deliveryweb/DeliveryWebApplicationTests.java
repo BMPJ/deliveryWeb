@@ -1,4 +1,4 @@
-package com.example.deliveryweb;
+package com.backend.deliveryweb;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

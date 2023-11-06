@@ -1,4 +1,4 @@
-package com.example.deliveryweb;
+package com.backend.deliveryweb;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
