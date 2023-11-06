@@ -1,30 +1,27 @@
 package com.backend.deliveryweb.controller;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.backend.deliveryweb.vo.Stores;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/main/*")
 public class MainController {
 
-    @PostMapping(value="/testData")
-    public Map<Integer, String> testData(@RequestBody List<String> params){
-        Map<Integer, String> data = new HashMap<>();
-        data.put(1,"사과");
-        data.put(2,"포도");
-        data.put(3,"바나나");
+    @GetMapping("main")
+    public void Main(){
 
-        int i = 4;
-        for(String param : params){
-            data.put(i, param);
-            i++;
-        }
+    }
 
-        return data;
+    @PostMapping("./pk")
+    public String pk(Stores stores){
+        System.out.println(stores);
+        return "";
+
+    }
+    @PostMapping("./dv")
+    public String dv(Stores stores){
+        System.out.println(stores);
+        return "";
     }
 
 }
