@@ -16,8 +16,6 @@ public class MainLogic {
 
     public List<Map<String, Object>> selectAll(Map<String, Object> pMap) {
 
-        List<Map<String, Object>> list = mainDao.selectAll(pMap);
-
-        return list;
+        return mainDao.selectAll(pMap);
     }
 }

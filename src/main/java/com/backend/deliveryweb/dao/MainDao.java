@@ -14,8 +14,7 @@ public class MainDao {
     private SqlSessionTemplate sqlSessionTemplate = null;
 
     public List<Map<String, Object>> selectAll(Map<String, Object> pMap) {
-        List<Map<String, Object>> list = sqlSessionTemplate.selectList("selectAll", pMap);
-        return list;
+        return sqlSessionTemplate.selectList("selectAll", pMap);
     }
 
 }
