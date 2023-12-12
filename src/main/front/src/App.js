@@ -1,32 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-import React from "react";
-function App() {
 
-    const handleChange = (event)
+function App() {
+    const [hello, setHello] = useState('')
+
+    useEffect(() => {
+        axios.get('/test')
+            .then(response => setHello(response.data))
+            .catch(error => console.log(error))
+    }, []);
+
     return (
         <div>
-            <form action="main/pk" method="get">
-                <button>포장</button>
-                <input type="hidden" name="type" value="1"/>
-                <input type="hidden" name="type" value="0"/>
-            </form>
-            <form action="main/dv" method="get">
-                <button>배달</button>
-                <input type="hidden"name="type" value="2"/>
-                <input type="hidden"name="type" value="0"/>
-            </form>
+            백엔드에서 가져온 데이터입니다 : {hello}
         </div>
-
-);
-}
-
-function selectData(){
-  axios.post('/main')
-      .then(function (res){
-        console.log(res)
-      });
+    );
 }
 
 export default App;
