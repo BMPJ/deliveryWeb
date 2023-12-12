@@ -1,27 +1,36 @@
 package com.backend.deliveryweb.controller;
 
-import com.backend.deliveryweb.vo.Stores;
+import com.backend.deliveryweb.logic.MainLogic;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
 @RestController
-@RequestMapping("/main/*")
 public class MainController {
 
-    @GetMapping("main")
-    public void Main(){
 
+    @Autowired
+    private MainLogic mainLogic;
+    @GetMapping("/test")
+    public String test() {
+
+        return "Hello, world!";
     }
+   @GetMapping("/main")
+   public String main(@RequestParam Map<String, Object> pMap){
 
-    @PostMapping("./pk")
-    public String pk(Stores stores){
-        System.out.println(stores);
+        List<Map<String, Object>> list = mainLogic.selectAll(pMap);
+       System.out.println(list);
+
         return "";
+   }
 
-    }
-    @PostMapping("./dv")
-    public String dv(Stores stores){
-        System.out.println(stores);
-        return "";
-    }
+
+
+
 
 }
