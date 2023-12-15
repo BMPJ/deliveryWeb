@@ -1,8 +1,7 @@
+/* global daum */
 import React, { useState } from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
-
-
 
 
 function StoresJoin() {
@@ -16,14 +15,35 @@ function StoresJoin() {
         nickname: '',
         phone: '',
         email: '',
-        grade: '',
-        zipcode: '',
-        address: '',
-        address_detail: '',
-        provider: '',
+        grade: '0',
         status: '1',
         role: '1',
     });
+
+    const [post, setPost] = useState({
+        zipcode: '',
+        address: '',
+        address_detail: '',
+    });
+
+
+    const openZipcode = (e) => {
+        e.preventDefault();
+        new daum.Postcode({
+            oncomplete: function (data) {
+                let address = "";
+                if (data.userSelectedType === "R") {
+                    address = data.roadAddress; //도로명
+                } else {
+                    address = data.jibunAddress; //지번
+                }
+                setPost({ ...post, zipcode: data.zonecode, addr: address });
+                document.getElementById("zipcode").value = data.zonecode;
+                document.getElementById("address").value = address;
+                document.getElementById("address_detail").focus();
+        },
+        }).open();
+    };
 
     const sendData = () => {
         axios.post('/manage/join', user)
@@ -97,23 +117,16 @@ function StoresJoin() {
                 />
             </div>
 
-            <div>
-                <label>Grade:</label>
-                <input
-                    type="text"
-                    name="grade"
-                    value={user.grade}
-                    onChange={(e) => setUser({ ...user, grade: e.target.value })}
-                />
-            </div>
 
             <div>
                 <label>Zipcode:</label>
                 <input
                     type="text"
-                    name="zipcode"
-                    value={user.zipcode}
-                    onChange={(e) => setUser({ ...user, zipcode: e.target.value })}
+                    id="zipcode"
+                    className="zipcode"
+                    placeholder="우편번호"
+                    value={post.zipcode}
+                    onChange={(e) => setPost({ ...post, zipcode: e.target.value })}
                 />
             </div>
 
@@ -121,29 +134,22 @@ function StoresJoin() {
                 <label>Address:</label>
                 <input
                     type="text"
-                    name="address"
-                    value={user.address}
-                    onChange={(e) => setUser({ ...user, address: e.target.value })}
+                    id="address"
+                    value={post.address}
+                    readOnly
+                    placeholder="주소검색해라"
                 />
+                <button onClick={(e)=>openZipcode(e)}>검색</button>
             </div>
 
             <div>
                 <label>Address Detail:</label>
                 <input
                     type="text"
-                    name="address_detail"
-                    value={user.address_detail}
-                    onChange={(e) => setUser({ ...user, address_detail: e.target.value })}
-                />
-            </div>
-
-            <div>
-                <label>Provider:</label>
-                <input
-                    type="text"
-                    name="provider"
-                    value={user.provider}
-                    onChange={(e) => setUser({ ...user, provider: e.target.value })}
+                    id="address_detail"
+                    value={post.address_detail}
+                    readOnly={!post.address}
+                    onChange={(e) => setPost({ ...post, address_detail: e.target.value })}
                 />
             </div>
 
