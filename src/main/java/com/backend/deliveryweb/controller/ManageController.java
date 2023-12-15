@@ -2,6 +2,7 @@ package com.backend.deliveryweb.controller;
 
 import com.backend.deliveryweb.logic.ManageLogic;
 import com.backend.deliveryweb.vo.Users;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +22,8 @@ public class ManageController {
     public String postjoin(@RequestBody Users users){
 
         System.out.println(users);
-        return "";
+        int result = manageLogic.join(users);
+        return String.valueOf(result);
     }
 
     @GetMapping("/login")
@@ -29,8 +31,12 @@ public class ManageController {
         return "";
     }
 
+    @GetMapping ("/checkInfo")
+    public String getInfo(@RequestParam String userid){
 
+        System.out.println(userid);
 
+        return String.valueOf(manageLogic.checkInfo(userid));
 
-
+    }
 }
