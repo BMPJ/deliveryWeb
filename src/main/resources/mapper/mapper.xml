@@ -4,4 +4,6 @@
     <select id="selectAll" parameterType="map" resultType="map">
         SELECT distinct "category" FROM "Stores"
     </select>
+
+
 </mapper>
