@@ -1,18 +1,21 @@
-import React, {useEffect, useState} from 'react';
-import axios from 'axios';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Homepage from './components/page/Homepage.jsx';
+import StoresJoin from "./components/page/StoresJoin.jsx";
+import ManageMain from "./components/page/ManageMain";
+import StoresLogin from "./components/page/StoresLogin";
 
 function App() {
-    const [hello, setHello] = useState('')
-
-    useEffect(() => {
-        axios.get('/test')
-            .then(response => setHello(response.data))
-            .catch(error => console.log(error))
-    }, []);
-
     return (
         <div>
-            백엔드에서 가져온 데이터입니다 : {hello}
+            <Router>
+                <Routes>
+                    <Route path="/main" element={<Homepage />} />
+                    <Route path="/manage/main" element={<ManageMain/>}/>
+                    <Route path="/manage/join" element={<StoresJoin/>}/>
+                    <Route path="/manage/login" element={<StoresLogin/>}/>
+                </Routes>
+            </Router>
         </div>
     );
 }
