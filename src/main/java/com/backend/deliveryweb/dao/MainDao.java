@@ -26,4 +26,11 @@ public class MainDao {
         return (result != null) ? result : 0; // null이면 0으로 처리
     }
 
+    public String session(String userid) {
+        return sqlSessionTemplate.selectOne("session", userid);
+    }
+
+    public List<Map<String, Object>> userInfo(String userid) {
+        return sqlSessionTemplate.selectList("userInfo", userid);
+    }
 }

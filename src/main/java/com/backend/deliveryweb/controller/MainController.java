@@ -15,15 +15,14 @@ public class MainController {
     @Autowired
     private MainLogic mainLogic;
 
+    Gson g = new Gson();
+
    @GetMapping("/main")
-   public String getMain(@RequestParam Map<String, Object> pMap){
+   public String getMain(@RequestParam String userid){
 
-        List<Map<String, Object>> list = mainLogic.selectAll(pMap);
-        Gson g = new Gson();
-        String temp = g.toJson(list);
-       System.out.println("");
+       List<Map<String, Object>> list = mainLogic.userInfo(userid);
 
-        return temp;
+       return g.toJson(list);
    }
 
     @PostMapping("/main/join")
@@ -35,7 +34,13 @@ public class MainController {
     @PostMapping("/main/login")
     public String postLogin(@RequestBody Users users){
 
-       return String.valueOf(mainLogic.login(users));
+       int login = mainLogic.login(users);
+
+       if(login==1){
+           return mainLogic.session(users.getUserid());
+       }else{
+           return "0";
+       }
     }
 
 

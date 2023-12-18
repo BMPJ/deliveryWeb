@@ -25,7 +25,6 @@ function MainJoin(){
 
     const [check, setCheck] = useState();
     const checkID=()=>{
-
         axios.get(`/manage/checkInfo?userid=${user.userid}`)
             //try
             .then(response => {
@@ -37,7 +36,6 @@ function MainJoin(){
             .catch(error => {
                 console.error('서버로 데이터 전송 중 오류 발생:', error);
             });
-
     }
     const openZipcode = (e) => {
         e.preventDefault();
@@ -62,7 +60,7 @@ function MainJoin(){
         axios.post('/main/join', user)
             //try
             .then(response => {
-                navigate('/main');
+                // navigate('/main');
                 console.log(response.data);
             })
             .catch(error => {
@@ -175,6 +173,7 @@ function MainJoin(){
 
             <button onClick={sendData}>회원가입</button>
             <button onClick={ ()=>{ navigate('/main') }}>메인</button>
+
         </div>
     );
 
