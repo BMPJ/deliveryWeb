@@ -21,7 +21,7 @@ public class MainController {
         List<Map<String, Object>> list = mainLogic.selectAll(pMap);
         Gson g = new Gson();
         String temp = g.toJson(list);
-       System.out.println(temp);
+       System.out.println("");
 
         return temp;
    }
