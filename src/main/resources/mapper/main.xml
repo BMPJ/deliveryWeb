@@ -5,5 +5,10 @@
         SELECT distinct "category" FROM "Stores"
     </select>
 
+    <select id="login" parameterType="com.backend.deliveryweb.vo.Users" resultType="int">
+        select count(*) from "Users"
+        where "userid" = #{userid} and "password" = #{password}
+    </select>
+
 
 </mapper>

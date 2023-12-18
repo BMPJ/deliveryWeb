@@ -1,12 +1,12 @@
 /* global daum */
-import React, { useState } from "react";
-import axios from "axios";
+import React, {useState} from 'react';
 import {useNavigate} from "react-router-dom";
+import axios from "axios";
 
-function StoresJoin() {
+function MainJoin(){
 
     let navigate = useNavigate();
-    // user 상태를 ManageMain 함수에서 정의
+
     const [user, setUser] = useState({
         userid: '',
         password: '',
@@ -20,33 +20,25 @@ function StoresJoin() {
         address_detail: '',
         provider : '0',
         status: '0',
-        role: '1',
+        role: '0',
     });
 
+    const [check, setCheck] = useState();
     const checkID=()=>{
 
         axios.get(`/manage/checkInfo?userid=${user.userid}`)
-        //try
-        .then(response => {
-            console.log(response.data);
-            const data = JSON.stringify(response.data);
-            console.log(data);
-
-            if(data==1){
-                alert("불가능")
-            }else{
-                alert("가능")
-            }
-
-
-        })
-        .catch(error => {
-            console.error('서버로 데이터 전송 중 오류 발생:', error);
-        });
+            //try
+            .then(response => {
+                console.log(response.data);
+                const data = JSON.stringify(response.data);
+                setCheck(data);
+                console.log(data);
+            })
+            .catch(error => {
+                console.error('서버로 데이터 전송 중 오류 발생:', error);
+            });
 
     }
-
-
     const openZipcode = (e) => {
         e.preventDefault();
         new daum.Postcode({
@@ -62,15 +54,15 @@ function StoresJoin() {
                 document.getElementById("address").value = address;
                 document.getElementById("address_detail").focus();
                 console.log(data)
-        },
+            },
         }).open();
     };
 
     const sendData = () => {
-        axios.post('/manage/join', user)
+        axios.post('/main/join', user)
             //try
             .then(response => {
-                navigate('/manage/main');
+                navigate('/main');
                 console.log(response.data);
             })
             .catch(error => {
@@ -90,6 +82,10 @@ function StoresJoin() {
                     onChange={(e) => setUser({ ...user, userid: e.target.value })}
                 />
                 <button onClick={checkID}>중복검사</button>
+                {
+                    check == 0 ? <p style={{color:'green'}}>사용가능</p> : <p style={{color:'red'}}>사용불가</p>
+                }
+
             </div>
 
             <div>
@@ -178,9 +174,11 @@ function StoresJoin() {
             </div>
 
             <button onClick={sendData}>회원가입</button>
-            <button onClick={ ()=>{ navigate('/manage/main') }}>메인</button>
+            <button onClick={ ()=>{ navigate('/main') }}>메인</button>
         </div>
     );
+
+
 }
 
-export default StoresJoin;
+export default MainJoin
