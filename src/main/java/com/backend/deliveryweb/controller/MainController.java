@@ -3,7 +3,6 @@ package com.backend.deliveryweb.controller;
 import com.backend.deliveryweb.logic.MainLogic;
 import com.backend.deliveryweb.vo.Users;
 import com.google.gson.Gson;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +16,7 @@ public class MainController {
     private MainLogic mainLogic;
 
    @GetMapping("/main")
-   public String main(@RequestParam Map<String, Object> pMap){
+   public String getMain(@RequestParam Map<String, Object> pMap){
 
         List<Map<String, Object>> list = mainLogic.selectAll(pMap);
         Gson g = new Gson();
