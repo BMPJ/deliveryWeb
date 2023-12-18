@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 
-function StoresJoin() {
+function ManageJoin() {
 
     let navigate = useNavigate();
     // user 상태를 ManageMain 함수에서 정의
@@ -183,4 +183,4 @@ function StoresJoin() {
     );
 }
 
-export default StoresJoin;
+export default ManageJoin;
