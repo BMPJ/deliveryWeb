@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 
-
 function StoresJoin() {
 
     let navigate = useNavigate();
@@ -16,15 +15,36 @@ function StoresJoin() {
         phone: '',
         email: '',
         grade: '0',
+        zipcode: '',
+        address: '',
+        address_detail: '',
+        provider : '0',
         status: '1',
         role: '1',
     });
 
-    const [post, setPost] = useState({
-        zipcode: '',
-        address: '',
-        address_detail: '',
-    });
+    const checkID=()=>{
+
+        axios.get(`/manage/checkInfo?userid=${user.userid}`)
+        //try
+        .then(response => {
+            console.log(response.data);
+            const data = JSON.stringify(response.data);
+            console.log(data);
+
+            if(data==1){
+                alert("불가능")
+            }else{
+                alert("가능")
+            }
+
+
+        })
+        .catch(error => {
+            console.error('서버로 데이터 전송 중 오류 발생:', error);
+        });
+
+    }
 
 
     const openZipcode = (e) => {
@@ -37,7 +57,7 @@ function StoresJoin() {
                 } else {
                     address = data.jibunAddress; //지번
                 }
-                setPost({ ...post, zipcode: data.zonecode, addr: address });
+                setUser({ ...user, zipcode: data.zonecode, address: address });
                 document.getElementById("zipcode").value = data.zonecode;
                 document.getElementById("address").value = address;
                 document.getElementById("address_detail").focus();
@@ -47,10 +67,13 @@ function StoresJoin() {
 
     const sendData = () => {
         axios.post('/manage/join', user)
+            //try
             .then(response => {
+                navigate('/manage/main');
                 console.log(response.data);
             })
             .catch(error => {
+                alert("실패");
                 console.error('서버로 데이터 전송 중 오류 발생:', error);
             });
     };
@@ -65,6 +88,7 @@ function StoresJoin() {
                     value={user.userid}
                     onChange={(e) => setUser({ ...user, userid: e.target.value })}
                 />
+                <button onClick={checkID}>중복검사</button>
             </div>
 
             <div>
@@ -117,7 +141,6 @@ function StoresJoin() {
                 />
             </div>
 
-
             <div>
                 <label>Zipcode:</label>
                 <input
@@ -125,8 +148,8 @@ function StoresJoin() {
                     id="zipcode"
                     className="zipcode"
                     placeholder="우편번호"
-                    value={post.zipcode}
-                    onChange={(e) => setPost({ ...post, zipcode: e.target.value })}
+                    value={user.zipcode}
+                    onChange={(e) => setUser({ ...user, zipcode: e.target.value })}
                 />
             </div>
 
@@ -135,7 +158,7 @@ function StoresJoin() {
                 <input
                     type="text"
                     id="address"
-                    value={post.address}
+                    value={user.address}
                     readOnly
                     placeholder="주소검색해라"
                 />
@@ -147,9 +170,9 @@ function StoresJoin() {
                 <input
                     type="text"
                     id="address_detail"
-                    value={post.address_detail}
-                    readOnly={!post.address}
-                    onChange={(e) => setPost({ ...post, address_detail: e.target.value })}
+                    value={user.address_detail}
+                    readOnly={!user.address}
+                    onChange={(e) => setUser({ ...user, address_detail: e.target.value })}
                 />
             </div>
 
