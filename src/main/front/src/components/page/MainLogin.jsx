@@ -5,18 +5,28 @@ import axios from "axios";
 function MainLogin(){
     const navigator = useNavigate();
 
+    const session = sessionStorage;
+
     const [user, setUser] = useState({
         userid: '',
         password: ''
     });
+
     const sendData = ()=>{
         axios.post(`/main/login`, user)
-            .then(response=>{
-                console.log(response.data)
+            .then(a=>{
+                if (a.data != 0) {
+                    console.log(a.data)
+                    session.setItem("userid", a.data);
+                    navigator("/main")
+                } else {
+                    alert("로그인실패!")
+                }
             }).catch(error=>{
                 console.error(error)
         })
     }
+
     return(
         <div>
             <div>

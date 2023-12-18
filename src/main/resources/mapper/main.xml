@@ -10,5 +10,15 @@
         where "userid" = #{userid} and "password" = #{password}
     </select>
 
+    <select id="session" parameterType="String" resultType="String">
+        select "userid" from "Users"
+        where "userid" = #{userid}
+    </select>
+
+    <select id="userInfo" parameterType="String" resultType="map">
+        select * from "Users"
+        where "userid" = #{userid}
+    </select>
+
 
 </mapper>

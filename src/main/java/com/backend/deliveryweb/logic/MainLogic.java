@@ -29,4 +29,12 @@ public class MainLogic {
     public int login(Users users) {
         return mainDao.login(users);
     }
+
+    public String session(String userid) {
+        return mainDao.session(userid);
+    }
+
+    public List<Map<String, Object>> userInfo(String userid) {
+        return mainDao.userInfo(userid);
+    }
 }
