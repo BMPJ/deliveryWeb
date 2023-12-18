@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-function StoresLogin(){
+function Login(){
 
     return(
 
@@ -18,4 +18,4 @@ function StoresLogin(){
 
 }
 
-export default StoresLogin
+export default Login

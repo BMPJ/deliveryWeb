@@ -5,6 +5,9 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Map;
+
 @Repository
 public class ManageDao {
 
@@ -17,5 +20,10 @@ public class ManageDao {
     public int checkInfo(String userid) {
 
         return sqlSessionTemplate.selectOne("checkInfo",userid);
+    }
+
+    public List<Map<String,Object>> getInfo(Users users) {
+
+        return sqlSessionTemplate.selectList("getInfo",users);
     }
 }

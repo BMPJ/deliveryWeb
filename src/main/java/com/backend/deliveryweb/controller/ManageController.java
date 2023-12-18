@@ -39,4 +39,10 @@ public class ManageController {
         return String.valueOf(manageLogic.checkInfo(userid));
 
     }
+
+    @GetMapping("/getInfo")
+    public String getInfo(@RequestParam Users users){
+        System.out.println(users);
+        return String.valueOf(manageLogic.getInfo(users));
+    }
 }

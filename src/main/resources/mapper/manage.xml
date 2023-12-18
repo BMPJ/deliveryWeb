@@ -25,4 +25,9 @@
         WHERE "userid" = #{userid}
     </select>
 
+    <select id="getInfo" resultType="map">
+        SELECT * FROM "Users"
+        WHERE "userid" = #{userid}
+    </select>
+
 </mapper>

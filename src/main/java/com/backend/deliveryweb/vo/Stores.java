@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class Stores {
-    private String storeId;
+    private String storeid;
     private String name;
     private int type;
     private String category;
