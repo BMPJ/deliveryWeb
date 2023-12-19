@@ -6,6 +6,7 @@ import MainLogin from "./components/page/MainLogin";
 import ManageMain from "./components/page/ManageMain";
 import ManageJoin from "./components/page/ManageJoin";
 import StoreRegister from "./components/page/StoreRegister";
+import MainDelivery from "./components/page/MainDelivery";
 
 function App() {
     return (
@@ -13,6 +14,7 @@ function App() {
             <Route path="/main" element={<Homepage/>}/>
             <Route path="/main/join" element={<MainJoin/>}/>
             <Route path="/main/login" element={<MainLogin/>}/>
+            <Route path="/main/delivery" element={<MainDelivery/>}/>
             <Route path="/manage/main" element={<ManageMain/>}/>
             <Route path="/manage/join" element={<ManageJoin/>}/>
             <Route path="/store/register" element={<StoreRegister/>}/>

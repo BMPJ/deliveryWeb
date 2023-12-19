@@ -45,8 +45,8 @@ function Homepage() {
                         sessionStorage.removeItem('userid');
                         window.location.reload();
                     }}>로그아웃</button>
-                    <button onClick={()=>{navigate('/main/포장')}}>포장</button>
-                    <button onClick={()=>{navigate('/main/배달')}}>배달</button>
+                    <button onClick={()=>{navigate('/main/packaging')}}>포장</button>
+                    <button onClick={()=>{navigate('/main/delivery')}}>배달</button>
                     <p>{nick}님 ㅎㅇ</p>
                 </div>
 

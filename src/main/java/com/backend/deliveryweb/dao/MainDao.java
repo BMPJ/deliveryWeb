@@ -14,9 +14,6 @@ public class MainDao {
     @Autowired
     private SqlSessionTemplate sqlSessionTemplate = null;
 
-    public List<Map<String, Object>> selectAll(Map<String, Object> pMap) {
-        return sqlSessionTemplate.selectList("selectAll", pMap);
-    }
     public int join(Users users) {
         return sqlSessionTemplate.update("join", users);
     }
@@ -32,5 +29,9 @@ public class MainDao {
 
     public List<Map<String, Object>> userInfo(String userid) {
         return sqlSessionTemplate.selectList("userInfo", userid);
+    }
+
+    public List<Map<String, Object>> category(int type) {
+        return sqlSessionTemplate.selectList("category", type);
     }
 }

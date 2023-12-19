@@ -3,6 +3,8 @@ package com.backend.deliveryweb.controller;
 import com.backend.deliveryweb.logic.MainLogic;
 import com.backend.deliveryweb.vo.Users;
 import com.google.gson.Gson;
+import org.mybatis.logging.Logger;
+import org.mybatis.logging.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +14,7 @@ import java.util.Map;
 @RestController
 public class MainController {
 
+    private static final Logger logger = LoggerFactory.getLogger(MainController.class);
     @Autowired
     private MainLogic mainLogic;
 
@@ -42,6 +45,23 @@ public class MainController {
            return "0";
        }
     }
+    @GetMapping("/main/delivery")
+    public String getDelivery(int type){
+
+       List<Map<String, Object>> list = mainLogic.category(type);
+        System.out.println(g.toJson(list));
+
+       return g.toJson(list);
+    }
+
+    @GetMapping("/main/delivery/category")
+    public String getCategory(@RequestParam(name = "category", required = false) String category){
+
+       System.out.println(category);
+
+       return "";
+    }
+
 
 
 

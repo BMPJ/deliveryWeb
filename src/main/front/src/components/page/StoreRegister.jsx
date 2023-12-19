@@ -7,10 +7,10 @@ const StoreRegister = () => {
 
     let navigate = useNavigate();
     const [store, setStore] = useState({
-        storeid :'1234',
+        storeid :'',
         name: '',
         type: '',
-        category: '',
+        category: '프랜차이즈',
         address: '',
         address_detail: '',
         storePictureUrl : '',

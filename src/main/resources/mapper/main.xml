@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.backend.deliveryweb">
-    <select id="selectAll" parameterType="map" resultType="map">
-        SELECT distinct "category" FROM "Stores"
-    </select>
-
     <select id="login" parameterType="com.backend.deliveryweb.vo.Users" resultType="int">
         select count(*) from "Users"
         where "userid" = #{userid} and "password" = #{password}
@@ -18,6 +14,11 @@
     <select id="userInfo" parameterType="String" resultType="map">
         select * from "Users"
         where "userid" = #{userid}
+    </select>
+
+    <select id="category" parameterType="int" resultType="map">
+        SELECT distinct "category" FROM "Stores"
+        where "type" = #{type}
     </select>
 
 
