@@ -15,12 +15,6 @@ public class MainLogic {
     @Autowired
     private MainDao mainDao;
 
-    public List<Map<String, Object>> selectAll(Map<String, Object> pMap) {
-
-        return mainDao.selectAll(pMap);
-    }
-
-
     public int join(Users users) {
         return mainDao.join(users);
     }
@@ -36,5 +30,9 @@ public class MainLogic {
 
     public List<Map<String, Object>> userInfo(String userid) {
         return mainDao.userInfo(userid);
+    }
+
+    public List<Map<String, Object>> category(int type) {
+        return mainDao.category(type);
     }
 }

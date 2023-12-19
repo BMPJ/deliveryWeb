@@ -22,7 +22,7 @@
             "status"
         )
         VALUES (
-                   #{storeid},
+                   seq_stores.nextval,
                    #{name},
                    #{type},
                    #{category},
