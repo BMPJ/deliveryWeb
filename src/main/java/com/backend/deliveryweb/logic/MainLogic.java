@@ -35,4 +35,6 @@ public class MainLogic {
     public List<Map<String, Object>> category(int type) {
         return mainDao.category(type);
     }
+
+    public List<Map<String, Object>> getDeliveryStores(String category) { return mainDao.getDeliveryStores(category); }
 }
