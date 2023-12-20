@@ -50,7 +50,6 @@ public class MainController {
     public String getDelivery(int type){
 
        List<Map<String, Object>> list = mainLogic.category(type);
-        System.out.println(g.toJson(list));
 
        return g.toJson(list);
     }
@@ -59,7 +58,6 @@ public class MainController {
     public String getCategory(@RequestParam("category") String category) {
 
        List<Map<String, Object>> list = mainLogic.getDeliveryStores(category);
-        System.out.println(list);
 
         return g.toJson(list);
     }
