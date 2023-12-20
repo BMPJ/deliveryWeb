@@ -3,7 +3,7 @@ import axios from 'axios';
 import {useNavigate} from "react-router-dom";
 
 function MainDelivery() {
-    const type = 0;
+    const type = 0;//배달
     const [category, setCategory] = useState(() => {
         // localStorage에서 category 데이터 불러오기
         const savedCategory = localStorage.getItem(`category_${type}`);
@@ -16,7 +16,6 @@ function MainDelivery() {
                 setCategory(response.data);
                 // localStorage에 category 데이터 저장
                 localStorage.setItem(`category_${type}`, JSON.stringify(response.data));
-                console.log(category)
             })
             .catch((err) => {
                 console.log(err);
@@ -27,12 +26,11 @@ function MainDelivery() {
 
     return (
         <div>
-
             {
                 category.map(function (a, i){
                     return(
-                        <div>
-                            <div onClick={()=>{navigate(`/main/delivery/category?=${category[i].category}`)}}>
+                        <div key={i} >
+                            <div onClick={()=>{navigate(`/main/delivery/category?category=${category[i].category}`)}}>
                                 <div>{category[i].category}</div>
                                 <img src=''/>
                             </div>

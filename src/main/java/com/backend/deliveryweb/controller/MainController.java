@@ -1,6 +1,7 @@
 package com.backend.deliveryweb.controller;
 
 import com.backend.deliveryweb.logic.MainLogic;
+import com.backend.deliveryweb.vo.Stores;
 import com.backend.deliveryweb.vo.Users;
 import com.google.gson.Gson;
 import org.mybatis.logging.Logger;
@@ -55,11 +56,12 @@ public class MainController {
     }
 
     @GetMapping("/main/delivery/category")
-    public String getCategory(@RequestParam(name = "category", required = false) String category){
+    public String getCategory(@RequestParam("category") String category) {
 
-       System.out.println(category);
+       List<Map<String, Object>> list = mainLogic.getDeliveryStores(category);
+        System.out.println(list);
 
-       return "";
+        return g.toJson(list);
     }
 
 
