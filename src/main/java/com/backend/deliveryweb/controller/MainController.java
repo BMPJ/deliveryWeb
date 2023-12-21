@@ -69,6 +69,13 @@ public class MainController {
         return g.toJson(list);
     }
 
+    @GetMapping("/main/delivery/category/storename")
+    public String deliveryStore(@RequestParam ("storename") String storename){
+
+
+
+       return "";
+    }
 
 
 

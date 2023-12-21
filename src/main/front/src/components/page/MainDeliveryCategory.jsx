@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { useLocation } from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import axios from 'axios';
 
 function MainDeliveryCategory() {
@@ -7,6 +7,7 @@ function MainDeliveryCategory() {
     const queryParams = new URLSearchParams(location.search);
     const categoryParam = queryParams.get('category');
     const [stores, setStores] = useState([]);
+    const navigator = useNavigate();
 
     useEffect(() => {
         if (categoryParam) {
@@ -28,9 +29,9 @@ function MainDeliveryCategory() {
                 stores.map(function (a, i){
                     return(
                         <div key={i}>
-                            <div>
-                                {stores[i].name}
-                                {stores[i].address}
+                            <div onClick={()=>{navigator(`/main/delivery/category/storename?storename=${stores[i].name}`)}}>
+                                <div>{stores[i].name}</div>
+                                <img src={"/"}/>
                             </div>
                         </div>
                     )

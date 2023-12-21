@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import {Main} from "../../styles/HomepageStyle";
 import {useNavigate} from "react-router-dom";
 
 
