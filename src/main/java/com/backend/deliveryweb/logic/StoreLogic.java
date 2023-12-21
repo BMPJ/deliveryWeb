@@ -14,12 +14,15 @@ public class StoreLogic {
     @Autowired
     private StoreDao storeDao;
 
-    /*public static List<Map<String, Object>> info(String userid) {
-    }*/
 
     public int register(Stores stores){
         return storeDao.register(stores);
     }
 
 
+    public List<Map<String, Object>> info(String userid) {
+
+        return storeDao.info(userid);
+
+    }
 }

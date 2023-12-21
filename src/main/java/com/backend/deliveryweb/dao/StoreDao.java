@@ -5,6 +5,9 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Map;
+
 @Repository
 public class StoreDao {
 
@@ -15,5 +18,9 @@ public class StoreDao {
 
         return sqlSessionTemplate.update("register",stores);
 
+    }
+
+    public List<Map<String, Object>> info(String userid) {
+        return sqlSessionTemplate.selectList("info",userid);
     }
 }
