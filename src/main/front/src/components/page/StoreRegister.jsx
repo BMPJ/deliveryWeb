@@ -11,7 +11,6 @@ const StoreRegister = () => {
     const [userid] = useState(window.sessionStorage.getItem('userid'));
 
     const [store, setStore] = useState({
-        storeid :'',
         name: '',
         type: '',
         category: '',

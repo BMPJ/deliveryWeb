@@ -24,7 +24,7 @@ public class MainLogic {
         return mainDao.login(users);
     }
 
-    public String session(String userid) {
+    public List<String> session(String userid) {
         return mainDao.session(userid);
     }
 
