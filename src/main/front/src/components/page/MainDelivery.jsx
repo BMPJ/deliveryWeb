@@ -30,7 +30,7 @@ function MainDelivery() {
                 category.map(function (a, i){
                     return(
                         <div key={i} >
-                            <div onClick={()=>{navigate(`/main/delivery/category?category=${category[i].category}`)}}>
+                            <div onClick={()=>{navigate(`/main/delivery/category/category?=${category[i].category}`)}}>
                                 <div>{category[i].category}</div>
                                 <img src=''/>
                             </div>

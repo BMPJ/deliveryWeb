@@ -6,11 +6,11 @@ import {storesRegisterDB} from "../../service/storesLogic";
 import {manageDB} from "../../service/manageLogic";
 
 const StoreRegister = () => {
-
     let navigate = useNavigate();
     const [userid] = useState(window.sessionStorage.getItem('userid'));
-
     const [role] = useState(window.sessionStorage.getItem('role'));
+    const [openHours, setOpenHours] = useState("");
+    const [closeHours, setCloseHours] = useState("");
 
     const [store, setStore] = useState({
         name: '',
@@ -18,44 +18,66 @@ const StoreRegister = () => {
         category: '',
         address: '',
         address_detail: '',
-        storePictureUrl : '',
-        phone : '',
-        content : '',
-        minDeliveryPrice : '',
-        deliveryTip : '',
-        minDeliveryTime : '',
-        maxDeliveryTime : '',
-        operationHours : '',
-        closedDays : '',
-        deliveryAddress : '',
+        storePictureUrl: '',
+        phone: '',
+        content: '',
+        minDeliveryPrice: '',
+        deliveryTip: '',
+        minDeliveryTime: '',
+        maxDeliveryTime: '',
+        operationHours: '',
+        closedDays: '',
+        deliveryAddress: '',
         status: '0',
     });
+    useEffect(() => {
+        setStore({
+            ...store,
+            operationHours: `${openHours} ~ ${closeHours}`,
+        });
+    }, [openHours, closeHours]);
 
     useEffect(() => {
-
-        if(role != 1){
-            navigate('/main/login')
+        if (role != 1) {
+            navigate('/main/login');
         }
+
         const AddrData = async () => {
             try {
-                let params = {userid : userid};
+                let params = { userid: userid };
                 let response = await manageDB(params);
-                setStore({...store, address : response.data[0].address, address_detail: response.data[0].address_detail});
-                console.log(response)
+                setStore({ ...store, address: response.data[0].address, address_detail: response.data[0].address_detail });
             } catch (error) {
                 console.error(error);
             }
         };
+
         AddrData();
     }, []);
-
-
 
     const info = (e) => {
         const id = e.currentTarget.id;
         const value = e.target.value;
-        setStore({...store, [id]: value});
-    }
+
+        setStore({
+            ...store,
+            [id]: value,
+            operationHours: `${openHours} ~ ${closeHours}`,
+        });
+    };
+
+    const register = async () => {
+        try {
+            const response = await storesRegisterDB(store);
+            console.log(store.operationHours); // operationHours 출력
+            console.log(store);
+        } catch (error) {
+            alert("실패");
+            console.error('서버로 데이터 전송 중 오류 발생:', error);
+        }
+    };
+
+
 
     /*const openZipcode = (e) => {
         e.preventDefault();
@@ -73,16 +95,6 @@ const StoreRegister = () => {
             },
         }).open();
     };*/
-    const register = async() => {
-        try {
-            const response = await storesRegisterDB(store)
-            console.log(response);
-        }catch (error){
-            alert("실패");
-            console.error('서버로 데이터 전송 중 오류 발생:', error);
-        }
-    }
-
 
 
 
@@ -96,6 +108,7 @@ const StoreRegister = () => {
 
     return(
         <>
+            <button onClick={()=>{console.log()}}>asd</button>
             <div>
                 <div>
                     <label>상호명:</label>
@@ -112,6 +125,7 @@ const StoreRegister = () => {
                         id="type"
                         onChange={(e) => {info(e)}}
                     >
+                        <option value selected disabled>선택해주세요</option>
                         <option value = "0">배달</option>
                         <option value = "1">포장</option>
                     </select>
@@ -123,6 +137,7 @@ const StoreRegister = () => {
                         id="category"
                         onChange={(e) => {info(e)}}
                     >
+                        <option value selected disabled>선택해주세요</option>
                         <option value = "프랜차이즈">프랜차이즈</option>
                         <option value = "치킨">치킨</option>
                         <option value = "피자/양식">피자/양식</option>
@@ -146,7 +161,7 @@ const StoreRegister = () => {
                         readOnly
                         //placeholder="주소검색해라"
                     />
-                   {/* <button onClick={(e)=>openZipcode(e)}>검색</button>*/}
+                    {/* <button onClick={(e)=>openZipcode(e)}>검색</button>*/}
                 </div>
 
                 <div>
@@ -157,7 +172,7 @@ const StoreRegister = () => {
                         /*readOnly={!store.address}*/
                         value={store.address_detail}
                         readOnly
-                       /* onChange={(e) => {info(e)}}*/
+                        /* onChange={(e) => {info(e)}}*/
                     />
                 </div>
 
@@ -249,12 +264,22 @@ const StoreRegister = () => {
                 </div>
 
                 <div>
-                    <label>운영시간:</label>
+                    <label>여는시간:</label>
                     <input
                         type="text"
-                        id="operationHours"
-                        value={store.operationHours}
-                        onChange={(e) => {info(e)}}
+                        id="openHours"
+                        value={openHours}
+                        onChange={(e)=>{setOpenHours(e.target.value)}}
+                    />
+                </div>
+
+                <div>
+                    <label>닫는시간:</label>
+                    <input
+                        type="text"
+                        id="closedHours"
+                        value={closeHours}
+                        onChange={(e) => {setCloseHours(e.target.value)}}
                     />
                 </div>
 
@@ -279,6 +304,7 @@ const StoreRegister = () => {
                 </div>
 
                 <button onClick={()=>register()}>가게등록</button>
+                {/*<button onClick={test()}>테스트</button>*/}
                 {/*<button onClick={()=>sendData()}>가게등록</button>*/}
                 <button onClick={ ()=>{ navigate('/manage/main') }}>메인</button>
             </div>

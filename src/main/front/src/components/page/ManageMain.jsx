@@ -25,7 +25,7 @@ const ManageMain = () => {
                     ) :
                     (
                         <div>
-                            <p>넌할수있어은경아 화이팅~</p>
+                            <button onClick={()=>{navigate("/store/register")}}>가게등록</button>
                             <button onClick={()=>{
                                 sessionStorage.removeItem('userid');
                                 sessionStorage.removeItem('role');

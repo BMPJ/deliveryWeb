@@ -63,16 +63,18 @@ public class MainController {
 
     @GetMapping("/main/delivery/category")
     public String getCategory(@RequestParam("category") String category) {
+        System.out.println(category);
 
        List<Map<String, Object>> list = mainLogic.getDeliveryStores(category);
+        System.out.println(list);
 
         return g.toJson(list);
     }
 
-    @GetMapping("/main/delivery/category/storename")
-    public String deliveryStore(@RequestParam ("storename") String storename){
+    @GetMapping("/main/delivery/category/store")
+    public String deliveryStore(@RequestParam ("storeid") String storeid){
 
-
+        System.out.println(storeid);
 
        return "";
     }
