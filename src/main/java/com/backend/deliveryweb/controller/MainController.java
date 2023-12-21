@@ -43,8 +43,6 @@ public class MainController {
 
        List<String> session = mainLogic.session(users.getUserid());
 
-        System.out.println(session);
-        System.out.println(g.toJson(session));
 
        if(login==1){
            return g.toJson(session);

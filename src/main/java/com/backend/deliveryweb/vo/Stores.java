@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Stores {
     private String storeid;
+    private String userid;
     private String name;
     private int type;
     private String category;

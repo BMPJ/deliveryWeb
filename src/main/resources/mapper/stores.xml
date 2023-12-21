@@ -4,6 +4,7 @@
     <insert id = "register" parameterType="com.backend.deliveryweb.vo.Stores">
         INSERT INTO "Stores"(
             "storeid",
+            "userid",
             "name",
             "type",
             "category",
@@ -23,6 +24,7 @@
         )
         VALUES (
                    seq_stores.nextval,
+                   #{userid},
                    #{name},
                    #{type},
                    #{category},

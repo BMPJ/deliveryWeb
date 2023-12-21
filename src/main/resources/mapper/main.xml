@@ -26,10 +26,4 @@
         where "category" = #{category} and "type" = 0
     </select>
 
-
-    <select id="login2" parameterType="map" resultType="map">
-        SELECT "userid" FROM "Users"
-        where "userid" = #{userid} and "password" = #{password}
-    </select>
-
 </mapper>
