@@ -19,6 +19,7 @@ function MainLogin(){
                     console.log(a.data)
                     session.setItem("userid", a.data[0].userid);
                     session.setItem("role", a.data[0].role);
+                    session.setItem("storeid", a.data[0].storeid);
 
                     if(a.data[0].role != 1){
                         navigator("/main")
