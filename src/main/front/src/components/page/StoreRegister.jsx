@@ -1,16 +1,20 @@
 /* global daum */
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import {storesRegisterDB} from "../../service/storesLogic";
+import {manageDB} from "../../service/manageLogic";
 
 const StoreRegister = () => {
 
     let navigate = useNavigate();
+    const [userid] = useState(window.sessionStorage.getItem('userid'));
+
     const [store, setStore] = useState({
         storeid :'',
         name: '',
         type: '',
-        category: '프랜차이즈',
+        category: '',
         address: '',
         address_detail: '',
         storePictureUrl : '',
@@ -26,13 +30,29 @@ const StoreRegister = () => {
         status: '0',
     });
 
+    useEffect(() => {
+        const AddrData = async () => {
+            try {
+                let params = {userid : userid};
+                let response = await manageDB(params);
+                setStore({...store, address : response.data[0].address, address_detail: response.data[0].address_detail});
+                console.log(response)
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        AddrData();
+    }, []);
+
+
+
     const info = (e) => {
         const id = e.currentTarget.id;
         const value = e.target.value;
         setStore({...store, [id]: value});
     }
 
-    const openZipcode = (e) => {
+    /*const openZipcode = (e) => {
         e.preventDefault();
         new daum.Postcode({
             oncomplete: function (data) {
@@ -47,22 +67,19 @@ const StoreRegister = () => {
                 document.getElementById("address_detail").focus();
             },
         }).open();
-    };
+    };*/
+    const register = async() => {
+        try {
+            const response = await storesRegisterDB(store)
+            console.log(response);
+        }catch (error){
+            alert("실패");
+            console.error('서버로 데이터 전송 중 오류 발생:', error);
+        }
+    }
 
 
-    const sendData = () => {
-        axios.post('/store/register', store)
-            //try
-            .then(response => {
-                navigate('/manage/main');
-                console.log(response.data);
-            })
-            .catch(error => {
-                alert("실패");
-                console.log(store);
-                console.error('서버로 데이터 전송 중 오류 발생:', error);
-            });
-    };
+
 
 
     //이거 나중에 session에 아이디 넣고 주소땡겨올때 쓸라고 만들어둔거
@@ -122,9 +139,9 @@ const StoreRegister = () => {
                         id="address"
                         value={store.address}
                         readOnly
-                        placeholder="주소검색해라"
+                        //placeholder="주소검색해라"
                     />
-                    <button onClick={(e)=>openZipcode(e)}>검색</button>
+                   {/* <button onClick={(e)=>openZipcode(e)}>검색</button>*/}
                 </div>
 
                 <div>
@@ -132,9 +149,10 @@ const StoreRegister = () => {
                     <input
                         type="text"
                         id="address_detail"
-                        readOnly={!store.address}
+                        /*readOnly={!store.address}*/
                         value={store.address_detail}
-                        onChange={(e) => {info(e)}}
+                        readOnly
+                       /* onChange={(e) => {info(e)}}*/
                     />
                 </div>
 
@@ -255,7 +273,8 @@ const StoreRegister = () => {
                     />
                 </div>
 
-                <button onClick={sendData}>가게등록</button>
+                <button onClick={()=>register()}>가게등록</button>
+                {/*<button onClick={()=>sendData()}>가게등록</button>*/}
                 <button onClick={ ()=>{ navigate('/manage/main') }}>메인</button>
             </div>
         </>
