@@ -43,4 +43,9 @@
                    #{status}
                )
     </insert>
+
+    <select id ="info" parameterType="string" resultType="map">
+        SELECT * FROM "Stores"
+        WHERE "userid" = #{userid}
+    </select>
 </mapper>

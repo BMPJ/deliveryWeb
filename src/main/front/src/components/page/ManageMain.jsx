@@ -24,7 +24,7 @@ const ManageMain = () => {
                     (
                         <div>
                             <button onClick={()=>navigate("/store/register")}>가게등록</button>
-                            <button onClick={()=>navigate("/store/setting")}>가게관리</button>
+                            <button onClick={()=>navigate("/store/settingMain")}>가게관리</button>
                             <button onClick={()=>{
                                 sessionStorage.removeItem('userid');
                                 sessionStorage.removeItem('role');

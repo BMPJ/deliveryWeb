@@ -29,13 +29,13 @@ public class StoreController {
     }
 
     @GetMapping("/info")
-    public String storeInfo(@RequestParam String userid){
-
-        //List<Map<String,Object>> list = StoreLogic.info(userid);
-
+    public String storeInfo(@RequestParam String userid) {
         System.out.println(userid);
 
-        return "";
+        List<Map<String, Object>> list = storeLogic.info(userid);
+
+
+        return g.toJson(list);
     }
 
 

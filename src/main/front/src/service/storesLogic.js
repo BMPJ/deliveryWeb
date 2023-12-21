@@ -22,11 +22,13 @@ export const storesInfoDB = (userid) => {
             const response = axios({
                 method: "get",
                 url: "/store/info",
-                params: userid,
+                params : {
+                    userid
+                }
             });
             resolve(response);
         } catch (error) {
             reject(error);
         }
     });
-}
+};

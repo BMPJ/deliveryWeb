@@ -8,6 +8,7 @@ import ManageJoin from "./components/page/ManageJoin";
 import StoreRegister from "./components/page/StoreRegister";
 import MainDelivery from "./components/page/MainDelivery";
 import MainDeliveryCategory from "./components/page/MainDeliveryCategory";
+import StoreSettingMain from "./components/page/StoreSettingMain";
 import DeliveryStore from "./components/page/DeliveryStore";
 import StoreSetting from "./components/page/StoreSetting";
 
@@ -23,6 +24,7 @@ function App() {
             <Route path="/manage/main" element={<ManageMain/>}/>
             <Route path="/manage/join" element={<ManageJoin/>}/>
             <Route path="/store/register" element={<StoreRegister/>}/>
+            <Route path="/store/settingMain" element={<StoreSettingMain/>}/>
             <Route path="/store/setting" element={<StoreSetting/>}/>
         </Routes>
     );
