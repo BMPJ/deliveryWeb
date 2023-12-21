@@ -10,6 +10,8 @@ const StoreRegister = () => {
     let navigate = useNavigate();
     const [userid] = useState(window.sessionStorage.getItem('userid'));
 
+    const [role] = useState(window.sessionStorage.getItem('role'));
+
     const [store, setStore] = useState({
         name: '',
         type: '',
@@ -30,6 +32,10 @@ const StoreRegister = () => {
     });
 
     useEffect(() => {
+
+        if(role != 1){
+            navigate('/main/login')
+        }
         const AddrData = async () => {
             try {
                 let params = {userid : userid};
