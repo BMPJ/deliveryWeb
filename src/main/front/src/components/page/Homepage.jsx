@@ -9,6 +9,7 @@ function Homepage() {
     const [userid, setUserid] = useState(null);
     const [nick, setNick] = useState('');
 
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -26,7 +27,7 @@ function Homepage() {
         };
         fetchData();
     }, []);
-    
+
     
     return (
         <div>
@@ -48,6 +49,7 @@ function Homepage() {
                     <button onClick={()=>{navigate('/main/packaging')}}>포장</button>
                     <button onClick={()=>{navigate('/main/delivery')}}>배달</button>
                     <p>{nick}님 ㅎㅇ</p>
+                    <button onClick={()=>{navigate('/store/register')}}>가게등록</button>
                 </div>
 
             }

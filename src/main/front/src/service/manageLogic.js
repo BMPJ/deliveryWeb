@@ -1,14 +1,13 @@
 import axios from "axios";
 
-//가게등록 post 일때는 data, get일땐 param
-export const storesRegisterDB = (store) => {
+//판매자 db조회
+export const manageDB = (user) => {
     return new Promise((resolve, reject) => {
         try {
-            console.log(store)
             const response = axios({
-                method: "post",
-                url: "/store/register",
-                data: store,
+                method: "get",
+                url: "/main",
+                params: user,
             });
             resolve(response);
         } catch (error) {

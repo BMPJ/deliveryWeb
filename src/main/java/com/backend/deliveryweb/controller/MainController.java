@@ -35,6 +35,7 @@ public class MainController {
         return String.valueOf(mainLogic.join(users));
     }
 
+    //로그인+세션
     @PostMapping("/main/login")
     public String postLogin(@RequestBody Users users){
 
@@ -46,6 +47,7 @@ public class MainController {
            return "0";
        }
     }
+
     @GetMapping("/main/delivery")
     public String getDelivery(int type){
 
