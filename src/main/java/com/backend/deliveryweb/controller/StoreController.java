@@ -2,8 +2,12 @@ package com.backend.deliveryweb.controller;
 
 import com.backend.deliveryweb.logic.StoreLogic;
 import com.backend.deliveryweb.vo.Stores;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/store")
@@ -11,6 +15,8 @@ public class StoreController {
 
     @Autowired
     private StoreLogic storeLogic;
+
+    Gson g = new Gson();
 
     //가게 등록
     @PostMapping("/register")
@@ -21,5 +27,16 @@ public class StoreController {
         return String.valueOf(result);
 
     }
+
+    @GetMapping("/info")
+    public String storeInfo(@RequestParam String userid){
+
+        //List<Map<String,Object>> list = StoreLogic.info(userid);
+
+        System.out.println(userid);
+
+        return "";
+    }
+
 
 }

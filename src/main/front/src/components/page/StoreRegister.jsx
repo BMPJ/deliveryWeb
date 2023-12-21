@@ -6,109 +6,85 @@ import {storesRegisterDB} from "../../service/storesLogic";
 import {manageDB} from "../../service/manageLogic";
 
 const StoreRegister = () => {
+
     let navigate = useNavigate();
     const [userid] = useState(window.sessionStorage.getItem('userid'));
+
     const [role] = useState(window.sessionStorage.getItem('role'));
+
+
     const [openHours, setOpenHours] = useState("");
     const [closeHours, setCloseHours] = useState("");
 
     const [store, setStore] = useState({
+        userid,
         name: '',
         type: '',
         category: '',
         address: '',
         address_detail: '',
-        storePictureUrl: '',
-        phone: '',
-        content: '',
-        minDeliveryPrice: '',
-        deliveryTip: '',
-        minDeliveryTime: '',
-        maxDeliveryTime: '',
-        operationHours: '',
-        closedDays: '',
-        deliveryAddress: '',
+        storePictureUrl : '',
+        phone : '',
+        content : '',
+        minDeliveryPrice : '',
+        deliveryTip : '',
+        minDeliveryTime : '',
+        maxDeliveryTime : '',
+        operationHours : '',
+        closedDays : '',
+        deliveryAddress : '',
         status: '0',
     });
-    useEffect(() => {
+
+    //운영시간 합치기
+    useEffect(()=>{
         setStore({
             ...store,
-            operationHours: `${openHours} ~ ${closeHours}`,
-        });
-    }, [openHours, closeHours]);
+            operationHours : `${openHours} ~ ${closeHours}`})
+    },[openHours,closeHours])
 
     useEffect(() => {
-        if (role != 1) {
-            navigate('/main/login');
-        }
 
+        if(role != 1){
+            navigate('/main/login')
+        }
         const AddrData = async () => {
             try {
-                let params = { userid: userid };
+                let params = {userid : userid};
                 let response = await manageDB(params);
-                setStore({ ...store, address: response.data[0].address, address_detail: response.data[0].address_detail });
+                setStore({...store, address : response.data[0].address, address_detail: response.data[0].address_detail});
             } catch (error) {
                 console.error(error);
             }
         };
-
         AddrData();
     }, []);
+
 
     const info = (e) => {
         const id = e.currentTarget.id;
         const value = e.target.value;
+        setStore({...store, [id]: value});
+    }
 
-        setStore({
-            ...store,
-            [id]: value,
-            operationHours: `${openHours} ~ ${closeHours}`,
-        });
-    };
-
-    const register = async () => {
+    const register = async() => {
         try {
-            const response = await storesRegisterDB(store);
-            console.log(store.operationHours); // operationHours 출력
-            console.log(store);
-        } catch (error) {
+            const response = await storesRegisterDB(store)
+            navigate('/manage/main')
+            //console.log(response);
+            console.log(store.operationHours)
+            console.log(store)
+        }catch (error){
             alert("실패");
+            console.log(store.operationHours)
+            console.log(store)
             console.error('서버로 데이터 전송 중 오류 발생:', error);
         }
-    };
-
-
-
-    /*const openZipcode = (e) => {
-        e.preventDefault();
-        new daum.Postcode({
-            oncomplete: function (data) {
-                let address = "";
-                if (data.userSelectedType === "R") {
-                    address = data.roadAddress; //도로명
-                } else {
-                    address = data.jibunAddress; //지번
-                }
-                setStore({ ...store,  address: address });
-                document.getElementById("address").value = address;
-                document.getElementById("address_detail").focus();
-            },
-        }).open();
-    };*/
-
-
-
-
-    //이거 나중에 session에 아이디 넣고 주소땡겨올때 쓸라고 만들어둔거
-    /*const getData = () => {
-        axios.get('/manage')
     }
-*/
 
 
     return(
         <>
-            <button onClick={()=>{console.log()}}>asd</button>
             <div>
                 <div>
                     <label>상호명:</label>
@@ -159,20 +135,16 @@ const StoreRegister = () => {
                         id="address"
                         value={store.address}
                         readOnly
-                        //placeholder="주소검색해라"
                     />
-                    {/* <button onClick={(e)=>openZipcode(e)}>검색</button>*/}
                 </div>
-
                 <div>
                     <label>상세주소:</label>
                     <input
                         type="text"
                         id="address_detail"
-                        /*readOnly={!store.address}*/
                         value={store.address_detail}
                         readOnly
-                        /* onChange={(e) => {info(e)}}*/
+
                     />
                 </div>
 
@@ -268,7 +240,6 @@ const StoreRegister = () => {
                     <input
                         type="text"
                         id="openHours"
-                        value={openHours}
                         onChange={(e)=>{setOpenHours(e.target.value)}}
                     />
                 </div>
@@ -277,8 +248,7 @@ const StoreRegister = () => {
                     <label>닫는시간:</label>
                     <input
                         type="text"
-                        id="closedHours"
-                        value={closeHours}
+                        id="closeHours"
                         onChange={(e) => {setCloseHours(e.target.value)}}
                     />
                 </div>
