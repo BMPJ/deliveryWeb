@@ -37,4 +37,8 @@ public class MainLogic {
     }
 
     public List<Map<String, Object>> getDeliveryStores(String category) { return mainDao.getDeliveryStores(category); }
+
+    public List<Map<String, Object>> getMenu(String storeid) {
+        return mainDao.getMenu(storeid);
+    }
 }

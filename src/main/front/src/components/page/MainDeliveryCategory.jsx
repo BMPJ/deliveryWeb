@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
 import axios from 'axios';
 
-function MainDeliveryCategory() {
+const MainDeliveryCategory = () => {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const categoryParam = queryParams.get('category');
@@ -11,11 +11,11 @@ function MainDeliveryCategory() {
 
     useEffect(() => {
         if (categoryParam) {
-            // categoryParam을 Spring 서버로 전송하는 예시
-            axios.get(`/main/delivery/category?category=${categoryParam}`)
+            const decodedCategory = decodeURIComponent(categoryParam);
+            axios.get(`/main/delivery/category?category=${decodedCategory}`)
                 .then((response) => {
-                    console.log(response.data);
-                    setStores(response.data)
+                    setStores(response.data);
+                    console.log(response.data)
                 })
                 .catch((error) => {
                     console.error(error);
@@ -29,7 +29,7 @@ function MainDeliveryCategory() {
                 stores.map(function (a, i){
                     return(
                         <div key={i}>
-                            <div onClick={()=>{navigator(`/main/delivery/category/storeid?storeid=${stores[i].name}`)}}>
+                            <div onClick={()=>{navigator(`/main/delivery/category/storeid?storeid=${stores[i].storeid}`)}}>
                                 <div>{stores[i].name}</div>
                                 <img src={"/"}/>
                             </div>
@@ -41,4 +41,4 @@ function MainDeliveryCategory() {
     );
 }
 
-export default MainDeliveryCategory;
+export default MainDeliveryCategory

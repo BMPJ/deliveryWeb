@@ -11,7 +11,7 @@ function DeliveryStore(){
 
     useEffect(()=>{
         if(storename) {
-            axios.get(`/main/delivery/category/store?storename=${storename}`)
+            axios.get(`/main/delivery/category/storeid?storeid=${storename}`)
                 .then((a)=>{
                     console.log(a.data)
                     setStore(a.data)
@@ -25,7 +25,17 @@ function DeliveryStore(){
 
     return(
         <div>
-
+            {
+                store.map(function (a,i){
+                    return(
+                        <div key={i}>
+                            <div>
+                                {store[i].name}
+                            </div>
+                        </div>
+                    )
+                })
+            }
         </div>
     )
 }
