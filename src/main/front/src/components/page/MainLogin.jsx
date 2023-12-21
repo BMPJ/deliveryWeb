@@ -19,7 +19,12 @@ function MainLogin(){
                     console.log(a.data)
                     session.setItem("userid", a.data[0].userid);
                     session.setItem("role", a.data[0].role);
-                    navigator("/main")
+
+                    if(a.data[0].role != 1){
+                        navigator("/main")
+                    }else{
+                        navigator("/manage/main")
+                    }
                 } else {
                     alert("로그인실패!")
                 }
