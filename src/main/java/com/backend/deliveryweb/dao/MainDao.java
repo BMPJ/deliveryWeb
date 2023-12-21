@@ -38,4 +38,8 @@ public class MainDao {
     public List<Map<String, Object>> getDeliveryStores(String category) {
         return sqlSessionTemplate.selectList("getDeliveryStores", category);
     }
+
+    public List<Map<String, Object>> getMenu(String storeid) {
+        return sqlSessionTemplate.selectList("getMenu", storeid);
+    }
 }

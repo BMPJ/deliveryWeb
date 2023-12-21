@@ -70,8 +70,8 @@ const StoreRegister = () => {
     const register = async() => {
         try {
             const response = await storesRegisterDB(store)
-            navigate('/manage/main')
-            //console.log(response);
+            // navigate('/manage/main')
+            console.log(response);
             console.log(store.operationHours)
             console.log(store)
         }catch (error){
