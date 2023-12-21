@@ -41,10 +41,15 @@ public class MainController {
 
        int login = mainLogic.login(users);
 
+       List<String> session = mainLogic.session(users.getUserid());
+
+        System.out.println(session);
+        System.out.println(g.toJson(session));
+
        if(login==1){
-           return mainLogic.session(users.getUserid());
+           return g.toJson(session);
        }else{
-           return "0";
+           return "" ;
        }
     }
 

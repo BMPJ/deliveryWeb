@@ -28,32 +28,47 @@ function Homepage() {
         fetchData();
     }, []);
 
-    
+    const role = sessionStorage.getItem('role')
     return (
         <div>
-            <div>
-                <button onClick={()=>{navigate('/main/join')}}>회원가입</button>
-            </div>
-
             {
                 userid == null ?
-                <div>
-                    <button onClick={()=>{navigate('/main/login')}}>로그인</button>
-                </div>
+                    (
+                        <div>
+                            <button onClick={()=>{navigate('/main/login')}}>로그인</button>
+                        </div>
+                    )
                 :
-                <div>
+                    (
+                        <div>
                     <button onClick={()=>{
                         sessionStorage.removeItem('userid');
+                        sessionStorage.removeItem('role');
                         window.location.reload();
                     }}>로그아웃</button>
-                    <button onClick={()=>{navigate('/main/packaging')}}>포장</button>
-                    <button onClick={()=>{navigate('/main/delivery')}}>배달</button>
-                    <p>{nick}님 ㅎㅇ</p>
-                    <button onClick={()=>{navigate('/store/register')}}>가게등록</button>
-                </div>
-
+                        </div>
+                    )
             }
-
+            {   userid  ?
+                role == 1 ? (
+                    <div>
+                        <button onClick={()=>{navigate('/manage/main')}}>판매자메인</button>
+                        <p>{nick}님 ㅎㅇ</p>
+                    </div>
+                )
+                 : (
+                    <div>
+                        <button onClick={()=>{navigate('/main/packaging')}}>포장</button>
+                        <button onClick={()=>{navigate('/main/delivery')}}>배달</button>
+                        <p>{nick}님 ㅎㅇ</p>
+                    </div>
+                )
+                : (
+                    <div>
+                        <button onClick={()=>{navigate('/main/join')}}>회원가입</button>
+                    </div>
+                )
+            }
         </div>
     );
 }

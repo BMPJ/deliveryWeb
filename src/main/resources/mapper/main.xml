@@ -6,8 +6,8 @@
         where "userid" = #{userid} and "password" = #{password}
     </select>
 
-    <select id="session" parameterType="String" resultType="String">
-        select "userid" from "Users"
+    <select id="session" parameterType="String" resultType="map">
+        select "userid" , "role" from "Users"
         where "userid" = #{userid}
     </select>
 
