@@ -15,7 +15,6 @@ import java.util.Map;
 @RestController
 public class MainController {
 
-    private static final Logger logger = LoggerFactory.getLogger(MainController.class);
     @Autowired
     private MainLogic mainLogic;
 
@@ -43,7 +42,6 @@ public class MainController {
 
        List<String> session = mainLogic.session(users.getUserid());
 
-
        if(login==1){
            return g.toJson(session);
        }else{
@@ -63,13 +61,21 @@ public class MainController {
     public String getCategory(@RequestParam("category") String category) {
 
        List<Map<String, Object>> list = mainLogic.getDeliveryStores(category);
-        System.out.println(list);
 
-        return g.toJson(list);
+       return g.toJson(list);
     }
 
-    @GetMapping("main/delivery/category/storeid")
+    @GetMapping("/main/delivery/category/storeid")
     public String deliveryStore(@RequestParam ("storeid") String storeid){
+
+       List<Map<String, Object>> list = mainLogic.getStores(storeid);
+        System.out.println(list);
+
+       return g.toJson(list);
+    }
+
+    @GetMapping("/main/delivery/category/storeMenu")
+    public String storeMenu(@RequestParam ("storeid") String storeid){
 
        List<Map<String, Object>> list = mainLogic.getMenu(storeid);
 

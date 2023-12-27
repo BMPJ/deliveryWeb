@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {useNavigate} from "react-router-dom";
+import {Category, Main} from "../../styles/MainDelivery";
 
 function MainDelivery() {
     const type = 0;//배달
@@ -29,12 +30,12 @@ function MainDelivery() {
             {
                 category.map(function (a, i){
                     return(
-                        <div key={i} >
-                            <div onClick={()=>{navigate(`/main/delivery/category?category=${category[i].category}`)}}>
+                        <Main    key={i} >
+                            <Category onClick={()=>{navigate(`/main/delivery/category?category=${category[i].category}`)}}>
                                 <div>{category[i].category}</div>
                                 <img src='/'/>
-                            </div>
-                        </div>
+                            </Category>
+                        </Main>
                     )
                 })
             }

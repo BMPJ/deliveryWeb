@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import {Main, Type} from "../../styles/HomepageStyle";
 
 
 function Homepage() {
@@ -42,14 +43,23 @@ function Homepage() {
                 :
                     (
                         <div>
-                    <button onClick={()=>{
-                        sessionStorage.removeItem('userid');
-                        sessionStorage.removeItem('role');
-                        window.location.reload();
-                    }}>로그아웃</button>
-                            <button onClick={()=>{navigate('/main/packaging')}}>포장</button>
-                            <button onClick={()=>{navigate('/main/delivery')}}>배달</button>
-                            <p>{nick}님 ㅎㅇ</p>
+                            <div>
+                                <button onClick={()=>{
+                                    sessionStorage.removeItem('userid');
+                                    sessionStorage.removeItem('role');
+                                    window.location.reload();
+                                }}>로그아웃</button>
+                                <p>{nick}님 ㅎㅇ</p>
+                            </div>
+                            <Main>
+                                <div onClick={()=>{navigate('/main/packaging')}}>
+                                    <Type>포장</Type>
+                                </div>
+                                <div onClick={()=>{navigate('/main/delivery')}}>
+                                    <Type>배달</Type>
+                                </div>
+                            </Main>
+
                         </div>
                     )
             }
