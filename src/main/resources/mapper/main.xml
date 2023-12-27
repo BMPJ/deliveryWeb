@@ -26,11 +26,13 @@
         where "category" = #{category} and "type" = 0
     </select>
 
-    <select id="getMenu" parameterType="String" resultType="map">
-        select distinct * from "Stores" a
-        inner join "Menu" b
-        on a."storeid" = b."storeid"
-        where a."storeid" = #{storeid}
+    <select id="getStores" parameterType="String" resultType="map">
+        select * from "Stores"
+        where "storeid" = #{storeid}
     </select>
 
+    <select id="getMenu" parameterType="String" resultType="map">
+        select * from "Menu"
+        where "storeid" = #{storeid}
+    </select>
 </mapper>
