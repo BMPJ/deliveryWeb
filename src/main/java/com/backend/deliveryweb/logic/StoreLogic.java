@@ -14,6 +14,10 @@ public class StoreLogic {
     @Autowired
     private StoreDao storeDao;
 
+    public int update(Stores stores) {
+        return storeDao.update(stores);
+    }
+
 
     public int register(Stores stores){
         return storeDao.register(stores);
@@ -25,4 +29,12 @@ public class StoreLogic {
         return storeDao.info(userid);
 
     }
+
+
+    public List<Map<String, Object>> detail(String storeid, String userid) {
+
+        return storeDao.detail(storeid, userid);
+    }
+
+
 }
