@@ -5,6 +5,8 @@ const StoreSettingMain = () =>{
     const userid = sessionStorage.getItem('userid');
     const [store,setStore] = useState([]);
 
+    const [visible,setVisible] = useState(false);
+
     let navigate = useNavigate();
 
     useEffect(()=>{
@@ -14,7 +16,7 @@ const StoreSettingMain = () =>{
                 console.log(response);
 
                 setStore(response.data)
-                console.log(store)
+                console.log(response.data)
             } catch (error) {
                 console.error('서버로 데이터 전송 중 오류 발생:', error);
             }
@@ -30,12 +32,11 @@ const StoreSettingMain = () =>{
                     store.map(function (a,i) {
                         return(
                             <div>
-                            <button onClick={()=>{navigate("/store/setting")}}>
-                                {store[i].name}
-                            </button>
+                                <button onClick={()=>{navigate(`/store/modify/${store[i].storeid}`)}}>
+                                    {store[i].name}
+                                </button>
                             </div>
                         )
-
                     })
                 }
             </div>
