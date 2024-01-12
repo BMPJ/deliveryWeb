@@ -1,6 +1,7 @@
 package com.backend.deliveryweb.controller;
 
 import com.backend.deliveryweb.logic.StoreLogic;
+import com.backend.deliveryweb.vo.Menu;
 import com.backend.deliveryweb.vo.Stores;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,5 +60,23 @@ public class StoreController {
         return String.valueOf(result);
     }
 
+    @PostMapping("/menu/register")
+    public String menuRegister(@RequestBody Menu menu){
+
+        System.out.println(menu);
+
+        int result = storeLogic.menuRegister(menu);
+
+        return String.valueOf(result);
+
+    }
+
+    @GetMapping("/menu/info")
+    public String menuInfo(@RequestParam String storeid){
+
+        System.out.println(storeid);
+        List<Map<String,Object>> list = storeLogic.menuInfo(storeid);
+        return g.toJson(list);
+    }
 
 }

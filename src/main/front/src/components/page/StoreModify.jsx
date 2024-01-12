@@ -303,7 +303,7 @@ const StoreModify = () => {
                 <button onClick={(e)=>sendData(e)}>수정</button>
                 <button onClick={ ()=>{ navigate('/store/settingMain') }}>가게리스트</button>
                 <button onClick={ ()=>{ navigate('/manage/main') }}>판매자메인</button>
-                <button onClick={ ()=>{ navigate(`/store/menu/${datas.storeid}`) }}>메뉴관리</button>
+                <button onClick={ ()=>{ navigate(`/store/menu/modify/${datas.storeid}`) }}>메뉴관리</button>
             </div>
         </>
     )

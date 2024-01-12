@@ -76,4 +76,23 @@
         WHERE
             "userid" = #{userid} AND "storeid" = #{storeid}
     </update>
+
+    <insert id = "menuRegister" parameterType="com.backend.deliveryweb.vo.Stores">
+        INSERT INTO "Menu"
+        VALUES (
+                   seq_menu.nextval,
+                   #{storeid},
+                   #{category},
+                   #{menuName},
+                   #{price},
+                   #{menuPictureUrl},
+                   #{popularity},
+                   #{status}
+               )
+    </insert>
+
+    <select id = "menuInfo" parameterType="String" resultType="map">
+        SELECT * FROM "Menu"
+        WHERE "storeid" = #{storeid}
+    </select>
 </mapper>

@@ -14,6 +14,7 @@ import DeliveryCart from "./components/page/DeliveryCart";
 import StoreModify from "./components/page/StoreModify";
 import StoreMenuModify from "./components/page/StoreMenuModify";
 import StoreMenuRegister from "./components/page/StoreMenuRegister";
+import StoreInfo from "./components/page/StoreInfo";
 
 function App() {
     return (
@@ -32,6 +33,8 @@ function App() {
             <Route path="/store/modify/:id" element={<StoreModify/>}/>
             <Route path="/store/menu/register/:id" element={<StoreMenuRegister/>}/>
             <Route path="/store/menu/modify/:id" element={<StoreMenuModify/>}/>
+            <Route path="/store/info/:id" element={<StoreInfo/>}/>
+
         </Routes>
     );
 }
