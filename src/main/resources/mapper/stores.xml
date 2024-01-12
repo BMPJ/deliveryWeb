@@ -48,4 +48,32 @@
         SELECT * FROM "Stores"
         WHERE "userid" = #{userid}
     </select>
+
+    <select id ="detail" parameterType="map" resultType="map">
+        SELECT * FROM "Stores"
+        WHERE "userid" = #{userid} and "storeid" = #{storeid}
+    </select>
+
+    <update id="update" parameterType="map">
+        UPDATE "Stores"
+        SET
+            "name" = #{name},
+            "type" = #{type},
+            "category" = #{category},
+            "address" = #{address},
+            "address_detail" = #{address_detail},
+            "storePictureUrl" = #{storePictureUrl},
+            "phone" = #{phone},
+            "content" = #{content},
+            "minDeliveryPrice" = #{minDeliveryPrice},
+            "deliveryTip" = #{deliveryTip},
+            "minDeliveryTime" = #{minDeliveryTime},
+            "maxDeliveryTime" = #{maxDeliveryTime},
+            "operationHours" = #{operationHours},
+            "closedDays" = #{closedDays},
+            "deliveryAddress" = #{deliveryAddress},
+            "status" = #{status}
+        WHERE
+            "userid" = #{userid} AND "storeid" = #{storeid}
+    </update>
 </mapper>

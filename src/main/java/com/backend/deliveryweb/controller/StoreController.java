@@ -30,12 +30,33 @@ public class StoreController {
 
     @GetMapping("/info")
     public String storeInfo(@RequestParam String userid) {
-        System.out.println(userid);
+        //System.out.println(userid);
 
         List<Map<String, Object>> list = storeLogic.info(userid);
 
 
         return g.toJson(list);
+    }
+
+    @GetMapping("/detail")
+    public String storeDetail(@RequestParam String storeid, @RequestParam String userid) {
+        System.out.println(storeid);
+        System.out.println(userid);
+
+        List<Map<String, Object>> list = storeLogic.detail(storeid, userid);
+
+        return g.toJson(list);
+    }
+
+    @PostMapping("/update")
+    public String storeUpdate(@RequestBody Stores stores){
+
+        System.out.println(stores);
+        System.out.println(stores.getName());
+
+        int result = storeLogic.update(stores);
+
+        return String.valueOf(result);
     }
 
 

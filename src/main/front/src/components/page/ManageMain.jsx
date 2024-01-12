@@ -37,7 +37,6 @@ const ManageMain = () => {
             }
         </>
     )
-
 }
 
 export default ManageMain

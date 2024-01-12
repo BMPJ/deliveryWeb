@@ -1,23 +1,23 @@
 /* global daum */
-import React, {useEffect, useState} from "react";
-import axios from "axios";
-import {useNavigate} from "react-router-dom";
-import {storesRegisterDB} from "../../service/storesLogic";
-import {manageDB} from "../../service/manageLogic";
+import React, {useNavigate, useParams} from "react-router-dom";
+import {useEffect, useState} from "react";
+import {storesDetailDB, storesUpdateDB} from "../../service/storesLogic";
 
-const StoreRegister = () => {
+const StoreModify = () => {
+    const navigate = useNavigate();
+    const {id} = useParams()
 
-    let navigate = useNavigate();
-    const [userid] = useState(window.sessionStorage.getItem('userid'));
+    const userid = sessionStorage.getItem('userid');
 
-    const [role] = useState(window.sessionStorage.getItem('role'));
-
+    const datas = {
+        userid : userid,
+        storeid : id,
+    }
 
     const [openHours, setOpenHours] = useState("");
     const [closeHours, setCloseHours] = useState("");
 
     const [store, setStore] = useState({
-        userid,
         name: '',
         type: '',
         category: '',
@@ -33,33 +33,50 @@ const StoreRegister = () => {
         operationHours : '',
         closedDays : '',
         deliveryAddress : '',
-        status: '0',
-    });
+        status: '2',
+    })
 
-    //운영시간 합치기
     useEffect(()=>{
         setStore({
             ...store,
             operationHours : `${openHours} ~ ${closeHours}`})
     },[openHours,closeHours])
 
-    useEffect(() => {
-
-        if(role != 1){
-            navigate('/main/login')
-        }
-        const AddrData = async () => {
-            try {
-                let params = {userid : userid};
-                let response = await manageDB(params);
-                setStore({...store, address : response.data[0].address, address_detail: response.data[0].address_detail});
-            } catch (error) {
-                console.error(error);
+    //첫화면 호출할때
+    useEffect(()=>{
+        const db = async () =>{
+            try{
+                const response = await storesDetailDB(datas);
+                console.log(response);
+                console.log(response.data[0]);
+                setStore(response.data[0]);
+                setOpenHours(response.data[0].operationHours.split('~')[0]);
+                setCloseHours(response.data[0].operationHours.split('~')[1]);
+            } catch (error){
+                console.error('서버로 데이터 전송 중 오류 발생:', error);
             }
         };
-        AddrData();
-    }, []);
+        db();
+    },[])
 
+
+    const openZipcode = (e) => {
+        e.preventDefault();
+        new daum.Postcode({
+            oncomplete: function (data) {
+                let address = "";
+                if (data.userSelectedType === "R") {
+                    address = data.roadAddress; //도로명
+                } else {
+                    address = data.jibunAddress; //지번
+                }
+                setStore({ ...store, address: address });
+                document.getElementById("address").value = address;
+                document.getElementById("address_detail").focus();
+                console.log(data)
+            },
+        }).open();
+    };
 
     const info = (e) => {
         const id = e.currentTarget.id;
@@ -67,21 +84,24 @@ const StoreRegister = () => {
         setStore({...store, [id]: value});
     }
 
-    const register = async() => {
-        try {
-            const response = await storesRegisterDB(store)
-            // navigate('/manage/main')
+    const sendData = async(e) => {
+        e.preventDefault();
+        try{
+            const response = await storesUpdateDB(store, datas);
             console.log(response);
-            console.log(store.operationHours)
+            alert("수정완료");
             console.log(store)
-        }catch (error){
-            alert("실패");
-            console.log(store.operationHours)
-            console.log(store)
-            console.error('서버로 데이터 전송 중 오류 발생:', error);
-        }
-    }
+            console.log(datas);
+            //navigate("/store/settingMain");
 
+        }catch (error){
+            console.error('서버로 데이터 전송 중 오류 발생:', error);
+            console.log(store)
+            console.log(datas);
+        }
+
+
+    }
 
     return(
         <>
@@ -136,16 +156,19 @@ const StoreRegister = () => {
                         id="address"
                         value={store.address}
                         readOnly
+                        placeholder="주소검색해라"
                     />
+                    <button onClick={(e)=>openZipcode(e)}>검색</button>
                 </div>
+
                 <div>
                     <label>상세주소:</label>
                     <input
                         type="text"
                         id="address_detail"
                         value={store.address_detail}
-                        readOnly
-
+                        readOnly={!store.address}
+                        onChange={(e) => setStore({ ...store, address_detail: e.target.value })}
                     />
                 </div>
 
@@ -241,6 +264,7 @@ const StoreRegister = () => {
                     <input
                         type="text"
                         id="openHours"
+                        value={openHours}
                         onChange={(e)=>{setOpenHours(e.target.value)}}
                     />
                 </div>
@@ -250,6 +274,7 @@ const StoreRegister = () => {
                     <input
                         type="text"
                         id="closeHours"
+                        value={closeHours}
                         onChange={(e) => {setCloseHours(e.target.value)}}
                     />
                 </div>
@@ -274,13 +299,14 @@ const StoreRegister = () => {
                     />
                 </div>
 
-                <button onClick={()=>register()}>가게등록</button>
-                {/*<button onClick={test()}>테스트</button>*/}
-                {/*<button onClick={()=>sendData()}>가게등록</button>*/}
-                <button onClick={ ()=>{ navigate('/manage/main') }}>메인</button>
+
+                <button onClick={(e)=>sendData(e)}>수정</button>
+                <button onClick={ ()=>{ navigate('/store/settingMain') }}>가게리스트</button>
+                <button onClick={ ()=>{ navigate('/manage/main') }}>판매자메인</button>
+                <button onClick={ ()=>{ navigate(`/store/menu/${datas.storeid}`) }}>메뉴관리</button>
             </div>
         </>
-    );
-};
+    )
+}
 
-export default StoreRegister;
+export default StoreModify;
