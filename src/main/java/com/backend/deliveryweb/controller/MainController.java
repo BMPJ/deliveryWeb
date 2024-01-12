@@ -1,11 +1,9 @@
 package com.backend.deliveryweb.controller;
 
 import com.backend.deliveryweb.logic.MainLogic;
-import com.backend.deliveryweb.vo.Stores;
+import com.backend.deliveryweb.vo.Carts;
 import com.backend.deliveryweb.vo.Users;
 import com.google.gson.Gson;
-import org.mybatis.logging.Logger;
-import org.mybatis.logging.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,32 +56,71 @@ public class MainController {
     }
 
     @GetMapping("/main/delivery/category")
-    public String getCategory(@RequestParam("category") String category) {
+    public String deliveryGetCategory(@RequestParam("category") String category) {
 
        List<Map<String, Object>> list = mainLogic.getDeliveryStores(category);
 
        return g.toJson(list);
     }
 
-    @GetMapping("/main/delivery/category/storeid")
-    public String deliveryStore(@RequestParam ("storeid") String storeid){
+    @GetMapping("/main/delivery/storeid")
+    public String deliveryStoreid(@RequestParam ("storeid") String storeid){
 
        List<Map<String, Object>> list = mainLogic.getStores(storeid);
-        System.out.println(list);
 
        return g.toJson(list);
     }
 
-    @GetMapping("/main/delivery/category/storeMenu")
-    public String storeMenu(@RequestParam ("storeid") String storeid){
+    @GetMapping("/main/delivery/storeMenu")
+    public String deliveryStoreMenu(@RequestParam ("storeid") String storeid){
 
        List<Map<String, Object>> list = mainLogic.getMenu(storeid);
 
        return g.toJson(list);
     }
 
+    @GetMapping("/main/delivery/menuOption")
+    public String deliveryMenuOption(@RequestParam ("menuid") String menuid){
 
+        List<Map<String, Object>> list = mainLogic.getOption(menuid);
 
+        return g.toJson(list);
+    }
 
+    @PostMapping("/main/delivery/cart")
+    public String deliveryCart(@RequestBody Carts carts){
+
+       int i = mainLogic.selectCart(carts.getUserid());
+
+        if (i >= 0) {
+            mainLogic.deleteCart(carts.getUserid());
+
+        }
+        return String.valueOf(mainLogic.cart(carts));
+    }
+
+    @GetMapping("/main/delivery/cart")
+    public String deliveryCartGet(@RequestParam String userid){
+
+       List<Map<String, Object>> list = mainLogic.getCart(userid);
+
+       return g.toJson(list);
+    }
+
+    @GetMapping("/main/delivery/cart/menu")
+    public String getMenu(@RequestParam String menuid){
+
+       List<Map<String, Object>> list = mainLogic.cartMenu(menuid);
+
+       return g.toJson(list);
+    }
+
+    @GetMapping("/main/delivery/cart/menuOptionId")
+    public String getOption(@RequestParam String menuOptionId){
+
+        List<Map<String, Object>> list = mainLogic.cartMenuOption(menuOptionId);
+
+        return g.toJson(list);
+    }
 
 }

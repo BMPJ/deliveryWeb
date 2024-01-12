@@ -10,6 +10,7 @@ import MainDelivery from "./components/page/MainDelivery";
 import MainDeliveryCategory from "./components/page/MainDeliveryCategory";
 import StoreSettingMain from "./components/page/StoreSettingMain";
 import DeliveryStore from "./components/page/DeliveryStore";
+import DeliveryCart from "./components/page/DeliveryCart";
 
 function App() {
     return (
@@ -20,6 +21,7 @@ function App() {
             <Route path="/main/delivery" element={<MainDelivery/>}/>
             <Route path="/main/delivery/category" element={<MainDeliveryCategory/>}/>
             <Route path="main/delivery/category/storeid" element={<DeliveryStore/>}/>
+            <Route path="main/delivery/cart" element={<DeliveryCart/>}/>
             <Route path="/manage/main" element={<ManageMain/>}/>
             <Route path="/manage/join" element={<ManageJoin/>}/>
             <Route path="/store/register" element={<StoreRegister/>}/>
