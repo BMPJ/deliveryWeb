@@ -1,6 +1,7 @@
 package com.backend.deliveryweb.logic;
 
 import com.backend.deliveryweb.dao.MainDao;
+import com.backend.deliveryweb.vo.Carts;
 import com.backend.deliveryweb.vo.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,6 @@ public class MainLogic {
     public int join(Users users) {
         return mainDao.join(users);
     }
-
 
     public int login(Users users) {
         return mainDao.login(users);
@@ -45,4 +45,26 @@ public class MainLogic {
     public List<Map<String, Object>> getMenu(String storeid) {
         return mainDao.getMenu(storeid);
     }
+
+    public List<Map<String, Object>> getOption(String menuid) {
+        return mainDao.getOption(menuid);
+    }
+
+    public int selectCart(String userid) {
+        return mainDao.selectCart(userid);
+    }
+
+    public void deleteCart(String userid) { mainDao.deleteCart(userid);}
+
+    public int cart(Carts carts) {return mainDao.cart(carts); }
+
+    public List<Map<String, Object>> getCart(String userid) { return mainDao.getCart(userid); }
+
+    public List<Map<String, Object>> cartMenu(String menuid) { return mainDao.cartMenu(menuid); }
+
+    public List<Map<String, Object>> cartMenuOption(String menuOptionId) { return mainDao.cartMenuOption(menuOptionId); }
+
+
+
+
 }

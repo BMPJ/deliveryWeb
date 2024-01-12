@@ -1,5 +1,6 @@
 package com.backend.deliveryweb.dao;
 
+import com.backend.deliveryweb.vo.Carts;
 import com.backend.deliveryweb.vo.Users;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,4 +47,37 @@ public class MainDao {
     public List<Map<String, Object>> getMenu(String storeid) {
         return sqlSessionTemplate.selectList("getMenu", storeid);
     }
+
+
+    public List<Map<String, Object>> getOption(String menuid) {
+        return sqlSessionTemplate.selectList("getOption", menuid);
+    }
+
+    public int selectCart(String userid) {
+        return sqlSessionTemplate.selectOne("selectCart", userid);
+    }
+
+    public void deleteCart(String userid) {
+        sqlSessionTemplate.delete("deleteCart", userid);
+    }
+
+    public int cart(Carts carts) {
+        return sqlSessionTemplate.update("cart", carts);
+    }
+
+    public List<Map<String, Object>> getCart(String userid) {
+        return sqlSessionTemplate.selectList("getCart", userid);
+    }
+
+    public List<Map<String, Object>> cartMenu(String menuid) {
+        return sqlSessionTemplate.selectList("cartMenu", menuid);
+    }
+
+    public List<Map<String, Object>> cartMenuOption(String menuOptionId) {
+        return sqlSessionTemplate.selectList("cartMenuOption", menuOptionId);
+    }
+
+
+
+
 }
