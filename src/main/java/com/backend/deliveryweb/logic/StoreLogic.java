@@ -1,6 +1,7 @@
 package com.backend.deliveryweb.logic;
 
 import com.backend.deliveryweb.dao.StoreDao;
+import com.backend.deliveryweb.vo.Menu;
 import com.backend.deliveryweb.vo.Stores;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,4 +38,11 @@ public class StoreLogic {
     }
 
 
+    public int menuRegister(Menu menu) {
+        return storeDao.menuRegister(menu);
+    }
+
+    public List<Map<String, Object>> menuInfo(String storeid) {
+        return storeDao.menuInfo(storeid);
+    }
 }

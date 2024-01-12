@@ -26,23 +26,15 @@ const StoreSettingMain = () =>{
         db();
     },[])
 
-    const openButtonHandler = (id) =>{
-        setIsOpen(()=>(isOpen !== id ? id : ""));
-
-        if(isOpen === id){
-            setIsOpen("");
-        }
-    }
 
     return(
         <>
             <div>
                 {store.map((a, i) => (
                     <div key={i}>
-                        <button onClick={() => openButtonHandler(a.storeid)}>
-                            {a.name}
+                        <button onClick={() => navigate(`/store/info/${store[i].storeid}`)}>
+                            {store[i].name}
                         </button>
-                        {isOpen === a.storeid ? <button>테스트</button> : null}
                     </div>
                     ))}
             </div>
