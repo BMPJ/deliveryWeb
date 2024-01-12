@@ -1,5 +1,6 @@
 package com.backend.deliveryweb.dao;
 
+import com.backend.deliveryweb.vo.Menu;
 import com.backend.deliveryweb.vo.Stores;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +38,13 @@ public class StoreDao {
         params.put("storeid", storeid);
         params.put("userid", userid);
     return sqlSessionTemplate.selectList("detail",params);
+    }
+
+    public int menuRegister(Menu menu) {
+        return sqlSessionTemplate.update("menuRegister",menu);
+    }
+
+    public List<Map<String, Object>> menuInfo(String storeid) {
+        return sqlSessionTemplate.selectList("menuInfo",storeid);
     }
 }
