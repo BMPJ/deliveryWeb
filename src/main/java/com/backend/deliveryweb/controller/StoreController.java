@@ -59,6 +59,5 @@ public class StoreController {
         return String.valueOf(result);
     }
 
-    @PostMapping("/menu/register")
 
 }
