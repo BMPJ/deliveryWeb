@@ -50,6 +50,12 @@ public class MainLogic {
         return mainDao.getOption(menuid);
     }
 
+    public int selectCart(String userid) {
+        return mainDao.selectCart(userid);
+    }
+
+    public void deleteCart(String userid) { mainDao.deleteCart(userid);}
+
     public int cart(Carts carts) {return mainDao.cart(carts); }
 
     public List<Map<String, Object>> getCart(String userid) { return mainDao.getCart(userid); }
@@ -58,11 +64,7 @@ public class MainLogic {
 
     public List<Map<String, Object>> cartMenuOption(String menuOptionId) { return mainDao.cartMenuOption(menuOptionId); }
 
-    public int selectCart(String userid) {
-        return mainDao.selectCart(userid);
-    }
 
-    public void deleteCart(String userid) {
-        mainDao.deleteCart(userid);
-    }
+
+
 }

@@ -35,4 +35,54 @@
         select * from "Menu"
         where "storeid" = #{storeid}
     </select>
+
+    <select id="getOption" parameterType="String" resultType="map">
+        select "menuOptionId","menuid","option","content","price"
+        from "MenuOption"
+        where "menuid" = #{menuid}
+    </select>
+
+    <select id="selectCart" parameterType="String" resultType="int">
+        select count(*) from "Carts"
+        where "userid" = #{userid}
+    </select>
+
+    <delete id="deleteCart" parameterType="String">
+        delete from "Carts"
+        where "userid" = #{userid}
+    </delete>
+
+    <insert id="cart" parameterType="com.backend.deliveryweb.vo.Stores">
+        insert into "Carts"
+        values (
+                SEQ_CARTID.nextval,
+                #{userid},
+                #{storeid},
+                #{menuid},
+                #{menuOptionId},
+                #{quantity}
+               )
+    </insert>
+
+    <select id="getCart" parameterType="String" resultType="map">
+        select c.*, u."name", u."nickname", u."phone", u."address", u."address_detail", s."name" storeName,
+               s."minDeliveryPrice", s."maxDeliveryTime", s."deliveryTip"
+        from "Carts" c
+                 inner join "Users" u
+                            on u."userid" = c."userid"
+                 inner join "Stores" s
+                            on c."storeid" = s."storeid"
+        where c."userid" = #{userid}
+    </select>
+
+    <select id="cartMenu" parameterType="String" resultType="map">
+        select * from "Menu"
+        where "menuid" = #{menuid}
+    </select>
+
+    <select id="cartMenuOption" parameterType="String" resultType="map">
+        select * from "MenuOption"
+        where "menuOptionId" = #{menuOptionId}
+    </select>
+
 </mapper>

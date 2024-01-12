@@ -90,6 +90,7 @@ public class MainController {
     @PostMapping("/main/delivery/cart")
     public String deliveryCart(@RequestBody Carts carts){
 
+        System.out.println(carts);
        int i = mainLogic.selectCart(carts.getUserid());
 
         if (i >= 0) {
