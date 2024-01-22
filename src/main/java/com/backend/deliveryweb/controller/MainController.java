@@ -2,6 +2,7 @@ package com.backend.deliveryweb.controller;
 
 import com.backend.deliveryweb.logic.MainLogic;
 import com.backend.deliveryweb.vo.Carts;
+import com.backend.deliveryweb.vo.Orders;
 import com.backend.deliveryweb.vo.Users;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,14 +91,12 @@ public class MainController {
     @PostMapping("/main/delivery/cart")
     public String deliveryCart(@RequestBody Carts carts){
 
-        System.out.println(carts);
        int i = mainLogic.selectCart(carts.getUserid());
 
-        if (i >= 0) {
+       if (i >= 0) {
             mainLogic.deleteCart(carts.getUserid());
-
-        }
-        return String.valueOf(mainLogic.cart(carts));
+       }
+       return String.valueOf(mainLogic.cart(carts));
     }
 
     @GetMapping("/main/delivery/cart")
@@ -122,6 +121,20 @@ public class MainController {
         List<Map<String, Object>> list = mainLogic.cartMenuOption(menuOptionId);
 
         return g.toJson(list);
+    }
+
+    @PostMapping("/main/delivery/cart/pay")
+    public String pay(@RequestBody Orders orders){
+
+       return String.valueOf(mainLogic.deliveryPay(orders));
+    }
+
+    @GetMapping("/main/delivery/order")
+    public String order(@RequestParam String userid){
+
+       List<Map<String, Object>> list = mainLogic.orderList(userid);
+
+       return"";
     }
 
 }

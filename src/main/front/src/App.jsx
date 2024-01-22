@@ -15,6 +15,7 @@ import StoreModify from "./components/page/StoreModify";
 import StoreMenuModify from "./components/page/StoreMenuModify";
 import StoreMenuRegister from "./components/page/StoreMenuRegister";
 import StoreInfo from "./components/page/StoreInfo";
+import DeliveryOrder from "./components/page/DeliveryOrder";
 
 function App() {
     return (
@@ -26,6 +27,7 @@ function App() {
             <Route path="/main/delivery/category" element={<MainDeliveryCategory/>}/>
             <Route path="main/delivery/category/storeid" element={<DeliveryStore/>}/>
             <Route path="main/delivery/cart" element={<DeliveryCart/>}/>
+            <Route path="main/delivery/order" element={<DeliveryOrder/>}/>
             <Route path="/manage/main" element={<ManageMain/>}/>
             <Route path="/manage/join" element={<ManageJoin/>}/>
             <Route path="/store/register" element={<StoreRegister/>}/>

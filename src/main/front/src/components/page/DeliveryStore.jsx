@@ -116,17 +116,21 @@ function DeliveryStore() {
     }, [cart]);
     const addCart = ()=>{
         if(cart) {
-            axios.post('/main/delivery/cart', cart)
-                .then((a) => {
-                    console.log(a.data)
-                    if (a.data === 1) {
-                        navigator(`/main/delivery/cart?userid=${userid}`)
-                    } else {
-                        alert("실패")
-                    }
-                }).catch((err) => {
-                console.error(err)
-            })
+            if(total>store[0].minDeliveryPrice) {
+                axios.post('/main/delivery/cart', cart)
+                    .then((a) => {
+                        console.log(a.data)
+                        if (a.data === 1) {
+                            navigator(`/main/delivery/cart?userid=${userid}`)
+                        } else {
+                            alert("실패")
+                        }
+                    }).catch((err) => {
+                    console.error(err)
+                })
+            }else{
+                alert("최소주문금액보다 작습니다")
+            }
         }
     }
     return (

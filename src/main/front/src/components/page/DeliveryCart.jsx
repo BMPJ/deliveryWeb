@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 function DeliveryCart() {
     const userid = sessionStorage.getItem("userid");
@@ -13,6 +14,8 @@ function DeliveryCart() {
     const [menuPrice, setMenuPrice] = useState(0)
     const [menuOptionPrice, setMenuOptionPrice] = useState(0)
     const [quantity, setQuantity] = useState(0)
+    const [request, setRequest] = useState('');
+    const navigator = useNavigate();
 
     useEffect(() => {
         axios
@@ -74,6 +77,72 @@ function DeliveryCart() {
     }
 
 
+
+    const kakaopay = () => {
+        const { IMP } = window;
+        IMP.init('imp11118386');
+
+        const data = {
+            pg: 'kakaopay',
+            pay_method: 'kakaopay',
+            merchant_uid: `mid_${new Date().getTime()}`,
+            amount: price,
+            name: menu[0].menuName + menuOption[0].option,
+            custom_data:request
+        }
+
+        IMP.request_pay(data, callback)
+        function callback(response){
+            const {
+                success,
+                error_msg,
+            } = response;
+
+            const order = {
+                storeid : cart[0].storeid,
+                userid : userid,
+                paymentMethod : 'kakaopay',
+                totalPrice : price,
+                requests : request,
+                status : 0
+            }
+
+            if (success) {
+                axios.post(`/main/delivery/cart/pay`, order)
+                    .then((a)=>{
+                        console.log(a)
+                        navigator(`/main/delivery/order?userid=${userid}`)
+                    })
+                    .catch((err)=>{
+                        console.error(err)
+                    })
+            } else {
+                alert(`결제 실패: ${error_msg}`);
+            }
+        }
+    }
+
+    const onside = () => {
+
+        const order = {
+            storeid : cart[0].storeid,
+            userid : userid,
+            paymentMethod : 'onside',
+            totalPrice : price,
+            requests : request,
+            status : 0
+        }
+
+        axios.post(`/main/delivery/cart/pay`, order)
+            .then((a)=>{
+                console.log(a)
+                navigator(`/main/delivery/order?userid=${userid}`)
+            })
+            .catch((err)=>{
+                console.error(err)
+            })
+    }
+
     return (
         <div>
             {cart.length > 0 && menuOption.length > 0 && (
@@ -101,32 +170,39 @@ function DeliveryCart() {
                             <p>배달정보</p>
                         </div>
                         <div>
-                            <div>
-                                <label>주소</label>
-                                <input value={cart[0].address} readOnly/>
-                            </div>
-                            <div>
-                                <input
-                                    type="text"
-                                    placeholder="(필수)상세주소 입력"
-                                />
-                            </div>
-                            <div>
-                                <label>휴대전화번호</label>
-                                <input type="text" placeholder="(필수)휴대전화 번호 입력"/>
-                            </div>
+                            <label>주소</label>
+                            <div>{cart[0].address}</div>
+                            <div>{cart[0].address_detail}</div>
+                        </div>
+                        <div>
+                            <label>휴대전화번호</label>
+                            <div>{cart[0].phone}</div>
                         </div>
                         <div>
                             <div>
                                 <p>주문시 요청사항</p>
                             </div>
                             <div>
-                                <textarea placeholder={"요청사항을 남겨주세요"}/>
+                                <textarea
+                                    placeholder={"요청사항을 남겨주세요"}
+                                    name="request"
+                                    onChange={(e)=>
+                                        setRequest(e.target.value)
+                                }/>
                             </div>
                         </div>
                     </div>
                 </div>
             )}
+            <div>
+                <div>
+                    <div onClick={onside}>현장결제</div>
+                </div>
+                <div>
+                    <div onClick={kakaopay}>카카오페이</div>
+                </div>
+            </div>
+
         </div>
     );
 }

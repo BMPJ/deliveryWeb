@@ -1,6 +1,7 @@
 package com.backend.deliveryweb.dao;
 
 import com.backend.deliveryweb.vo.Carts;
+import com.backend.deliveryweb.vo.Orders;
 import com.backend.deliveryweb.vo.Users;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,7 +78,11 @@ public class MainDao {
         return sqlSessionTemplate.selectList("cartMenuOption", menuOptionId);
     }
 
+    public int deliveryPay(Orders orders) {
+        return sqlSessionTemplate.update("deliveryPay", orders);
+    }
 
-
-
+    public List<Map<String, Object>> orderList(String userid) {
+        return sqlSessionTemplate.selectList("orderList", userid);
+    }
 }
