@@ -92,7 +92,22 @@
     </insert>
 
     <select id = "menuInfo" parameterType="String" resultType="map">
-        SELECT * FROM "Menu"
-        WHERE "storeid" = #{storeid}
+        SELECT m.*, s."name"
+        FROM "Menu" m
+        INNER JOIN "Stores" s
+        ON m."storeid" = s."storeid"
+        WHERE m."storeid" = #{storeid}
     </select>
+
+    <update id = "menuUpdate" parameterType="map">
+        UPDATE "Menu"
+        SET
+            "menuName" = #{menuName},
+            "price" = #{price},
+            "menuPictureUrl" = #{menuPictureUrl},
+            "category" = #{category},
+            "status" = #{status}
+        WHERE
+            "menuid" = #{menuid} AND "storeid" = #{storeid}
+    </update>
 </mapper>

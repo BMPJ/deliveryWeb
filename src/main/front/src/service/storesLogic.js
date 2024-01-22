@@ -66,3 +66,19 @@ export const storesUpdateDB = (store,datas) => {
         }
     });
 }
+
+
+export const menuUpdateDB = (menu) => {
+    return new Promise((resolve, reject) => {
+        try {
+            const response = axios({
+                method: "post",
+                url: "/store/menu/update",
+                data: menu
+            });
+            resolve(response);
+        } catch (error) {
+            reject(error);
+        }
+    });
+}
