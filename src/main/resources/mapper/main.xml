@@ -85,4 +85,24 @@
         where "menuOptionId" = #{menuOptionId}
     </select>
 
+    <insert id="deliveryPay" parameterType="com.backend.deliveryweb.vo.Orders">
+        insert into "Orders"
+        values (
+                SEQ_ORDERID.nextval,
+                #{storeid},
+                #{userid},
+                #{paymentMethod},
+                #{totalPrice},
+                #{requests},
+                sysdate,
+                #{status}
+               )
+    </insert>
+
+    <select id="orderList" parameterType="String">
+        select "totalPrice", "orderTime", "status"
+        from "Order"
+        where "userid" = #{userid}
+    </select>
+
 </mapper>
