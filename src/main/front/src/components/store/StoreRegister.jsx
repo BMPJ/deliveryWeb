@@ -104,7 +104,6 @@ const StoreRegister = () => {
                         <option value selected disabled>선택해주세요</option>
                         <option value = "0">배달</option>
                         <option value = "1">포장</option>
-                        <option value = "2">배달/포장</option>
                     </select>
                 </div>
 

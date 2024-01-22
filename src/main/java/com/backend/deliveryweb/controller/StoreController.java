@@ -79,4 +79,14 @@ public class StoreController {
         return g.toJson(list);
     }
 
+    @PostMapping("/menu/update")
+    public String menuUpdate(@RequestBody Menu menu){
+        System.out.println(menu);
+
+        int result = storeLogic.menuUpdate(menu);
+
+        return String.valueOf(result);
+
+    }
+
 }

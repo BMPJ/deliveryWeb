@@ -5,16 +5,16 @@ import MainJoin from "./components/page/MainJoin";
 import MainLogin from "./components/page/MainLogin";
 import ManageMain from "./components/page/ManageMain";
 import ManageJoin from "./components/page/ManageJoin";
-import StoreRegister from "./components/page/StoreRegister";
+import StoreRegister from "./components/store/StoreRegister";
 import MainDelivery from "./components/page/MainDelivery";
 import MainDeliveryCategory from "./components/page/MainDeliveryCategory";
 import StoreSettingMain from "./components/page/StoreSettingMain";
 import DeliveryStore from "./components/page/DeliveryStore";
 import DeliveryCart from "./components/page/DeliveryCart";
-import StoreModify from "./components/page/StoreModify";
-import StoreMenuModify from "./components/page/StoreMenuModify";
-import StoreMenuRegister from "./components/page/StoreMenuRegister";
-import StoreInfo from "./components/page/StoreInfo";
+import StoreModify from "./components/store/StoreModify";
+import StoreMenuModify from "./components/store/StoreMenuModify";
+import StoreMenuRegister from "./components/store/StoreMenuRegister";
+import StoreInfo from "./components/store/StoreInfo";
 import DeliveryOrder from "./components/page/DeliveryOrder";
 
 function App() {
