@@ -16,4 +16,5 @@ public class Orders {
     private int totalPrice;
     private String requests;
     private int status;
+    private String orderName;
 }

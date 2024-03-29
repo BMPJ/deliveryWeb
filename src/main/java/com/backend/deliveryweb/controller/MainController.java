@@ -126,15 +126,14 @@ public class MainController {
     @PostMapping("/main/delivery/cart/pay")
     public String pay(@RequestBody Orders orders){
 
+        System.out.println(orders);
        return String.valueOf(mainLogic.deliveryPay(orders));
     }
 
     @GetMapping("/main/delivery/order")
     public String order(@RequestParam String userid){
 
-       List<Map<String, Object>> list = mainLogic.orderList(userid);
-
-       return"";
+       return g.toJson(mainLogic.orderList(userid));
     }
 
 }

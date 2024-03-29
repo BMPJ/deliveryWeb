@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import {Main, Type} from "../../styles/HomepageStyle";
+import Header from "./Header";
 
 
 function Homepage() {
@@ -31,6 +32,7 @@ function Homepage() {
     const role = sessionStorage.getItem('role')
     return (
         <div>
+            <Header></Header>
             {
                 userid == null ?
                     (
@@ -49,6 +51,10 @@ function Homepage() {
                                     sessionStorage.removeItem('role');
                                     window.location.reload();
                                 }}>로그아웃</button>
+                                <button onClick={()=>{
+                                    navigate(`/main/delivery/order?userid=${userid}`)
+                                }}
+                                >주문내역</button>
                                 <p>{nick}님 ㅎㅇ</p>
                             </div>
                             <Main>

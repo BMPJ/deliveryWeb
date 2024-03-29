@@ -95,14 +95,18 @@
                 #{totalPrice},
                 #{requests},
                 sysdate,
-                #{status}
+                #{status},
+                #{orderName}
                )
     </insert>
 
-    <select id="orderList" parameterType="String">
-        select "totalPrice", "orderTime", "status"
-        from "Order"
-        where "userid" = #{userid}
+    <select id="orderList" parameterType="String" resultType="map">
+        select s."name", o."orderName", o."totalPrice", o."status", to_char(o."orderTime", 'MM"월" DD"일" HH24:MI') orderTime, s."storeid"
+        from "Orders" o
+        inner join "Stores" s
+        on s."storeid" = o."storeid"
+        where o."userid" = #{userid}
+        order by o."status", orderTime desc
     </select>
 
 </mapper>
