@@ -101,12 +101,47 @@
     </insert>
 
     <select id="orderList" parameterType="String" resultType="map">
-        select s."name", o."orderName", o."totalPrice", o."status", to_char(o."orderTime", 'MM"월" DD"일" HH24:MI') orderTime, s."storeid"
+        select s."name", o."orderName", o."totalPrice", o."status", to_char(o."orderTime", 'MM"월" DD"일" HH24:MI') orderTime, s."storeid", o."orderid"
         from "Orders" o
         inner join "Stores" s
         on s."storeid" = o."storeid"
         where o."userid" = #{userid}
         order by o."status", orderTime desc
     </select>
+
+    <select id="getOrder" parameterType="String" resultType="map">
+        select o."orderName", s."name", s."storeid"
+        from "Orders" o
+        inner join "Stores" s
+        on s."storeid" = o."storeid"
+        where "orderid" = #{orderid}
+    </select>
+
+    <insert id="reviewWrite" parameterType="com.backend.deliveryweb.vo.Reviews">
+        insert into "Reviews"(
+            "reviewid",
+            "storeid",
+            "userid",
+            "rating",
+            "content",
+            "reviewPictureUrl",
+            "createdDate",
+            "modifiedDate",
+            "status",
+            "orderName"
+         )
+        values (
+                   SEQ_REVIEWS.nextval,
+                   #{storeid},
+                   #{userid},
+                   #{rating},
+                   #{content},
+                   #{reviewPictureUrl},
+                   sysdate,
+                   sysdate,
+                   0,
+                   #{orderName}
+               )
+    </insert>
 
 </mapper>

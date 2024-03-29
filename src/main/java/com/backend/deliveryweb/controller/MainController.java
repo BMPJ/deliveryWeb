@@ -3,6 +3,7 @@ package com.backend.deliveryweb.controller;
 import com.backend.deliveryweb.logic.MainLogic;
 import com.backend.deliveryweb.vo.Carts;
 import com.backend.deliveryweb.vo.Orders;
+import com.backend.deliveryweb.vo.Reviews;
 import com.backend.deliveryweb.vo.Users;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -126,7 +127,6 @@ public class MainController {
     @PostMapping("/main/delivery/cart/pay")
     public String pay(@RequestBody Orders orders){
 
-        System.out.println(orders);
        return String.valueOf(mainLogic.deliveryPay(orders));
     }
 
@@ -134,6 +134,20 @@ public class MainController {
     public String order(@RequestParam String userid){
 
        return g.toJson(mainLogic.orderList(userid));
+    }
+
+    @GetMapping("/main/delivery/getOrder")
+    public String getOrder(String orderid){
+
+       return g.toJson(mainLogic.getOrder(orderid));
+    }
+
+    @PostMapping("/main/delivery/reviewWrite")
+    public String reviewWrite(@RequestBody Reviews reviews){
+
+        System.out.println(reviews);
+
+       return String.valueOf(mainLogic.reviewWrite(reviews));
     }
 
 }

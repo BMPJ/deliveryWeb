@@ -15,7 +15,6 @@ function MainDelivery() {
             axios.get(`/main/delivery?type=${type}`)
                 .then((response) => {
                 setCategory(response.data);
-                // localStorage에 category 데이터 저장
                 localStorage.setItem(`category_${type}`, JSON.stringify(response.data));
             })
             .catch((err) => {

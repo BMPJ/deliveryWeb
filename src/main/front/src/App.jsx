@@ -17,6 +17,8 @@ import StoreMenuModify from "./components/store/StoreMenuModify";
 import StoreMenuRegister from "./components/store/StoreMenuRegister";
 import StoreInfo from "./components/store/StoreInfo";
 import DeliveryOrder from "./components/page/DeliveryOrder";
+import StoreReview from "./components/page/StoreReview";
+import ReviewWrite from "./components/page/ReviewWrite";
 
 function App() {
     return (
@@ -37,7 +39,8 @@ function App() {
             <Route path="/store/menu/register/:id" element={<StoreMenuRegister/>}/>
             <Route path="/store/menu/modify/:id" element={<StoreMenuModify/>}/>
             <Route path="/store/info/:id" element={<StoreInfo/>}/>
-
+            <Route path="/main/delivery/store/review" element={<StoreReview/>}/>
+            <Route path="/main/delivery/store/reviewWrite" element={<ReviewWrite/>}/>
         </Routes>
     );
 }

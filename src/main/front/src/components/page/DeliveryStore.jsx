@@ -147,6 +147,12 @@ function DeliveryStore() {
                                 평점 : {store[i].rating}<br />
                                 최소주문금액 :{store[i].minDeliveryPrice}
                             </div>
+                            <div>
+                                <button onClick={()=>{
+                                    navigator(`/main/delivery/store/review?storeid=${a.storeid}`)
+                                }}
+                                >리뷰보기</button>
+                            </div>  
                         </Store>
                     )
                 })

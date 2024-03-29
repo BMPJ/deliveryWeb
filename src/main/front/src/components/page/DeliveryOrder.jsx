@@ -55,7 +55,10 @@ function DeliveryOrder(){
                                             <p>{a.totalPrice} 원</p>
                                         </div>
                                         <div>
-                                            <button>리뷰작성</button>
+                                            <button onClick={()=>{
+                                                navigator(`/main/delivery/store/reviewWrite?orderid=${a.orderid}`)
+                                            }}
+                                            >리뷰작성</button>
                                         </div>
                                     </div>
                                 </div>
