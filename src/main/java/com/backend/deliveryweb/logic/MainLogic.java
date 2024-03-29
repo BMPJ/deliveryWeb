@@ -3,6 +3,7 @@ package com.backend.deliveryweb.logic;
 import com.backend.deliveryweb.dao.MainDao;
 import com.backend.deliveryweb.vo.Carts;
 import com.backend.deliveryweb.vo.Orders;
+import com.backend.deliveryweb.vo.Reviews;
 import com.backend.deliveryweb.vo.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -73,4 +74,8 @@ public class MainLogic {
     public List<Map<String, Object>> orderList(String userid) {
         return mainDao.orderList(userid);
     }
+
+    public List<Map<String, Object>> getOrder(String orderid) { return mainDao.getOrder(orderid);}
+
+    public int reviewWrite(Reviews reviews) { return mainDao.reviewWrite(reviews); }
 }

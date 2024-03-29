@@ -2,6 +2,7 @@ package com.backend.deliveryweb.dao;
 
 import com.backend.deliveryweb.vo.Carts;
 import com.backend.deliveryweb.vo.Orders;
+import com.backend.deliveryweb.vo.Reviews;
 import com.backend.deliveryweb.vo.Users;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,5 +85,13 @@ public class MainDao {
 
     public List<Map<String, Object>> orderList(String userid) {
         return sqlSessionTemplate.selectList("orderList", userid);
+    }
+
+    public List<Map<String, Object>> getOrder(String orderid) {
+        return sqlSessionTemplate.selectList("getOrder", orderid);
+    }
+
+    public int reviewWrite(Reviews reviews) {
+        return sqlSessionTemplate.update("reviewWrite", reviews);
     }
 }
