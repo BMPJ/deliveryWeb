@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import {Main, Type} from "../../styles/HomepageStyle";
+import Header from "../include/Header";
 
 
 function Homepage() {
@@ -31,38 +32,19 @@ function Homepage() {
     const role = sessionStorage.getItem('role')
     return (
         <div>
-            {
-                userid == null ?
-                    (
-                        <div>
-                            <button onClick={()=>{navigate('/main/login')}}>로그인</button>
-                            <button onClick={()=>{navigate('/main/join')}}>회원가입</button>
-                            <button onClick={()=>{navigate('/manage/main')}}>판매자</button>
-                        </div>
-                    )
-                :
-                    (
-                        <div>
-                            <div>
-                                <button onClick={()=>{
-                                    sessionStorage.removeItem('userid');
-                                    sessionStorage.removeItem('role');
-                                    window.location.reload();
-                                }}>로그아웃</button>
-                                <p>{nick}님 ㅎㅇ</p>
-                            </div>
-                            <Main>
-                                <div onClick={()=>{navigate('/main/packaging')}}>
-                                    <Type>포장</Type>
-                                </div>
-                                <div onClick={()=>{navigate('/main/delivery')}}>
-                                    <Type>배달</Type>
-                                </div>
-                            </Main>
-
-                        </div>
-                    )
-            }
+            <Header/>
+            <Main>
+                <div onClick={() => {
+                    navigate('/main/packaging')
+                }}>
+                    <Type>포장</Type>
+                </div>
+                <div onClick={() => {
+                    navigate('/main/delivery')
+                }}>
+                    <Type>배달</Type>
+                </div>
+            </Main>
         </div>
     );
 }

@@ -17,6 +17,7 @@ function DeliveryCart() {
     const [request, setRequest] = useState('');
     const navigator = useNavigate();
 
+
     useEffect(() => {
         axios
             .get(`/main/delivery/cart?userid=${userid}`)
@@ -30,7 +31,10 @@ function DeliveryCart() {
                 console.error(err);
                 setLoading(false); // 에러 발생 시 로딩 상태를 false로 설정
             });
+
     }, []);
+
+
 
     useEffect(() => {
         if (cart.length > 0) {
@@ -70,12 +74,12 @@ function DeliveryCart() {
 
     useEffect(()=> {
         setPrice( (menuPrice + menuOptionPrice) * quantity )
+
     },[menuPrice, menuOptionPrice, quantity])
 
     if (loading) {
         return <p>Loading...</p>;
     }
-
 
 
     const kakaopay = () => {
@@ -98,13 +102,18 @@ function DeliveryCart() {
                 error_msg,
             } = response;
 
+            const orderName = (quantity === 1) ?
+                menu[0].menuName + " + " + menuOption[0].option + '1개' :
+                menu[0].menuName + ' + ' + menuOption[0].option + ' 외 ' + (quantity - 1) + '개';
+
             const order = {
                 storeid : cart[0].storeid,
                 userid : userid,
                 paymentMethod : 'kakaopay',
                 totalPrice : price,
                 requests : request,
-                status : 0
+                status : 0,
+                orderName : orderName
             }
 
             if (success) {
@@ -124,25 +133,37 @@ function DeliveryCart() {
 
     const onside = () => {
 
-        const order = {
-            storeid : cart[0].storeid,
-            userid : userid,
-            paymentMethod : 'onside',
-            totalPrice : price,
-            requests : request,
-            status : 0
-        }
+        const orderName = (quantity === 1) ?
+            menu[0].menuName + " + " + menuOption[0].option + '1개' :
+            menu[0].menuName + ' + ' + menuOption[0].option + ' 외 ' + (quantity - 1) + '개';
 
+        const order = {
+            storeid: cart[0].storeid,
+            userid: userid,
+            paymentMethod: 'onside',
+            totalPrice: price,
+            requests: request,
+            status: 0,
+            orderName : orderName
+        }
+        
         axios.post(`/main/delivery/cart/pay`, order)
             .then((a)=>{
                 console.log(a)
-                navigator(`/main/delivery/order?userid=${userid}`)
+                 navigator(`/main/delivery/order?userid=${userid}`)
             })
             .catch((err)=>{
                 console.error(err)
             })
     }
 
+    function MenuName(){
+        if(quantity===1){
+            return <p>{menu[0].menuName} + {menuOption[0].option} 1개</p>
+        }else if(quantity>=2){
+            return <p>{menu[0].menuName} + {menuOption[0].option} 외 {quantity-1}개</p>
+        }
+    }
     return (
         <div>
             {cart.length > 0 && menuOption.length > 0 && (
@@ -158,7 +179,7 @@ function DeliveryCart() {
                             <p>{cart[0].storeName}</p>
                         </div>
                         <div>
-                            <p>{menu[0].menuName} + {menuOption[0].option}</p>
+                            {MenuName()}
                             <p>{price} 원</p>
                         </div>
                     </div>
