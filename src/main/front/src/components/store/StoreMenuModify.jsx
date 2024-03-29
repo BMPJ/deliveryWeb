@@ -76,7 +76,6 @@ const StoreMenuModify = () =>{
             ){
                 const response = await menuUpdateDB(newMenu)
                 setInputStatus("");
-                console.log(newMenu.menuPictureUrl);
                 //window.location.reload();
             }else{
                 alert("빈칸 X")

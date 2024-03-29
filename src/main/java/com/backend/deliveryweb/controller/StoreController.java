@@ -89,4 +89,7 @@ public class StoreController {
 
     }
 
+//    @PostMapping("/menu/uploadImg")
+//    public String uploadImg(@RequestBody )
+
 }

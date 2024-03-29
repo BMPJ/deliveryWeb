@@ -82,3 +82,25 @@ export const menuUpdateDB = (menu) => {
         }
     });
 }
+
+export const fileUpdateDB = (file) => {
+    return new Promise((resolve, reject) => {
+        try{
+            const response = axios({
+                method: "post",
+                url: "/store/menu/uploadImg",
+                header : {
+                    "Content-Type" : "multipart/form-data",
+                },
+                processData : false,
+                contentType : false,
+                data : file,
+            });
+            resolve(response);
+        } catch (error) {
+            reject(error);
+        }
+    });
+
+
+}
