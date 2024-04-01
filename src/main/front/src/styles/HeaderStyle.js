@@ -1,8 +1,10 @@
 import styled from "styled-components"
 
 export const HeaderBlock = styled.div`
+  width: 100%;
   height: 78px;
   background-color: #fa0050;
+  overflow: hidden;
 
   .block {
     position: relative;
@@ -26,7 +28,11 @@ export const HeaderBlock = styled.div`
     left: 700px;
   }
 
-  .logout {
+  .logout,
+  .orderList,
+  .login,
+  .join,
+  .manage {
     position: absolute;
     width: 100px;
     height: 40px;
@@ -38,49 +44,14 @@ export const HeaderBlock = styled.div`
   }
 
   .orderList {
-    position: absolute;
-    width: 100px;
-    height: 40px;
     left: 110px;
-    color: #fff;
-    border: 1px solid #ea7226;
-    text-align: center;
-    line-height: 40px;
-    border-radius: 2px;
-  }
-
-  .login {
-    position: absolute;
-    width: 100px;
-    height: 40px;
-    color: #fff;
-    border: 1px solid #ea7226;
-    text-align: center;
-    line-height: 40px;
-    border-radius: 2px;
   }
 
   .join {
-    position: absolute;
-    width: 100px;
-    height: 40px;
     left: 110px;
-    color: #fff;
-    border: 1px solid #ea7226;
-    text-align: center;
-    line-height: 40px;
-    border-radius: 2px;
   }
 
   .manage {
-    position: absolute;
-    width: 100px;
-    height: 40px;
     left: 220px;
-    color: #fff;
-    border: 1px solid #ea7226;
-    text-align: center;
-    line-height: 40px;
-    border-radius: 2px;
   }
 `;
