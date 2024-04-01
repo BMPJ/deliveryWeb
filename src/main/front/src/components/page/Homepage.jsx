@@ -34,15 +34,13 @@ function Homepage() {
         <div>
             <Header/>
             <Main>
-                <div onClick={() => {
+                <div className="packaging" onClick={() => {
                     navigate('/main/packaging')
                 }}>
-                    <Type>포장</Type>
                 </div>
-                <div onClick={() => {
+                <div className="delivery" onClick={() => {
                     navigate('/main/delivery')
                 }}>
-                    <Type>배달</Type>
                 </div>
             </Main>
         </div>
