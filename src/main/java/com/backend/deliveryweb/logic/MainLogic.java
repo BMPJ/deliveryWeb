@@ -78,4 +78,5 @@ public class MainLogic {
     public List<Map<String, Object>> getOrder(String orderid) { return mainDao.getOrder(orderid);}
 
     public int reviewWrite(Reviews reviews) { return mainDao.reviewWrite(reviews); }
+
 }

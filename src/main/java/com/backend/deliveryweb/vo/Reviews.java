@@ -17,4 +17,5 @@ public class Reviews {
     private String reviewPictureUrl;
     private int status;
     private String orderName;
+    private String orderid;
 }

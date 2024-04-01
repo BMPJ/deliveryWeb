@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
 function ReviewWrite(){
 
@@ -13,6 +13,7 @@ function ReviewWrite(){
     const userid = sessionStorage.getItem("userid")
     const [orderName, setOrderName] = useState('');
     const [storeid, setStoreid] = useState('');
+    const navigator = useNavigate();
 
     useEffect(() => {
         if(orderid){
@@ -42,7 +43,8 @@ function ReviewWrite(){
         rating: rating,
         content: content,
         orderName: orderName,
-        reviewPictureUrl: ''
+        reviewPictureUrl: '',
+        orderid : orderid
     }
 
     const reviewWrite = ()=>{
@@ -52,6 +54,7 @@ function ReviewWrite(){
         axios.post('/main/delivery/reviewWrite', review)
             .then((a)=>{
                 console.log(a)
+                navigator(`/main/delivery/order?userid=${userid}`)
             })
             .catch((err)=>{
                 console.error(err)
@@ -64,7 +67,8 @@ function ReviewWrite(){
         <div>
             <div>
                 <strong>리뷰작성</strong>
-                {order.length>0 ?
+                {
+                    order.length>0 ?
                     <div>
                         <p>{order[0].name}</p>
                         <p>{order[0].orderName}</p>
@@ -96,7 +100,6 @@ function ReviewWrite(){
                         <p>Loading....</p>
                     </div>
                 }
-
             </div>
         </div>
     )
