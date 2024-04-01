@@ -133,6 +133,8 @@ public class MainController {
     @GetMapping("/main/delivery/order")
     public String order(@RequestParam String userid){
 
+        System.out.println(mainLogic.orderList(userid));
+
        return g.toJson(mainLogic.orderList(userid));
     }
 
@@ -149,5 +151,6 @@ public class MainController {
 
        return String.valueOf(mainLogic.reviewWrite(reviews));
     }
+
 
 }

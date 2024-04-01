@@ -101,16 +101,26 @@
     </insert>
 
     <select id="orderList" parameterType="String" resultType="map">
-        select s."name", o."orderName", o."totalPrice", o."status", to_char(o."orderTime", 'MM"월" DD"일" HH24:MI') orderTime, s."storeid", o."orderid"
+        select s."name", o."orderName", o."totalPrice", o."status", to_char(o."orderTime", 'MM"월" DD"일" HH24:MI') orderTime, s."storeid", o."orderid", count(r."reviewid") as cnt
         from "Orders" o
-        inner join "Stores" s
-        on s."storeid" = o."storeid"
+                 inner join "Stores" s
+                            on s."storeid" = o."storeid"
+                 left join "Reviews" r
+                           on o."orderid" = r."orderid"
         where o."userid" = #{userid}
+        GROUP BY
+            s."name",
+            o."orderName",
+            o."totalPrice",
+            o."status",
+            to_char(o."orderTime", 'MM"월" DD"일" HH24:MI'),
+            s."storeid",
+            o."orderid"
         order by o."status", orderTime desc
     </select>
 
     <select id="getOrder" parameterType="String" resultType="map">
-        select o."orderName", s."name", s."storeid"
+        select o."orderName", s."name", s."storeid", o."orderid"
         from "Orders" o
         inner join "Stores" s
         on s."storeid" = o."storeid"
@@ -128,7 +138,8 @@
             "createdDate",
             "modifiedDate",
             "status",
-            "orderName"
+            "orderName",
+            "orderid"
          )
         values (
                    SEQ_REVIEWS.nextval,
@@ -140,7 +151,8 @@
                    sysdate,
                    sysdate,
                    0,
-                   #{orderName}
+                   #{orderName},
+                   #{orderid}
                )
     </insert>
 
