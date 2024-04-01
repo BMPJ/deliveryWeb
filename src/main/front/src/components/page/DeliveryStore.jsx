@@ -14,6 +14,7 @@ import {
     Right,
     Store
 } from "../../styles/DeliveryStoreStyle";
+import Header from "../include/Header";
 
 function DeliveryStore() {
     const location = useLocation();
@@ -135,6 +136,7 @@ function DeliveryStore() {
     }
     return (
         <div>
+            <Header/>
             {
                 store.map(function (a, i) {
                     return (

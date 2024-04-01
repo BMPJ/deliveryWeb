@@ -79,4 +79,5 @@ public class MainLogic {
 
     public int reviewWrite(Reviews reviews) { return mainDao.reviewWrite(reviews); }
 
+    public List<Map<String, Object>> reviewList(String storeid) { return mainDao.reviewList(storeid); }
 }
