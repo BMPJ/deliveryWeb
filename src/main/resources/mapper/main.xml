@@ -156,4 +156,8 @@
                )
     </insert>
 
+    <select id="reviewList" parameterType="String" resultType="map">
+        select * from "Reviews" where "storeid" = #{storeid}
+    </select>
+
 </mapper>

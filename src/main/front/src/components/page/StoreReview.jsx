@@ -7,14 +7,22 @@ function StoreReview(){
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const storeid = queryParams.get('storeid');
-    const [store, setStore] = useState("");
+    const [store, setStore] = useState([]);
 
     useEffect(() => {
         if(storeid) {
             axios.get(`/main/delivery/storeid?storeid=${storeid}`)
                 .then((a) => {
                     console.log(a.data)
-                    setStore(a.data[0].name)
+                    setStore(a.data)
+                })
+                .catch((err) => {
+                    console.error(err)
+                });
+
+            axios.get(`/main/delivery/reviewList?storeid=${storeid}`)
+                .then((a) => {
+                    console.log(a.data)
                 })
                 .catch((err) => {
                     console.error(err)

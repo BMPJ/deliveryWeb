@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
 import axios from 'axios';
+import Header from "../include/Header";
 
 const MainDeliveryCategory = () => {
     const location = useLocation();
@@ -25,6 +26,7 @@ const MainDeliveryCategory = () => {
 
     return (
         <div>
+            <Header/>
             {
                 stores.map(function (a, i){
                     return(

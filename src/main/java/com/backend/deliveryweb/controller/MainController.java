@@ -152,5 +152,11 @@ public class MainController {
        return String.valueOf(mainLogic.reviewWrite(reviews));
     }
 
+    @GetMapping("/main/delivery/reviewList")
+    public String reviewList(String storeid){
+
+       return g.toJson(mainLogic.reviewList(storeid));
+    }
+
 
 }

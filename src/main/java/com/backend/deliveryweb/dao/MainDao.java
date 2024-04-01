@@ -94,4 +94,8 @@ public class MainDao {
     public int reviewWrite(Reviews reviews) {
         return sqlSessionTemplate.update("reviewWrite", reviews);
     }
+
+    public List<Map<String, Object>> reviewList(String storeid) {
+        return sqlSessionTemplate.selectList("reviewList", storeid);
+    }
 }

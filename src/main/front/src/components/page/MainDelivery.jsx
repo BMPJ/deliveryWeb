@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {useNavigate} from "react-router-dom";
 import {Category, Main} from "../../styles/MainDelivery";
+import Header from "../include/Header";
 
 function MainDelivery() {
     const type = 0;//배달
@@ -26,6 +27,7 @@ function MainDelivery() {
 
     return (
         <div>
+            <Header/>
             {
                 category.map(function (a, i){
                     return(
