@@ -257,12 +257,24 @@ function DeliveryStore() {
                                             </Modal>
                                         </div>
                                     }
-                                    <div className="menuName">
-                                        {menu[i].menuName}
-                                    </div>
-                                    <div className="price">
-                                        {menu[i].price}
-                                    </div>
+                                    <tr>
+                                        <td className="menu-text">
+                                            <div className="menuName">
+                                                {menu[i].menuName}
+                                            </div>
+                                            <div className="menuContents">
+                                                {menu[i].menuContents}
+                                            </div>
+                                            <div className="price">
+                                                {menu[i].price}
+                                            </div>
+                                        </td>
+                                        <td className="photo-area">
+                                            <div className="menuPictureUrl">
+                                                {menu[i].menuPictureUrl}
+                                            </div>
+                                        </td>
+                                    </tr>
 
                                 </Menu>
                             )

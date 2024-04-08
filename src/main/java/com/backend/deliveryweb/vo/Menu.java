@@ -15,7 +15,7 @@ public class Menu {
     private String category;
     private String menuName;
     private int price;
-    private String menuPictureUrl;
+    private String menuContents;
     private String popularity;
     private int status;
 }

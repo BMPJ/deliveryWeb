@@ -1,120 +1,120 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.backend.deliveryweb">
-    <insert id = "register" parameterType="com.backend.deliveryweb.vo.Stores">
-        INSERT INTO "Stores"(
-            "storeid",
-            "userid",
-            "name",
-            "type",
-            "category",
-            "address",
-            "address_detail",
-            "storePictureUrl",
-            "phone",
-            "content",
-            "minDeliveryPrice",
-            "deliveryTip",
-            "minDeliveryTime",
-            "maxDeliveryTime",
-            "operationHours",
-            "closedDays",
-            "deliveryAddress",
-            "status"
-        )
-        VALUES (
-                   seq_stores.nextval,
-                   #{userid},
-                   #{name},
-                   #{type},
-                   #{category},
-                   #{address},
-                   #{address_detail},
-                   #{storePictureUrl},
-                   #{phone},
-                   #{content},
-                   #{minDeliveryPrice},
-                   #{deliveryTip},
-                   #{minDeliveryTime},
-                   #{maxDeliveryTime},
-                   #{operationHours},
-                   #{closedDays},
-                   #{deliveryAddress},
-                   #{status}
-               )
+    <insert id="register" parameterType="com.backend.deliveryweb.vo.Stores">
+        INSERT INTO "Stores"("storeid",
+                             "userid",
+                             "name",
+                             "type",
+                             "category",
+                             "address",
+                             "address_detail",
+                             "storePictureUrl",
+                             "phone",
+                             "content",
+                             "minDeliveryPrice",
+                             "deliveryTip",
+                             "minDeliveryTime",
+                             "maxDeliveryTime",
+                             "operationHours",
+                             "closedDays",
+                             "deliveryAddress",
+                             "status")
+        VALUES (seq_stores.nextval,
+                #{userid},
+                #{name},
+                #{type},
+                #{category},
+                #{address},
+                #{address_detail},
+                #{storePictureUrl},
+                #{phone},
+                #{content},
+                #{minDeliveryPrice},
+                #{deliveryTip},
+                #{minDeliveryTime},
+                #{maxDeliveryTime},
+                #{operationHours},
+                #{closedDays},
+                #{deliveryAddress},
+                #{status})
     </insert>
 
-    <select id ="info" parameterType="string" resultType="map">
-        SELECT * FROM "Stores"
+    <select id="info" parameterType="string" resultType="map">
+        SELECT *
+        FROM "Stores"
         WHERE "userid" = #{userid}
     </select>
 
-    <select id ="detail" parameterType="map" resultType="map">
-        SELECT * FROM "Stores"
-        WHERE "userid" = #{userid} and "storeid" = #{storeid}
+    <select id="detail" parameterType="map" resultType="map">
+        SELECT *
+        FROM "Stores"
+        WHERE "userid" = #{userid}
+          and "storeid" = #{storeid}
     </select>
 
     <update id="update" parameterType="map">
         UPDATE "Stores"
-        SET
-            "name" = #{name},
-            "type" = #{type},
-            "category" = #{category},
-            "address" = #{address},
-            "address_detail" = #{address_detail},
-            "storePictureUrl" = #{storePictureUrl},
-            "phone" = #{phone},
-            "content" = #{content},
+        SET "name"             = #{name},
+            "type"             = #{type},
+            "category"         = #{category},
+            "address"          = #{address},
+            "address_detail"   = #{address_detail},
+            "storePictureUrl"  = #{storePictureUrl},
+            "phone"            = #{phone},
+            "content"          = #{content},
             "minDeliveryPrice" = #{minDeliveryPrice},
-            "deliveryTip" = #{deliveryTip},
-            "minDeliveryTime" = #{minDeliveryTime},
-            "maxDeliveryTime" = #{maxDeliveryTime},
-            "operationHours" = #{operationHours},
-            "closedDays" = #{closedDays},
-            "deliveryAddress" = #{deliveryAddress},
-            "status" = #{status}
-        WHERE
-            "userid" = #{userid} AND "storeid" = #{storeid}
+            "deliveryTip"      = #{deliveryTip},
+            "minDeliveryTime"  = #{minDeliveryTime},
+            "maxDeliveryTime"  = #{maxDeliveryTime},
+            "operationHours"   = #{operationHours},
+            "closedDays"       = #{closedDays},
+            "deliveryAddress"  = #{deliveryAddress},
+            "status"           = #{status}
+        WHERE "userid" = #{userid}
+          AND "storeid" = #{storeid}
     </update>
 
-    <insert id = "menuRegister" parameterType="com.backend.deliveryweb.vo.Stores">
+    <insert id="menuRegister" parameterType="com.backend.deliveryweb.vo.Stores">
         INSERT INTO "Menu"
-        VALUES (
-                   seq_menu.nextval,
-                   #{storeid},
-                   #{category},
-                   #{menuName},
-                   #{price},
-                   #{menuPictureUrl},
-                   #{popularity},
-                   #{status}
-               )
+        VALUES (seq_menu.nextval,
+                #{storeid},
+                #{category},
+                #{menuName},
+                #{price},
+                #{menuPictureUrl},
+                #{popularity},
+                #{status},
+                #{menuContents})
     </insert>
 
-    <select id = "menuInfo" parameterType="String" resultType="map">
+    <select id="menuInfo" parameterType="String" resultType="map">
         SELECT m.*, s."name"
         FROM "Menu" m
-        INNER JOIN "Stores" s
-        ON m."storeid" = s."storeid"
+                 INNER JOIN "Stores" s
+                            ON m."storeid" = s."storeid"
         WHERE m."storeid" = #{storeid}
     </select>
 
-    <update id = "menuUpdate" parameterType="map">
+    <update id="menuUpdate" parameterType="map">
         UPDATE "Menu"
-        SET
-            "menuName" = #{menuName},
-            "price" = #{price},
-            "menuPictureUrl" = #{menuPictureUrl},
-            "category" = #{category},
-            "status" = #{status}
-        WHERE
-            "menuid" = #{menuid} AND "storeid" = #{storeid}
+        SET "menuName"     = #{menuName},
+            "price"        = #{price},
+            "category"     = #{category},
+            "status"       = #{status},
+            "menuContents" = #{menuContents}
+        WHERE "menuid" = #{menuid}
+          AND "storeid" = #{storeid}
     </update>
 
-    <select id="orderList" parameterType="String" resultType="map">
-        select * from "Orders"
-        where "storeid" = #{storeid}
-    </select>
 
+    <update id="imageUpdate" parameterType="map">
+        UPDATE "MenuImage"
+        SET "menuPictureUrl" = #{file_url},
+            "menuImgSize"    = #{file_size},
+            "menuImgName"    = #{file_name}
+        WHERE "menuid" = #{menu_id}
+
+    </update>
 
 </mapper>
