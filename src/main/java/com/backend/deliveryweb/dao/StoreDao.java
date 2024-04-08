@@ -51,4 +51,8 @@ public class StoreDao {
     public int menuUpdate(Menu menu) {
         return sqlSessionTemplate.update("menuUpdate",menu);
     }
+
+    public List<Map<String, Object>> orderList(String storeid) {
+        return sqlSessionTemplate.selectList("orderList", storeid);
+    }
 }

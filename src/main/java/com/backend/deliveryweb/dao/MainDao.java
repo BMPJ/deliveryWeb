@@ -98,4 +98,8 @@ public class MainDao {
     public List<Map<String, Object>> reviewList(String storeid) {
         return sqlSessionTemplate.selectList("reviewList", storeid);
     }
+
+    public List<Map<String, Object>> reviewCount(String storeid) {
+        return sqlSessionTemplate.selectList("reviewCount", storeid);
+    }
 }

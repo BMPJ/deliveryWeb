@@ -19,6 +19,7 @@ import StoreInfo from "./components/store/StoreInfo";
 import DeliveryOrder from "./components/page/DeliveryOrder";
 import StoreReview from "./components/page/StoreReview";
 import ReviewWrite from "./components/page/ReviewWrite";
+import StoreOrder from "./components/store/StoreOrder";
 
 function App() {
     return (
@@ -41,6 +42,7 @@ function App() {
             <Route path="/store/info/:id" element={<StoreInfo/>}/>
             <Route path="/main/delivery/store/review" element={<StoreReview/>}/>
             <Route path="/main/delivery/store/reviewWrite" element={<ReviewWrite/>}/>
+            <Route path="/store/order" element={<StoreOrder/>}/>
         </Routes>
     );
 }

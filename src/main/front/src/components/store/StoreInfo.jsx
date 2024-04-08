@@ -47,7 +47,7 @@ const StoreInfo = () =>{
                     {storeName}
                 </div>
                 <div>
-                    주문확인
+                    <button onClick={()=>{navigate(`/store/order?storeid=${id}`)}}>주문확인</button>
                 </div>
                 <div>
                     <button onClick={()=>navigate(`/store/modify/${id}`)}>

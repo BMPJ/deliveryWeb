@@ -49,4 +49,6 @@ public class StoreLogic {
     public int menuUpdate(Menu menu) {
         return storeDao.menuUpdate(menu);
     }
+
+    public List<Map<String, Object>> orderList(String storeid) { return storeDao.orderList(storeid); }
 }

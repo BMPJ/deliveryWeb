@@ -135,7 +135,7 @@ function DeliveryCart() {
 
         const orderName = (quantity === 1) ?
             menu[0].menuName + " + " + menuOption[0].option + '1개' :
-            menu[0].menuName + ' + ' + menuOption[0].option + ' 외 ' + (quantity - 1) + '개';
+            menu[0].menuName + ' + ' + menuOption[0].option + (quantity - 1) + ' 개';
 
         const order = {
             storeid: cart[0].storeid,

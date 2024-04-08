@@ -92,4 +92,14 @@ public class StoreController {
 //    @PostMapping("/menu/uploadImg")
 //    public String uploadImg(@RequestBody )
 
+    @GetMapping("/orderList")
+    public String orderList(String storeid){
+        System.out.println(storeid);
+
+        List<Map<String, Object>> list = storeLogic.orderList(storeid);
+        System.out.println(list);
+
+        return "";
+    }
+
 }
