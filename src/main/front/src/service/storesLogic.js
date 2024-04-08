@@ -23,7 +23,7 @@ export const storesInfoDB = (userid) => {
             const response = axios({
                 method: "get",
                 url: "/store/info",
-                params :{
+                params: {
                     userid
                 }
             });
@@ -40,7 +40,7 @@ export const storesDetailDB = (data) => {
             const response = axios({
                 method: "get",
                 url: "/store/detail",
-                params : data,
+                params: data,
             });
             resolve(response);
         } catch (error) {
@@ -50,15 +50,13 @@ export const storesDetailDB = (data) => {
 };
 
 
-
-
-export const storesUpdateDB = (store,datas) => {
+export const storesUpdateDB = (store, datas) => {
     return new Promise((resolve, reject) => {
         try {
             const response = axios({
                 method: "post",
                 url: "/store/update",
-                data: store,datas
+                data: store, datas
             });
             resolve(response);
         } catch (error) {
@@ -68,39 +66,3 @@ export const storesUpdateDB = (store,datas) => {
 }
 
 
-export const menuUpdateDB = (menu) => {
-    return new Promise((resolve, reject) => {
-        try {
-            const response = axios({
-                method: "post",
-                url: "/store/menu/update",
-                data: menu
-            });
-            resolve(response);
-        } catch (error) {
-            reject(error);
-        }
-    });
-}
-
-export const fileUpdateDB = (file) => {
-    return new Promise((resolve, reject) => {
-        try{
-            const response = axios({
-                method: "post",
-                url: "/store/menu/uploadImg",
-                header : {
-                    "Content-Type" : "multipart/form-data",
-                },
-                processData : false,
-                contentType : false,
-                data : file,
-            });
-            resolve(response);
-        } catch (error) {
-            reject(error);
-        }
-    });
-
-
-}

@@ -76,10 +76,15 @@ export const Menu = styled.div`
     font-weight: bold;
   }
 
-  .price {
-
+  .menuContents {
+    padding: 3px 0 3px 0; //상우하좌
+    font-size: 0.8rem;
+    color: #999;
   }
 
+  .price:after {
+    content: "원";
+  }
 
 `
 

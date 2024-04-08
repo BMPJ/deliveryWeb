@@ -21,7 +21,7 @@ export const menuInfoDB = (storeid) => {
             const response = axios({
                 method: "get",
                 url: "/store/menu/info",
-                params : {
+                params: {
                     storeid
                 }
             });
@@ -32,3 +32,31 @@ export const menuInfoDB = (storeid) => {
     });
 };
 
+export const menuUpdateDB = (newMenu) => {
+    return new Promise((resolve, reject) => {
+        try {
+            const response = axios({
+                method: "post",
+                url: "/store/menu/update",
+                data: newMenu
+            });
+            resolve(response);
+        } catch (error) {
+            reject(error);
+        }
+    });
+}
+export const ImgUpdateDB = (formData) => {
+    return new Promise((resolve, reject) => {
+        try {
+            const response = axios({
+                method: "post",
+                url: "/store/menu/ImgUpdate",
+                data: formData
+            });
+            resolve(response);
+        } catch (error) {
+            reject(error);
+        }
+    });
+}

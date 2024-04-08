@@ -6,9 +6,12 @@ import com.backend.deliveryweb.vo.Stores;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
+
+import static org.apache.logging.log4j.message.MapMessage.MapFormat.JSON;
 
 @RestController
 @RequestMapping("/store")
@@ -21,7 +24,7 @@ public class StoreController {
 
     //가게 등록
     @PostMapping("/register")
-    public String storeRegister(@RequestBody Stores stores){
+    public String storeRegister(@RequestBody Stores stores) {
 
         System.out.println(stores);
         int result = storeLogic.register(stores);
@@ -50,7 +53,7 @@ public class StoreController {
     }
 
     @PostMapping("/update")
-    public String storeUpdate(@RequestBody Stores stores){
+    public String storeUpdate(@RequestBody Stores stores) {
 
         System.out.println(stores);
         System.out.println(stores.getName());
@@ -61,7 +64,7 @@ public class StoreController {
     }
 
     @PostMapping("/menu/register")
-    public String menuRegister(@RequestBody Menu menu){
+    public String menuRegister(@RequestBody Menu menu) {
 
         System.out.println(menu);
 
@@ -72,15 +75,15 @@ public class StoreController {
     }
 
     @GetMapping("/menu/info")
-    public String menuInfo(@RequestParam String storeid){
+    public String menuInfo(@RequestParam String storeid) {
 
         System.out.println(storeid);
-        List<Map<String,Object>> list = storeLogic.menuInfo(storeid);
+        List<Map<String, Object>> list = storeLogic.menuInfo(storeid);
         return g.toJson(list);
     }
 
     @PostMapping("/menu/update")
-    public String menuUpdate(@RequestBody Menu menu){
+    public String menuUpdate(@RequestBody Menu menu) {
         System.out.println(menu);
 
         int result = storeLogic.menuUpdate(menu);
@@ -89,11 +92,19 @@ public class StoreController {
 
     }
 
-//    @PostMapping("/menu/uploadImg")
-//    public String uploadImg(@RequestBody )
+    @PostMapping("/menu/ImgUpdate")
+    public String menuImgUpdate(@RequestParam MultipartFile file, @RequestParam("menuId") String menuId) {
+
+        int menuid = g.fromJson(menuId, int.class);
+
+
+        return storeLogic.imageUpdate(file, String.valueOf(menuid));
+
+    }
+
 
     @GetMapping("/orderList")
-    public String orderList(String storeid){
+    public String orderList(String storeid) {
         System.out.println(storeid);
 
         List<Map<String, Object>> list = storeLogic.orderList(storeid);
