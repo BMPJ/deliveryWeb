@@ -23,36 +23,41 @@ const StoreRegister = () => {
         category: '',
         address: '',
         address_detail: '',
-        storePictureUrl : '',
-        phone : '',
-        content : '',
-        minDeliveryPrice : '',
-        deliveryTip : '',
-        minDeliveryTime : '',
-        maxDeliveryTime : '',
-        operationHours : '',
-        closedDays : '',
-        deliveryAddress : '',
+        storePictureUrl: '',
+        phone: '',
+        content: '',
+        minDeliveryPrice: '',
+        deliveryTip: '',
+        minDeliveryTime: '',
+        maxDeliveryTime: '',
+        operationHours: '',
+        closedDays: '',
+        deliveryAddress: '',
         status: '0',
     });
 
     //운영시간 합치기
-    useEffect(()=>{
+    useEffect(() => {
         setStore({
             ...store,
-            operationHours : `${openHours} ~ ${closeHours}`})
-    },[openHours,closeHours])
+            operationHours: `${openHours} ~ ${closeHours}`
+        })
+    }, [openHours, closeHours])
 
     useEffect(() => {
 
-        if(role != 1){
+        if (role != 1) {
             navigate('/main/login')
         }
         const AddrData = async () => {
             try {
-                let params = {userid : userid};
+                let params = {userid: userid};
                 let response = await manageDB(params);
-                setStore({...store, address : response.data[0].address, address_detail: response.data[0].address_detail});
+                setStore({
+                    ...store,
+                    address: response.data[0].address,
+                    address_detail: response.data[0].address_detail
+                });
             } catch (error) {
                 console.error(error);
             }
@@ -67,14 +72,14 @@ const StoreRegister = () => {
         setStore({...store, [id]: value});
     }
 
-    const register = async() => {
+    const register = async () => {
         try {
             const response = await storesRegisterDB(store)
             // navigate('/manage/main')
             console.log(response);
             console.log(store.operationHours)
             console.log(store)
-        }catch (error){
+        } catch (error) {
             alert("실패");
             console.log(store.operationHours)
             console.log(store)
@@ -83,7 +88,7 @@ const StoreRegister = () => {
     }
 
 
-    return(
+    return (
         <>
             <div>
                 <div>
@@ -92,18 +97,22 @@ const StoreRegister = () => {
                         type="text"
                         id="name"
                         value={store.name}
-                        onChange={(e) => {info(e)}}
+                        onChange={(e) => {
+                            info(e)
+                        }}
                     />
                 </div>
                 <div>
                     <label>배달/포장:</label>
                     <select
                         id="type"
-                        onChange={(e) => {info(e)}}
+                        onChange={(e) => {
+                            info(e)
+                        }}
                     >
                         <option value selected disabled>선택해주세요</option>
-                        <option value = "0">배달</option>
-                        <option value = "1">포장</option>
+                        <option value="0">배달</option>
+                        <option value="1">포장</option>
                     </select>
                 </div>
 
@@ -111,20 +120,21 @@ const StoreRegister = () => {
                     <label>카테고리:</label>
                     <select
                         id="category"
-                        onChange={(e) => {info(e)}}
+                        onChange={(e) => {
+                            info(e)
+                        }}
                     >
                         <option value selected disabled>선택해주세요</option>
-                        <option value = "프랜차이즈">프랜차이즈</option>
-                        <option value = "치킨">치킨</option>
-                        <option value = "피자/양식">피자/양식</option>
-                        <option value = "중국집">중국집</option>
-                        <option value = "한식">한식</option>
-                        <option value = "일식/돈까스">일식/돈까스</option>
-                        <option value = "족발/보쌈">족발/보쌈</option>
-                        <option value = "양식">양식</option>
-                        <option value = "분식">분식</option>
-                        <option value = "카페/디저트">카페/디저트</option>
-                        <option value = "편의점/마트">편의점/마트</option>
+                        <option value="프랜차이즈">프랜차이즈</option>
+                        <option value="치킨">치킨</option>
+                        <option value="피자/양식">피자/양식</option>
+                        <option value="중국집">중국집</option>
+                        <option value="한식">한식</option>
+                        <option value="일식/돈까스">일식/돈까스</option>
+                        <option value="족발/보쌈">족발/보쌈</option>
+                        <option value="양식">양식</option>
+                        <option value="분식">분식</option>
+                        <option value="카페/디저트">카페/디저트</option>
                     </select>
                 </div>
 
@@ -154,7 +164,9 @@ const StoreRegister = () => {
                         type="text"
                         id="storePictureUrl"
                         value={store.storePictureUrl}
-                        onChange={(e) => {info(e)}}
+                        onChange={(e) => {
+                            info(e)
+                        }}
                     />
                 </div>
 
@@ -164,7 +176,9 @@ const StoreRegister = () => {
                         type="text"
                         id="phone"
                         value={store.phone}
-                        onChange={(e) => {info(e)}}
+                        onChange={(e) => {
+                            info(e)
+                        }}
                     />
                 </div>
 
@@ -174,7 +188,9 @@ const StoreRegister = () => {
                         type="text"
                         id="content"
                         value={store.content}
-                        onChange={(e) => {info(e)}}
+                        onChange={(e) => {
+                            info(e)
+                        }}
                     />
                 </div>
 
@@ -184,7 +200,9 @@ const StoreRegister = () => {
                         type="text"
                         id="minDeliveryPrice"
                         value={store.minDeliveryPrice}
-                        onChange={(e) => {info(e)}}
+                        onChange={(e) => {
+                            info(e)
+                        }}
                     />
                 </div>
 
@@ -194,7 +212,9 @@ const StoreRegister = () => {
                         type="text"
                         id="deliveryTip"
                         value={store.deliveryTip}
-                        onChange={(e) => {info(e)}}
+                        onChange={(e) => {
+                            info(e)
+                        }}
                     />
                 </div>
 
@@ -204,7 +224,9 @@ const StoreRegister = () => {
                         type="text"
                         id="minDeliveryTime"
                         value={store.minDeliveryTime}
-                        onChange={(e) => {info(e)}}
+                        onChange={(e) => {
+                            info(e)
+                        }}
                     />
 
                     {/*시간선택박스..*/}
@@ -231,7 +253,9 @@ const StoreRegister = () => {
                         type="text"
                         id="maxDeliveryTime"
                         value={store.maxDeliveryTime}
-                        onChange={(e) => {info(e)}}
+                        onChange={(e) => {
+                            info(e)
+                        }}
                     />
                 </div>
 
@@ -240,7 +264,9 @@ const StoreRegister = () => {
                     <input
                         type="text"
                         id="openHours"
-                        onChange={(e)=>{setOpenHours(e.target.value)}}
+                        onChange={(e) => {
+                            setOpenHours(e.target.value)
+                        }}
                     />
                 </div>
 
@@ -249,7 +275,9 @@ const StoreRegister = () => {
                     <input
                         type="text"
                         id="closeHours"
-                        onChange={(e) => {setCloseHours(e.target.value)}}
+                        onChange={(e) => {
+                            setCloseHours(e.target.value)
+                        }}
                     />
                 </div>
 
@@ -259,7 +287,9 @@ const StoreRegister = () => {
                         type="text"
                         id="closedDays"
                         value={store.closedDays}
-                        onChange={(e) => {info(e)}}
+                        onChange={(e) => {
+                            info(e)
+                        }}
                     />
                 </div>
 
@@ -269,14 +299,19 @@ const StoreRegister = () => {
                         type="text"
                         id="deliveryAddress"
                         value={store.deliveryAddress}
-                        onChange={(e) => {info(e)}}
+                        onChange={(e) => {
+                            info(e)
+                        }}
                     />
                 </div>
 
-                <button onClick={()=>register()}>가게등록</button>
+                <button onClick={() => register()}>가게등록</button>
                 {/*<button onClick={test()}>테스트</button>*/}
                 {/*<button onClick={()=>sendData()}>가게등록</button>*/}
-                <button onClick={ ()=>{ navigate('/manage/main') }}>메인</button>
+                <button onClick={() => {
+                    navigate('/manage/main')
+                }}>메인
+                </button>
             </div>
         </>
     );
