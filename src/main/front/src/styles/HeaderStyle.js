@@ -41,10 +41,15 @@ export const HeaderBlock = styled.div`
     text-align: center;
     line-height: 40px;
     border-radius: 2px;
+    cursor: pointer;
+  }
+
+  .logout {
+    left: 105px;
   }
 
   .orderList {
-    left: 110px;
+    left: 215px;
   }
 
   .join {

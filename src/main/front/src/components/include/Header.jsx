@@ -39,7 +39,7 @@ function Header() {
         <div>
             <HeaderBlock>
                 <div className="block">
-                    <a href="#">
+                    <a href="/main">
                         <img src="/images/logo-yogiyo.png" alt="메인로고"/>
                     </a>
                     <div className="buttons">

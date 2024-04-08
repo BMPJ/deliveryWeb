@@ -10,8 +10,8 @@ const StoreModify = () => {
     const userid = sessionStorage.getItem('userid');
 
     const datas = {
-        userid : userid,
-        storeid : id,
+        userid: userid,
+        storeid: id,
     }
 
     const [openHours, setOpenHours] = useState("");
@@ -23,41 +23,42 @@ const StoreModify = () => {
         category: '',
         address: '',
         address_detail: '',
-        storePictureUrl : '',
-        phone : '',
-        content : '',
-        minDeliveryPrice : '',
-        deliveryTip : '',
-        minDeliveryTime : '',
-        maxDeliveryTime : '',
-        operationHours : '',
-        closedDays : '',
-        deliveryAddress : '',
+        storePictureUrl: '',
+        phone: '',
+        content: '',
+        minDeliveryPrice: '',
+        deliveryTip: '',
+        minDeliveryTime: '',
+        maxDeliveryTime: '',
+        operationHours: '',
+        closedDays: '',
+        deliveryAddress: '',
         status: '2',
     })
 
-    useEffect(()=>{
+    useEffect(() => {
         setStore({
             ...store,
-            operationHours : `${openHours} ~ ${closeHours}`})
-    },[openHours,closeHours])
+            operationHours: `${openHours} ~ ${closeHours}`
+        })
+    }, [openHours, closeHours])
 
     //첫화면 호출할때
-    useEffect(()=>{
-        const db = async () =>{
-            try{
+    useEffect(() => {
+        const db = async () => {
+            try {
                 const response = await storesDetailDB(datas);
                 console.log(response);
                 console.log(response.data[0]);
                 setStore(response.data[0]);
                 setOpenHours(response.data[0].operationHours.split('~')[0]);
                 setCloseHours(response.data[0].operationHours.split('~')[1]);
-            } catch (error){
+            } catch (error) {
                 console.error('서버로 데이터 전송 중 오류 발생:', error);
             }
         };
         db();
-    },[])
+    }, [])
 
 
     const openZipcode = (e) => {
@@ -70,7 +71,7 @@ const StoreModify = () => {
                 } else {
                     address = data.jibunAddress; //지번
                 }
-                setStore({ ...store, address: address });
+                setStore({...store, address: address});
                 document.getElementById("address").value = address;
                 document.getElementById("address_detail").focus();
                 console.log(data)
@@ -84,9 +85,9 @@ const StoreModify = () => {
         setStore({...store, [id]: value});
     }
 
-    const sendData = async(e) => {
+    const sendData = async (e) => {
         e.preventDefault();
-        try{
+        try {
             const response = await storesUpdateDB(store, datas);
             console.log(response);
             alert("수정완료");
@@ -94,7 +95,7 @@ const StoreModify = () => {
             console.log(datas);
             //navigate("/store/settingMain");
 
-        }catch (error){
+        } catch (error) {
             console.error('서버로 데이터 전송 중 오류 발생:', error);
             console.log(store)
             console.log(datas);
@@ -103,7 +104,7 @@ const StoreModify = () => {
 
     }
 
-    return(
+    return (
         <>
             <div>
                 <div>
@@ -112,19 +113,22 @@ const StoreModify = () => {
                         type="text"
                         id="name"
                         value={store.name}
-                        onChange={(e) => {info(e)}}
+                        onChange={(e) => {
+                            info(e)
+                        }}
                     />
                 </div>
                 <div>
                     <label>배달/포장:</label>
                     <select
                         id="type"
-                        onChange={(e) => {info(e)}}
+                        onChange={(e) => {
+                            info(e)
+                        }}
                     >
                         <option value selected disabled>선택해주세요</option>
-                        <option value = "0">배달</option>
-                        <option value = "1">포장</option>
-                        <option value = "2">배달/포장</option>
+                        <option value="0">배달</option>
+                        <option value="1">포장</option>
                     </select>
                 </div>
 
@@ -132,20 +136,21 @@ const StoreModify = () => {
                     <label>카테고리:</label>
                     <select
                         id="category"
-                        onChange={(e) => {info(e)}}
+                        onChange={(e) => {
+                            info(e)
+                        }}
                     >
                         <option value selected disabled>선택해주세요</option>
-                        <option value = "프랜차이즈">프랜차이즈</option>
-                        <option value = "치킨">치킨</option>
-                        <option value = "피자/양식">피자/양식</option>
-                        <option value = "중국집">중국집</option>
-                        <option value = "한식">한식</option>
-                        <option value = "일식/돈까스">일식/돈까스</option>
-                        <option value = "족발/보쌈">족발/보쌈</option>
-                        <option value = "양식">양식</option>
-                        <option value = "분식">분식</option>
-                        <option value = "카페/디저트">카페/디저트</option>
-                        <option value = "편의점/마트">편의점/마트</option>
+                        <option value="프랜차이즈">프랜차이즈</option>
+                        <option value="치킨">치킨</option>
+                        <option value="피자/양식">피자/양식</option>
+                        <option value="중국집">중국집</option>
+                        <option value="한식">한식</option>
+                        <option value="일식/돈까스">일식/돈까스</option>
+                        <option value="족발/보쌈">족발/보쌈</option>
+                        <option value="양식">양식</option>
+                        <option value="분식">분식</option>
+                        <option value="카페/디저트">카페/디저트</option>
                     </select>
                 </div>
 
@@ -158,7 +163,7 @@ const StoreModify = () => {
                         readOnly
                         placeholder="주소검색해라"
                     />
-                    <button onClick={(e)=>openZipcode(e)}>검색</button>
+                    <button onClick={(e) => openZipcode(e)}>검색</button>
                 </div>
 
                 <div>
@@ -168,7 +173,7 @@ const StoreModify = () => {
                         id="address_detail"
                         value={store.address_detail}
                         readOnly={!store.address}
-                        onChange={(e) => setStore({ ...store, address_detail: e.target.value })}
+                        onChange={(e) => setStore({...store, address_detail: e.target.value})}
                     />
                 </div>
 
@@ -178,7 +183,9 @@ const StoreModify = () => {
                         type="text"
                         id="storePictureUrl"
                         value={store.storePictureUrl}
-                        onChange={(e) => {info(e)}}
+                        onChange={(e) => {
+                            info(e)
+                        }}
                     />
                 </div>
 
@@ -188,7 +195,9 @@ const StoreModify = () => {
                         type="text"
                         id="phone"
                         value={store.phone}
-                        onChange={(e) => {info(e)}}
+                        onChange={(e) => {
+                            info(e)
+                        }}
                     />
                 </div>
 
@@ -198,7 +207,9 @@ const StoreModify = () => {
                         type="text"
                         id="content"
                         value={store.content}
-                        onChange={(e) => {info(e)}}
+                        onChange={(e) => {
+                            info(e)
+                        }}
                     />
                 </div>
 
@@ -208,7 +219,9 @@ const StoreModify = () => {
                         type="text"
                         id="minDeliveryPrice"
                         value={store.minDeliveryPrice}
-                        onChange={(e) => {info(e)}}
+                        onChange={(e) => {
+                            info(e)
+                        }}
                     />
                 </div>
 
@@ -218,7 +231,9 @@ const StoreModify = () => {
                         type="text"
                         id="deliveryTip"
                         value={store.deliveryTip}
-                        onChange={(e) => {info(e)}}
+                        onChange={(e) => {
+                            info(e)
+                        }}
                     />
                 </div>
 
@@ -228,7 +243,9 @@ const StoreModify = () => {
                         type="text"
                         id="minDeliveryTime"
                         value={store.minDeliveryTime}
-                        onChange={(e) => {info(e)}}
+                        onChange={(e) => {
+                            info(e)
+                        }}
                     />
 
                     {/*시간선택박스..*/}
@@ -255,7 +272,9 @@ const StoreModify = () => {
                         type="text"
                         id="maxDeliveryTime"
                         value={store.maxDeliveryTime}
-                        onChange={(e) => {info(e)}}
+                        onChange={(e) => {
+                            info(e)
+                        }}
                     />
                 </div>
 
@@ -265,7 +284,9 @@ const StoreModify = () => {
                         type="text"
                         id="openHours"
                         value={openHours}
-                        onChange={(e)=>{setOpenHours(e.target.value)}}
+                        onChange={(e) => {
+                            setOpenHours(e.target.value)
+                        }}
                     />
                 </div>
 
@@ -275,7 +296,9 @@ const StoreModify = () => {
                         type="text"
                         id="closeHours"
                         value={closeHours}
-                        onChange={(e) => {setCloseHours(e.target.value)}}
+                        onChange={(e) => {
+                            setCloseHours(e.target.value)
+                        }}
                     />
                 </div>
 
@@ -285,7 +308,9 @@ const StoreModify = () => {
                         type="text"
                         id="closedDays"
                         value={store.closedDays}
-                        onChange={(e) => {info(e)}}
+                        onChange={(e) => {
+                            info(e)
+                        }}
                     />
                 </div>
 
@@ -295,15 +320,26 @@ const StoreModify = () => {
                         type="text"
                         id="deliveryAddress"
                         value={store.deliveryAddress}
-                        onChange={(e) => {info(e)}}
+                        onChange={(e) => {
+                            info(e)
+                        }}
                     />
                 </div>
 
 
-                <button onClick={(e)=>sendData(e)}>수정</button>
-                <button onClick={ ()=>{ navigate('/store/settingMain') }}>가게리스트</button>
-                <button onClick={ ()=>{ navigate('/manage/main') }}>판매자메인</button>
-                <button onClick={ ()=>{ navigate(`/store/menu/modify/${datas.storeid}`) }}>메뉴관리</button>
+                <button onClick={(e) => sendData(e)}>수정</button>
+                <button onClick={() => {
+                    navigate('/store/settingMain')
+                }}>가게리스트
+                </button>
+                <button onClick={() => {
+                    navigate('/manage/main')
+                }}>판매자메인
+                </button>
+                <button onClick={() => {
+                    navigate(`/store/menu/modify/${datas.storeid}`)
+                }}>메뉴관리
+                </button>
             </div>
         </>
     )
