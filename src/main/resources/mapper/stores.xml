@@ -110,4 +110,11 @@
         WHERE
             "menuid" = #{menuid} AND "storeid" = #{storeid}
     </update>
+
+    <select id="orderList" parameterType="String" resultType="map">
+        select * from "Orders"
+        where "storeid" = #{storeid}
+    </select>
+
+
 </mapper>

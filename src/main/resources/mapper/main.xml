@@ -157,7 +157,25 @@
     </insert>
 
     <select id="reviewList" parameterType="String" resultType="map">
-        select * from "Reviews" where "storeid" = #{storeid}
+        select r."content", r."orderName", to_char(r."createdDate", 'MM"월" DD"일" HH24:MI') createdDate, u."nickname", r."rating"
+        from "Reviews" r
+        inner join "Users" u
+        on u."userid" = r."userid"
+        where "storeid" = #{storeid}
+    </select>
+
+    <select id="reviewCount" parameterType="String" resultType="map">
+        SELECT
+            COUNT(*) AS cnt,
+            SUM(CASE WHEN "rating" = 5 THEN 1 ELSE 0 END) AS five,
+            SUM(CASE WHEN "rating" = 4 THEN 1 ELSE 0 END) AS four,
+            SUM(CASE WHEN "rating" = 3 THEN 1 ELSE 0 END) AS three,
+            SUM(CASE WHEN "rating" = 2 THEN 1 ELSE 0 END) AS two,
+            SUM(CASE WHEN "rating" = 1 THEN 1 ELSE 0 END) AS one
+        FROM
+            "Reviews"
+        WHERE
+            "storeid" = #{storeid}
     </select>
 
 </mapper>
