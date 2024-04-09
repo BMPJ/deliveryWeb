@@ -60,7 +60,7 @@ public class StoreDao {
         return sqlSessionTemplate.update("menuUpdate", menu);
     }
 
-    public List<Map<String, Object>> orderList(String storeid) {
-        return sqlSessionTemplate.selectList("orderList", storeid);
+    public List<Map<String, Object>> storeOrderList(String storeid) {
+        return sqlSessionTemplate.selectList("storeOrderList", storeid);
     }
 }

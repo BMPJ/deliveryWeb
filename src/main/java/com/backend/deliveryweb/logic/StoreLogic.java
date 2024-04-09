@@ -93,6 +93,6 @@ public class StoreLogic {
     }
 
     public List<Map<String, Object>> orderList(String storeid) {
-        return storeDao.orderList(storeid);
+        return storeDao.storeOrderList(storeid);
     }
 }
