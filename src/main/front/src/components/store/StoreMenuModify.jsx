@@ -1,6 +1,6 @@
 import React, {useParams} from "react-router-dom";
 import {useEffect, useRef, useState} from "react";
-import {ImgUpdateDB, menuInfoDB} from "../../service/menuLogic";
+import {imgUpdateDB, menuInfoDB} from "../../service/menuLogic";
 import {menuUpdateDB} from "../../service/menuLogic";
 
 
@@ -20,7 +20,7 @@ const StoreMenuModify = () => {
             category: '',
             price: '',
             menuContents: '',
-            status: ''
+            status: '',
         }
     )
 
@@ -67,7 +67,7 @@ const StoreMenuModify = () => {
             ) {
 
                 const response = await menuUpdateDB(newMenu)
-                const response1 = await ImgUpdateDB(formData)
+                const response1 = await imgUpdateDB(formData)
                 setInputStatus("");
                 //window.location.reload();
             } else {
@@ -145,8 +145,12 @@ const StoreMenuModify = () => {
                                             />
                                             </div>
                                             :
-                                            <div>메뉴사진={menu[i].menuPictureUrl && (
-                                                <img alt={menu[i].menuPictureUrl} src={menu[i].menuPictureUrl}/>)}</div>
+                                            <div>메뉴사진=
+                                                <img alt="#"
+                                                     src={"http://localhost:8000/" + menu[i].menuImgName}>
+                                                </img>
+
+                                            </div>
                                     }
                                 </div>
                                 <div>

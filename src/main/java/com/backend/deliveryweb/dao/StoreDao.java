@@ -63,4 +63,5 @@ public class StoreDao {
     public List<Map<String, Object>> storeOrderList(String storeid) {
         return sqlSessionTemplate.selectList("storeOrderList", storeid);
     }
+
 }

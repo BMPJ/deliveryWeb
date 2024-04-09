@@ -77,7 +77,7 @@ public class StoreController {
     @GetMapping("/menu/info")
     public String menuInfo(@RequestParam String storeid) {
 
-        System.out.println(storeid);
+        System.out.println("스토어아이디" + storeid);
         List<Map<String, Object>> list = storeLogic.menuInfo(storeid);
         return g.toJson(list);
     }
@@ -92,7 +92,7 @@ public class StoreController {
 
     }
 
-    @PostMapping("/menu/ImgUpdate")
+    @PostMapping("/menu/imgUpdate")
     public String menuImgUpdate(@RequestParam MultipartFile file, @RequestParam("menuId") String menuId) {
 
         int menuid = g.fromJson(menuId, int.class);
@@ -101,7 +101,6 @@ public class StoreController {
         return storeLogic.imageUpdate(file, String.valueOf(menuid));
 
     }
-
 
     @GetMapping("/orderList")
     public String orderList(String storeid) {
