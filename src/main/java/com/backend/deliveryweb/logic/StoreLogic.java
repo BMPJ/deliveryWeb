@@ -34,7 +34,7 @@ public class StoreLogic {
             Calendar time = Calendar.getInstance();
             filename = sdf.format(time.getTime()) + "-" + file.getOriginalFilename().replaceAll(" ", "_");
 
-            String saveFolder = "D:\\bproject\\delivery_web\\src\\main\\webapp\\pds";
+            String saveFolder = "D:\\bproject\\delivery_web\\src\\main\\resources\\img";
             fullPath = saveFolder + "\\" + filename;
             try {
                 File files = new File(fullPath);
@@ -92,7 +92,7 @@ public class StoreLogic {
         return storeDao.menuUpdate(menu);
     }
 
-    public List<Map<String, Object>> orderList(String storeid) {
+    public List<Map<String, Object>> storeOrderList(String storeid) {
         return storeDao.storeOrderList(storeid);
     }
 }

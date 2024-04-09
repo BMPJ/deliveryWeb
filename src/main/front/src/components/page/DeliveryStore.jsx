@@ -24,6 +24,10 @@ function DeliveryStore() {
     const [menu, setMenu] = useState([]);
     const navigator = useNavigate();
     const [menuOptionId, setMenuOptionId] = useState(0);
+    const [review, setReview] = useState([]);
+    const [rating, setRating] = useState([]);
+    const [menuOpen, setMenuOpen] = useState(true);
+    const [reviewOpen, setReviewOpen] = useState(false);
 
     // 각 메뉴 아이템에 대한 모달 열기/닫기 상태를 저장하는 state
     const [orderStates, setOrderStates] = useState(menu.map(() => false));
@@ -48,6 +52,22 @@ function DeliveryStore() {
                 .catch((err) => {
                     console.error(err)
                 })
+            axios.get(`/main/delivery/reviewList?storeid=${storeid}`)
+                .then((a) => {
+                    console.log(a.data)
+                    setReview(a.data)
+                })
+                .catch((err) => {
+                    console.error(err)
+                });
+            axios.get(`/main/delivery/reviewCount?storeid=${storeid}`)
+                .then((a) => {
+                    console.log(a.data)
+                    setRating(a.data)
+                })
+                .catch((err) => {
+                    console.error(err)
+                });
         }
     }, [])
 
@@ -116,6 +136,8 @@ function DeliveryStore() {
     useEffect(() => {
         console.log(cart);
     }, [cart]);
+
+
     const addCart = () => {
         if (cart) {
             if (total > store[0].minDeliveryPrice) {
@@ -135,6 +157,17 @@ function DeliveryStore() {
             }
         }
     }
+
+    const toggleMenu = () => {
+        setMenuOpen(!menuOpen);
+        setReviewOpen(false);
+    };
+
+    const toggleReview = () => {
+        setReviewOpen(!reviewOpen);
+        setMenuOpen(false);
+    };
+
     return (
         <div>
             <Header/>
@@ -163,10 +196,10 @@ function DeliveryStore() {
                 }
                 <MenuButton>
                     <ul>
-                        <li className="menu">
+                        <li className="menu" onClick={toggleMenu}>
                             <a href="#">메뉴</a>
                         </li>
-                        <li className="review">
+                        <li className="review" onClick={toggleReview}>
                             <a href="#">리뷰</a>
                         </li>
                         <li className="info">
@@ -175,116 +208,159 @@ function DeliveryStore() {
                     </ul>
                 </MenuButton>
 
-                <MenuWrap>
+                {menuOpen && (
+                    <MenuWrap>
 
-                    {
-                        menu.map(function (a, i) {
-                            return (
-                                <Menu key={i} onClick={() => {
-                                    // 해당 메뉴 아이템에 대한 모달 열기 상태를 토글
-                                    const newOrderStates = [...orderStates];
-                                    newOrderStates[i] = !newOrderStates[i];
-                                    setOrderStates(newOrderStates);
-                                    setMenuid(menu[i].menuid)
-                                    setTotal(menu[i].price)
-                                    setCopyPrice(menu[i].price)
-                                    setOptionPrice(0)
-                                    setSelectedOptionIndex(0)
-                                }}>
-                                    {
-                                        // 개별 메뉴 아이템에 대한 모달 열기 상태에 따라 모달 렌더링
-                                        orderStates[i] &&
-                                        <div onClick={e => {
-                                            // 모달 영역 외부를 클릭했을 때 모달 닫기
-                                            if (e.target === e.currentTarget) {
-                                                const newOrderStates = [...orderStates];
-                                                newOrderStates[i] = false;
-                                                setOrderStates(newOrderStates);
-                                            }
-                                        }}>
-                                            <Modal>
-                                                <Order onClick={e => e.stopPropagation()}>
-                                                    <p>메뉴 상세</p>
-                                                    <Line/>
-                                                    <p>{menu[i].menuName}</p>
-                                                    가격<Price>{menu[i].price} 원</Price>
-                                                    <Line/>
-                                                    {
-                                                        option.map(function (a, i) {
-                                                            return (
-                                                                <div key={i}>
-                                                                    <Option>
-                                                                        <input type="radio" name="optionGroup"
-                                                                               checked={selectedOptionIndex === i}
-                                                                               onChange={() => {
-                                                                                   setOptionPrice(option[i].price)
-                                                                                   setSelectedOptionIndex(i);
-                                                                                   setMenuOptionId(option[i].menuOptionId)
-                                                                               }}
-                                                                        /> {option[i].option}
-                                                                        <Price>+ {option[i].price} 원</Price>
-                                                                    </Option>
-                                                                </div>
-                                                            )
-                                                        })
-                                                    }
+                        {
+                            menu.map(function (a, i) {
+                                return (
+                                    <Menu key={i} onClick={() => {
+                                        // 해당 메뉴 아이템에 대한 모달 열기 상태를 토글
+                                        const newOrderStates = [...orderStates];
+                                        newOrderStates[i] = !newOrderStates[i];
+                                        setOrderStates(newOrderStates);
+                                        setMenuid(menu[i].menuid)
+                                        setTotal(menu[i].price)
+                                        setCopyPrice(menu[i].price)
+                                        setOptionPrice(0)
+                                        setSelectedOptionIndex(0)
+                                    }}>
+                                        {
+                                            // 개별 메뉴 아이템에 대한 모달 열기 상태에 따라 모달 렌더링
+                                            orderStates[i] &&
+                                            <div onClick={e => {
+                                                // 모달 영역 외부를 클릭했을 때 모달 닫기
+                                                if (e.target === e.currentTarget) {
+                                                    const newOrderStates = [...orderStates];
+                                                    newOrderStates[i] = false;
+                                                    setOrderStates(newOrderStates);
+                                                }
+                                            }}>
+                                                <Modal>
+                                                    <Order onClick={e => e.stopPropagation()}>
+                                                        <p>메뉴 상세</p>
+                                                        <Line/>
+                                                        <p>{menu[i].menuName}</p>
+                                                        가격<Price>{menu[i].price} 원</Price>
+                                                        <Line/>
+                                                        {
+                                                            option.map(function (a, i) {
+                                                                return (
+                                                                    <div key={i}>
+                                                                        <Option>
+                                                                            <input type="radio" name="optionGroup"
+                                                                                   checked={selectedOptionIndex === i}
+                                                                                   onChange={() => {
+                                                                                       setOptionPrice(option[i].price)
+                                                                                       setSelectedOptionIndex(i);
+                                                                                       setMenuOptionId(option[i].menuOptionId)
+                                                                                   }}
+                                                                            /> {option[i].option}
+                                                                            <Price>+ {option[i].price} 원</Price>
+                                                                        </Option>
+                                                                    </div>
+                                                                )
+                                                            })
+                                                        }
 
-                                                    <Cnt>
-                                                        <p>수량</p>
-                                                        <Right>
-                                                            <button onClick={decrease}> -</button>
-                                                            <OrderCnt value={orderCnt} readOnly/>
-                                                            <button onClick={increase}> +</button>
-                                                        </Right>
-                                                    </Cnt>
-                                                    <Line/>
-                                                    <Cnt>
-                                                        <p>총 주문금액</p>
-                                                        <Right>
-                                                            {total}
-                                                        </Right>
-                                                    </Cnt>
-                                                    <DetailFoot>
-                                                        <Button onClick={addCart}>장바구니 담기</Button>
-                                                        <Button onClick={() => {
-                                                            const newOrderStates = [...orderStates];
-                                                            newOrderStates[i] = false;
-                                                            setOrderStates(newOrderStates);
-                                                            setOrderCnt(1)
-                                                        }}>닫기</Button>
-                                                    </DetailFoot>
-                                                </Order>
-                                            </Modal>
+                                                        <Cnt>
+                                                            <p>수량</p>
+                                                            <Right>
+                                                                <button onClick={decrease}> -</button>
+                                                                <OrderCnt value={orderCnt} readOnly/>
+                                                                <button onClick={increase}> +</button>
+                                                            </Right>
+                                                        </Cnt>
+                                                        <Line/>
+                                                        <Cnt>
+                                                            <p>총 주문금액</p>
+                                                            <Right>
+                                                                {total}
+                                                            </Right>
+                                                        </Cnt>
+                                                        <DetailFoot>
+                                                            <Button onClick={addCart}>장바구니 담기</Button>
+                                                            <Button onClick={() => {
+                                                                const newOrderStates = [...orderStates];
+                                                                newOrderStates[i] = false;
+                                                                setOrderStates(newOrderStates);
+                                                                setOrderCnt(1)
+                                                            }}>닫기</Button>
+                                                        </DetailFoot>
+                                                    </Order>
+                                                </Modal>
+                                            </div>
+                                        }
+                                        <tr>
+                                            <td className="menu-text">
+                                                <div className="menuName">
+                                                    {menu[i].menuName}
+                                                </div>
+                                                <div className="menuContents">
+                                                    {menu[i].menuContents}
+                                                </div>
+                                                <div className="price">
+                                                    {menu[i].price}
+                                                </div>
+                                            </td>
+                                            <td className="photo-area">
+                                                <div className="menuPictureUrl">c
+                                                    <img src="http://localhost:8000/" alt="" />
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                    </Menu>
+                                )
+                            })
+                        }
+                    </MenuWrap>
+                )}
+                {reviewOpen && (
+                    <div>
+                        {
+                            store.length > 0 && rating.length > 0 ? (
+                                    <div>
+                                        <p>{store[0].name} 리뷰 ( {rating[0].CNT} )</p>
+                                        <div>
+                                            <p>5 : {rating[0].FIVE}</p>
+                                            <p>4 : {rating[0].FOUR}</p>
+                                            <p>3 : {rating[0].THREE}</p>
+                                            <p>2 : {rating[0].TWO}</p>
+                                            <p>1 : {rating[0].ONE}</p>
                                         </div>
-                                    }
-                                    <tr>
-                                        <td className="menu-text">
-                                            <div className="menuName">
-                                                {menu[i].menuName}
-                                            </div>
-                                            <div className="menuContents">
-                                                {menu[i].menuContents}
-                                            </div>
-                                            <div className="price">
-                                                {menu[i].price}
-                                            </div>
-                                        </td>
-                                        <td className="photo-area">
-                                            <div className="menuPictureUrl">
-                                                {menu[i].menuPictureUrl}
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                </Menu>
-                            )
-                        })
-                    }
-                </MenuWrap>
+                                    </div>
+                                )
+                                :
+                                (
+                                    <div>
+                                        <p>리뷰가 없습니다.</p>
+                                    </div>
+                                )
+                        }
+                        {
+                            review.map(function (a,i){
+                                return(
+                                    <div key={i}>
+                                        <div>
+                                            <p>{review[i].nickname}</p>
+                                            <p>{review[i].CREATEDDATE}</p>
+                                            <p>{review[i].rating}</p>
+                                            <p>{review[i].content}</p>
+                                        </div>
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+                )}
             </Wrap>
         </div>
 
     );
 }
+
+
+
 
 export default DeliveryStore;
