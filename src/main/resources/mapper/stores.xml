@@ -91,10 +91,10 @@
     <select id="menuInfo" parameterType="String" resultType="map">
         SELECT m.*, s."name", i."menuPictureUrl", i."menuImgSize", i."menuImgName"
         FROM "Menu" m
-        INNER JOIN "Stores" s
-        ON m."storeid" = s."storeid"
-        left join "MenuImage" i
-        on m."menuid" = i."menuid"
+                 INNER JOIN "Stores" s
+                            ON m."storeid" = s."storeid"
+                 LEFT JOIN "MenuImage" i
+                           ON m."menuid" = i."menuid"
         WHERE m."storeid" = #{storeid}
     </select>
 

@@ -2,73 +2,89 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.backend.deliveryweb">
     <select id="login" parameterType="com.backend.deliveryweb.vo.Users" resultType="int">
-        select count(*) from "Users"
-        where "userid" = #{userid} and "password" = #{password}
+        select count(*)
+        from "Users"
+        where "userid" = #{userid}
+          and "password" = #{password}
     </select>
 
     <select id="session" parameterType="String" resultType="map">
-        select "userid" , "role" from "Users"
+        select "userid", "role"
+        from "Users"
         where "userid" = #{userid}
     </select>
 
     <select id="userInfo" parameterType="String" resultType="map">
-        select * from "Users"
+        select *
+        from "Users"
         where "userid" = #{userid}
     </select>
 
     <select id="category" parameterType="int" resultType="map">
-        SELECT distinct "category" FROM "Stores"
+        SELECT distinct "category"
+        FROM "Stores"
         where "type" = #{type}
     </select>
 
     <select id="getDeliveryStores" parameterType="String" resultType="map">
-        select * from "Stores"
-        where "category" = #{category} and "type" = 0
+        select *
+        from "Stores"
+        where "category" = #{category}
+          and "type" = 0
     </select>
 
     <select id="getStores" parameterType="String" resultType="map">
-        select * from "Stores"
+        select *
+        from "Stores"
         where "storeid" = #{storeid}
     </select>
 
     <select id="getMenu" parameterType="String" resultType="map">
         select m.*, i."menuPictureUrl", i."menuImgSize", i."menuImgName"
         from "Menu" m
-        left join "MenuImage" i on m."menuid" = i."menuid"
+                 left join "MenuImage" i on m."menuid" = i."menuid"
         where "storeid" = #{storeid}
     </select>
 
     <select id="getOption" parameterType="String" resultType="map">
-        select "menuOptionId","menuid","option","content","price"
+        select "menuOptionId", "menuid", "option", "content", "price"
         from "MenuOption"
         where "menuid" = #{menuid}
     </select>
 
     <select id="selectCart" parameterType="String" resultType="int">
-        select count(*) from "Carts"
+        select count(*)
+        from "Carts"
         where "userid" = #{userid}
     </select>
 
     <delete id="deleteCart" parameterType="String">
-        delete from "Carts"
+        delete
+        from "Carts"
         where "userid" = #{userid}
     </delete>
 
     <insert id="cart" parameterType="com.backend.deliveryweb.vo.Stores">
         insert into "Carts"
-        values (
-                SEQ_CARTID.nextval,
+        values (SEQ_CARTID.nextval,
                 #{userid},
                 #{storeid},
                 #{menuid},
                 #{menuOptionId},
-                #{quantity}
-               )
+                #{quantity})
     </insert>
 
     <select id="getCart" parameterType="String" resultType="map">
-        select c.*, u."name", u."nickname", u."phone", u."address", u."address_detail", s."name" storeName,
-               s."minDeliveryPrice", s."maxDeliveryTime", s."deliveryTip"
+        select c.*,
+               u."name",
+               u."nickname",
+               u."phone",
+               u."address",
+               u."address_detail",
+               s."name" storeName,
+               s."minDeliveryPrice",
+               s."maxDeliveryTime",
+               s."deliveryTip"
         from "Carts" c
                  inner join "Users" u
                             on u."userid" = c."userid"
@@ -78,19 +94,20 @@
     </select>
 
     <select id="cartMenu" parameterType="String" resultType="map">
-        select * from "Menu"
+        select *
+        from "Menu"
         where "menuid" = #{menuid}
     </select>
 
     <select id="cartMenuOption" parameterType="String" resultType="map">
-        select * from "MenuOption"
+        select *
+        from "MenuOption"
         where "menuOptionId" = #{menuOptionId}
     </select>
 
     <insert id="deliveryPay" parameterType="com.backend.deliveryweb.vo.Orders">
         insert into "Orders"
-        values (
-                SEQ_ORDERID.nextval,
+        values (SEQ_ORDERID.nextval,
                 #{storeid},
                 #{userid},
                 #{paymentMethod},
@@ -98,86 +115,88 @@
                 #{requests},
                 sysdate,
                 #{status},
-                #{orderName}
-               )
+                #{orderName})
     </insert>
 
     <select id="orderList" parameterType="String" resultType="map">
-        select s."name", o."orderName", o."totalPrice", o."status", to_char(o."orderTime", 'MM"월" DD"일" HH24:MI') orderTime, s."storeid", o."orderid", count(r."reviewid") as cnt
+        select s."name",
+               o."orderName",
+               o."totalPrice",
+               o."status",
+               to_char(o."orderTime", 'MM"월" DD"일" HH24:MI') orderTime,
+               s."storeid",
+               o."orderid",
+               count(r."reviewid") as                        cnt
         from "Orders" o
                  inner join "Stores" s
                             on s."storeid" = o."storeid"
                  left join "Reviews" r
                            on o."orderid" = r."orderid"
         where o."userid" = #{userid}
-        GROUP BY
-            s."name",
-            o."orderName",
-            o."totalPrice",
-            o."status",
-            to_char(o."orderTime", 'MM"월" DD"일" HH24:MI'),
-            s."storeid",
-            o."orderid"
+        GROUP BY s."name",
+                 o."orderName",
+                 o."totalPrice",
+                 o."status",
+                 to_char(o."orderTime", 'MM"월" DD"일" HH24:MI'),
+                 s."storeid",
+                 o."orderid"
         order by o."status", orderTime desc
     </select>
 
     <select id="getOrder" parameterType="String" resultType="map">
         select o."orderName", s."name", s."storeid", o."orderid"
         from "Orders" o
-        inner join "Stores" s
-        on s."storeid" = o."storeid"
+                 inner join "Stores" s
+                            on s."storeid" = o."storeid"
         where "orderid" = #{orderid}
     </select>
 
     <insert id="reviewWrite" parameterType="com.backend.deliveryweb.vo.Reviews">
-        insert into "Reviews"(
-            "reviewid",
-            "storeid",
-            "userid",
-            "rating",
-            "content",
-            "reviewPictureUrl",
-            "createdDate",
-            "modifiedDate",
-            "status",
-            "orderName",
-            "orderid"
-         )
-        values (
-                   SEQ_REVIEWS.nextval,
-                   #{storeid},
-                   #{userid},
-                   #{rating},
-                   #{content},
-                   #{reviewPictureUrl},
-                   sysdate,
-                   sysdate,
-                   0,
-                   #{orderName},
-                   #{orderid}
-               )
+        insert into "Reviews"("reviewid",
+                              "storeid",
+                              "userid",
+                              "rating",
+                              "content",
+                              "reviewPictureUrl",
+                              "createdDate",
+                              "modifiedDate",
+                              "status",
+                              "orderName",
+                              "orderid")
+        values (SEQ_REVIEWS.nextval,
+                #{storeid},
+                #{userid},
+                #{rating},
+                #{content},
+                #{reviewPictureUrl},
+                sysdate,
+                sysdate,
+                0,
+                #{orderName},
+                #{orderid})
     </insert>
 
     <select id="reviewList" parameterType="String" resultType="map">
-        select r."content", r."orderName", to_char(r."createdDate", 'MM"월" DD"일" HH24:MI') createdDate, u."nickname", r."rating"
+        select r."content",
+               r."orderName",
+               to_char(r."createdDate", 'MM"월" DD"일" HH24:MI') createdDate,
+               u."nickname",
+               r."rating"
         from "Reviews" r
-        inner join "Users" u
-        on u."userid" = r."userid"
+                 inner join "Users" u
+                            on u."userid" = r."userid"
         where "storeid" = #{storeid}
     </select>
 
     <select id="reviewCount" parameterType="String" resultType="map">
-        SELECT
-            COUNT(*) AS cnt,
-            SUM(CASE WHEN "rating" = 5 THEN 1 ELSE 0 END) AS five,
-            SUM(CASE WHEN "rating" = 4 THEN 1 ELSE 0 END) AS four,
-            SUM(CASE WHEN "rating" = 3 THEN 1 ELSE 0 END) AS three,
-            SUM(CASE WHEN "rating" = 2 THEN 1 ELSE 0 END) AS two,
-            SUM(CASE WHEN "rating" = 1 THEN 1 ELSE 0 END) AS one
-        FROM
-            "Reviews"
-        WHERE
-            "storeid" = #{storeid}
+        SELECT COUNT(*)                                      AS cnt,
+               SUM(CASE WHEN "rating" = 5 THEN 1 ELSE 0 END) AS five,
+               SUM(CASE WHEN "rating" = 4 THEN 1 ELSE 0 END) AS four,
+               SUM(CASE WHEN "rating" = 3 THEN 1 ELSE 0 END) AS three,
+               SUM(CASE WHEN "rating" = 2 THEN 1 ELSE 0 END) AS two,
+               SUM(CASE WHEN "rating" = 1 THEN 1 ELSE 0 END) AS one
+        FROM "Reviews"
+        WHERE "storeid" = #{storeid}
     </select>
 
 </mapper>

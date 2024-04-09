@@ -31,7 +31,6 @@ export const menuInfoDB = (storeid) => {
         }
     });
 };
-
 export const menuUpdateDB = (newMenu) => {
     return new Promise((resolve, reject) => {
         try {
@@ -46,12 +45,13 @@ export const menuUpdateDB = (newMenu) => {
         }
     });
 }
-export const ImgUpdateDB = (formData) => {
+
+export const imgUpdateDB = (formData) => {
     return new Promise((resolve, reject) => {
         try {
             const response = axios({
                 method: "post",
-                url: "/store/menu/ImgUpdate",
+                url: "/store/menu/imgUpdate",
                 data: formData
             });
             resolve(response);
@@ -60,3 +60,4 @@ export const ImgUpdateDB = (formData) => {
         }
     });
 }
+

@@ -22,6 +22,13 @@ public class StoreLogic {
     @Autowired
     private StoreDao storeDao;
 
+    /**
+     * 이미지 업데이트
+     *
+     * @param file
+     * @param menuId
+     * @return
+     */
     public String imageUpdate(MultipartFile file, String menuId) {
 
         Map<String, Object> image = new HashMap<>();
@@ -34,7 +41,7 @@ public class StoreLogic {
             Calendar time = Calendar.getInstance();
             filename = sdf.format(time.getTime()) + "-" + file.getOriginalFilename().replaceAll(" ", "_");
 
-            String saveFolder = "D:\\bproject\\delivery_web\\src\\main\\resources\\img";
+            String saveFolder = "D:\\bproject\\delivery_web\\src\\main\\webapp\\pds";
             fullPath = saveFolder + "\\" + filename;
             try {
                 File files = new File(fullPath);
@@ -95,4 +102,5 @@ public class StoreLogic {
     public List<Map<String, Object>> storeOrderList(String storeid) {
         return storeDao.storeOrderList(storeid);
     }
+
 }
