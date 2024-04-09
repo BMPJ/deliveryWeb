@@ -107,7 +107,7 @@ public class StoreController {
     public String orderList(String storeid) {
         System.out.println(storeid);
 
-        List<Map<String, Object>> list = storeLogic.orderList(storeid);
+        List<Map<String, Object>> list = storeLogic.storeOrderList(storeid);
         System.out.println(list);
 
         return "";

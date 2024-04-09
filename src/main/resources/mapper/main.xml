@@ -32,7 +32,9 @@
     </select>
 
     <select id="getMenu" parameterType="String" resultType="map">
-        select * from "Menu"
+        select m.*, i."menuPictureUrl", i."menuImgSize", i."menuImgName"
+        from "Menu" m
+        left join "MenuImage" i on m."menuid" = i."menuid"
         where "storeid" = #{storeid}
     </select>
 
