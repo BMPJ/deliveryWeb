@@ -18,4 +18,5 @@ public class Menu {
     private String menuContents;
     private String popularity;
     private int status;
+    private String menuPictureUrl;
 }

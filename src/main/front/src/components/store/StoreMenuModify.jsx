@@ -69,7 +69,7 @@ const StoreMenuModify = () => {
                 const response = await menuUpdateDB(newMenu)
                 const response1 = await imgUpdateDB(formData)
                 setInputStatus("");
-                //window.location.reload();
+                window.location.reload();
             } else {
                 alert("빈칸 X")
             }
@@ -145,12 +145,18 @@ const StoreMenuModify = () => {
                                             />
                                             </div>
                                             :
-                                            <div>메뉴사진=
-                                                <img alt="#"
-                                                     src={"http://localhost:8000/" + menu[i].menuImgName}>
-                                                </img>
-
-                                            </div>
+                                            menu[i].menuImgName == null ?
+                                                <div>메뉴사진=
+                                                    <img alt="디폴트이미지"
+                                                         src="/images/menu/defaultmenuimg.png">
+                                                    </img>
+                                                </div>
+                                                :
+                                                <div>메뉴사진=
+                                                    <img alt="#"
+                                                         src={"http://localhost:8000/" + menu[i].menuImgName}>
+                                                    </img>
+                                                </div>
                                     }
                                 </div>
                                 <div>

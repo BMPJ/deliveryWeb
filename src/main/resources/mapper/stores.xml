@@ -76,16 +76,33 @@
     </update>
 
     <insert id="menuRegister" parameterType="com.backend.deliveryweb.vo.Stores">
-        INSERT INTO "Menu"
+        INSERT
+        ALL
+        INTO "Menu"
         VALUES (seq_menu.nextval,
-                #{storeid},
-                #{category},
-                #{menuName},
-                #{price},
-                #{menuPictureUrl},
-                #{popularity},
-                #{status},
-                #{menuContents})
+        #{storeid},
+        #{category},
+        #{menuName},
+        #{price},
+        #{popularity},
+        #{status},
+        #{menuContents}
+        )
+        INTO
+        "MenuImage"
+        VALUES
+        (
+        seq_menu
+        .
+        CURRVAL,
+        #{menuPictureUrl}
+        ,
+        ''
+        ,
+        ''
+        )
+        SELECT *
+        FROM DUAL
     </insert>
 
     <select id="menuInfo" parameterType="String" resultType="map">

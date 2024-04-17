@@ -77,6 +77,7 @@ public class StoreController {
     @GetMapping("/menu/info")
     public String menuInfo(@RequestParam String storeid) {
 
+
         System.out.println("스토어아이디" + storeid);
         List<Map<String, Object>> list = storeLogic.menuInfo(storeid);
         return g.toJson(list);
