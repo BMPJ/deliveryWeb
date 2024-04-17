@@ -291,25 +291,39 @@ function DeliveryStore() {
                                                 </Modal>
                                             </div>
                                         }
-                                        <tr>
-                                            <td className="menu-text">
-                                                <div className="menuName">
-                                                    {menu[i].menuName}
-                                                </div>
-                                                <div className="menuContents">
-                                                    {menu[i].menuContents}
-                                                </div>
-                                                <div className="price">
-                                                    {menu[i].price}
-                                                </div>
-                                            </td>
-                                            <td className="photo-area">
-                                                <div className="menuPictureUrl">
-                                                    <img src={"http://localhost:8000/"+menu[i].menuImgName} alt="" />
-                                                </div>
-                                            </td>
-                                        </tr>
-
+                                        <table>
+                                            <tbody>
+                                            <tr>
+                                                <td className="menu-text">
+                                                    <div className="menuName">
+                                                        {menu[i].menuName}
+                                                    </div>
+                                                    <div className="menuContents">
+                                                        {menu[i].menuContents}
+                                                    </div>
+                                                    <div className="price">
+                                                        {menu[i].price}
+                                                    </div>
+                                                </td>
+                                                <td className="photo-area">
+                                                    {
+                                                        menu[i].menuImgName == null ?
+                                                            <div className="menuPictureUrl">
+                                                                <img alt="디폴트이미지"
+                                                                     src="/images/menu/defaultmenuimg.png">
+                                                                </img>
+                                                            </div>
+                                                            :
+                                                            <div className="menuPictureUrl">
+                                                                <img
+                                                                    src={"http://localhost:8000/" + menu[i].menuImgName}
+                                                                    alt=""/>
+                                                            </div>
+                                                    }
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
                                     </Menu>
                                 )
                             })
@@ -339,8 +353,8 @@ function DeliveryStore() {
                                 )
                         }
                         {
-                            review.map(function (a,i){
-                                return(
+                            review.map(function (a, i) {
+                                return (
                                     <div key={i}>
                                         <div>
                                             <p>{review[i].nickname}</p>
@@ -359,8 +373,6 @@ function DeliveryStore() {
 
     );
 }
-
-
 
 
 export default DeliveryStore;

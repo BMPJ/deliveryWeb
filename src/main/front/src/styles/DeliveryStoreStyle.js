@@ -72,6 +72,11 @@ export const Menu = styled.div`
   width: 100%;
   cursor: pointer;
 
+  .menu-text {
+    width: 100%;
+    padding-right: 10px;
+  }
+
   .menuName {
     font-weight: bold;
   }
@@ -84,6 +89,11 @@ export const Menu = styled.div`
 
   .price:after {
     content: "원";
+  }
+
+  .photo-area img {
+    width: 112px;
+    height: 80px;
   }
 
 `
