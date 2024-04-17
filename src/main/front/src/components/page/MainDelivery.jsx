@@ -25,6 +25,19 @@ function MainDelivery() {
 
     const navigate = useNavigate();
 
+    const imageNames = [
+        "0.png",
+        "1.png",
+        "2.png",
+        "3.png",
+        "4.png",
+        "5.png",
+        "6.png",
+        "7.png",
+        "8.png",
+        "9.png"
+    ];
+
     return (
         <div>
             <Header/>
@@ -34,7 +47,7 @@ function MainDelivery() {
                         <Main    key={i} >
                             <Category onClick={()=>{navigate(`/main/delivery/category?category=${category[i].category}`)}}>
                                 <div>{category[i].category}</div>
-                                <img src='/'/>
+                                <img src={`/images/category/${imageNames[i]}`} alt={"category"} />
                             </Category>
                         </Main>
                     )
