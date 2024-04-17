@@ -304,8 +304,8 @@ function DeliveryStore() {
                                                 </div>
                                             </td>
                                             <td className="photo-area">
-                                                <div className="menuPictureUrl">c
-                                                    <img src="http://localhost:8000/" alt="" />
+                                                <div className="menuPictureUrl">
+                                                    <img src={"http://localhost:8000/"+menu[i].menuImgName} alt="" />
                                                 </div>
                                             </td>
                                         </tr>

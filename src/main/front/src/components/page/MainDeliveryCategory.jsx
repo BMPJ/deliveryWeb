@@ -12,8 +12,8 @@ const MainDeliveryCategory = () => {
 
     useEffect(() => {
         if (categoryParam) {
-            const decodedCategory = decodeURIComponent(categoryParam);
-            axios.get(`/main/delivery/category?category=${decodedCategory}`)
+            const category = decodeURIComponent(categoryParam);
+            axios.get(`/main/delivery/category?category=${category}`)
                 .then((response) => {
                     setStores(response.data);
                     console.log(response.data)

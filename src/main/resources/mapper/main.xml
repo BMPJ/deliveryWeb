@@ -24,6 +24,7 @@
         SELECT distinct "category"
         FROM "Stores"
         where "type" = #{type}
+        order by "category" desc
     </select>
 
     <select id="getDeliveryStores" parameterType="String" resultType="map">
