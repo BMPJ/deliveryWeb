@@ -61,3 +61,19 @@ export const imgUpdateDB = (formData) => {
     });
 }
 
+export const menuDeleteDB = (menuid) => {
+    return new Promise((resolve, reject) => {
+        try {
+            const response = axios({
+                method: "post",
+                url: "/store/menu/delete",
+                data: {
+                    menuid
+                }
+            });
+            resolve(response);
+        } catch (error) {
+            reject(error);
+        }
+    });
+}

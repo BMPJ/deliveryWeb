@@ -1,7 +1,6 @@
 import React, {useParams} from "react-router-dom";
 import {useEffect, useRef, useState} from "react";
-import {imgUpdateDB, menuInfoDB} from "../../service/menuLogic";
-import {menuUpdateDB} from "../../service/menuLogic";
+import {imgUpdateDB, menuDeleteDB, menuInfoDB, menuUpdateDB} from "../../service/menuLogic";
 
 
 const StoreMenuModify = () => {
@@ -79,6 +78,16 @@ const StoreMenuModify = () => {
             setInputStatus("");
             console.log(newMenu.menuPictureUrl);
 
+        }
+    }
+
+    const deleteData = async (menuid) => {
+        try {
+            const response = await menuDeleteDB(menuid);
+            window.location.reload();
+
+        } catch (error) {
+            console.error('서버로 데이터 전송 중 오류 발생:', error);
         }
     }
 
@@ -187,15 +196,18 @@ const StoreMenuModify = () => {
                                 {
                                     inputStatus === "" || inputStatus !== menu[i].menuid
                                         ?
-                                        <button onClick={() => {
-                                            modifyHandler(menu[i].menuid)
-                                            setNewMenu({
-                                                menuid: menu[i].menuid,
-                                                storeid: menu[i].storeid,
-                                            })
-                                            setMenuid(menu[i].menuid)
-                                            setNewMenu(menu[i])
-                                        }}>수정</button>
+                                        <div>
+                                            <button onClick={() => {
+                                                modifyHandler(menu[i].menuid)
+                                                setMenuid(menu[i].menuid)
+                                                setNewMenu(menu[i])
+                                            }}>수정
+                                            </button>
+                                            <button onClick={() =>
+                                                deleteData(menu[i].menuid)}
+                                            >삭제
+                                            </button>
+                                        </div>
                                         :
                                         <button onClick={() => sendData()}>수정완료</button>
                                 }

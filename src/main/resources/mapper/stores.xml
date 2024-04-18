@@ -136,4 +136,16 @@
 
     </update>
 
+    <delete id="menuDelete" parameterType="map">
+        DELETE
+        FROM "Menu"
+        WHERE "menuid" = #{menuid}
+    </delete>
+
+    <delete id="menuImageDelete" parameterType="map">
+        DELETE
+        FROM "MenuImage"
+        WHERE "menuid" = #{menuid}
+    </delete>
+
 </mapper>

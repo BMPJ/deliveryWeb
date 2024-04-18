@@ -93,6 +93,15 @@ public class StoreController {
 
     }
 
+    @PostMapping("/menu/delete")
+    public String menuDelete(@RequestBody Map<String, Object> menuid) {
+        System.out.println("오냐?");
+        System.out.println(menuid);
+        int result = storeLogic.menuDelete(menuid);
+        return String.valueOf(result);
+    }
+
+
     @PostMapping("/menu/imgUpdate")
     public String menuImgUpdate(@RequestParam MultipartFile file, @RequestParam("menuId") String menuId) {
 
@@ -112,5 +121,6 @@ public class StoreController {
 
         return "";
     }
+
 
 }
