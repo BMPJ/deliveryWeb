@@ -5,6 +5,7 @@ import com.backend.deliveryweb.vo.Menu;
 import com.backend.deliveryweb.vo.Stores;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedOutputStream;
@@ -103,4 +104,11 @@ public class StoreLogic {
         return storeDao.storeOrderList(storeid);
     }
 
+    @Transactional
+    //애노테이션은 주로 서비스 계층의 메서드에 적용되며, 해당 메서드에서 수행되는 모든 작업을 하나의 트랜잭션으로 묶어줍니다.
+    // 따라서 데이터베이스 작업을 실행하는 서비스 메서드에서 데이터의 일관성과 안정성을 보장하기 위해 사용
+    public int menuDelete(Map<String, Object> menuid) {
+        int imageDelete = storeDao.menuImageDelete(menuid);
+        return storeDao.menuDelete(menuid);
+    }
 }

@@ -64,4 +64,11 @@ public class StoreDao {
         return sqlSessionTemplate.selectList("storeOrderList", storeid);
     }
 
+    public int menuDelete(Map<String, Object> menuid) {
+        return sqlSessionTemplate.update("menuDelete", menuid);
+    }
+
+    public int menuImageDelete(Map<String, Object> menuid) {
+        return sqlSessionTemplate.update("menuImageDelete", menuid);
+    }
 }
