@@ -28,6 +28,7 @@ function DeliveryStore() {
     const [rating, setRating] = useState([]);
     const [menuOpen, setMenuOpen] = useState(true);
     const [reviewOpen, setReviewOpen] = useState(false);
+    const [infoOpen, setInfoOpen] = useState(false);
 
     // 각 메뉴 아이템에 대한 모달 열기/닫기 상태를 저장하는 state
     const [orderStates, setOrderStates] = useState(menu.map(() => false));
@@ -133,10 +134,6 @@ function DeliveryStore() {
         )
     }, [storeid, menuid, menuOptionId, orderCnt, option]);
 
-    useEffect(() => {
-        console.log(cart);
-    }, [cart]);
-
 
     const addCart = () => {
         if (cart) {
@@ -161,19 +158,27 @@ function DeliveryStore() {
     const toggleMenu = () => {
         setMenuOpen(!menuOpen);
         setReviewOpen(false);
+        setInfoOpen(false);
     };
 
     const toggleReview = () => {
         setReviewOpen(!reviewOpen);
         setMenuOpen(false);
+        setInfoOpen(false);
     };
+
+    const toggleInfo = () => {
+        setInfoOpen(!infoOpen);
+        setReviewOpen(false);
+        setMenuOpen(false);
+    }
 
     return (
         <div>
             <Header/>
             <Wrap>
                 {
-                    store.map(function (a, i) {
+                    rating.length > 0  && store.map(function (a, i) {
                         return (
                             <Store key={i}>
                                 <div className="storeName">
@@ -183,7 +188,7 @@ function DeliveryStore() {
                                     <img src="/images/store/puradak.png" alt={store[i].name}/>
                                     <ul>
                                         <li>
-                                            평점 : {store[i].rating}
+                                            평점 : {rating[i].AVG}
                                         </li>
                                         <li>
                                             최소주문금액 :{store[i].minDeliveryPrice}
@@ -202,13 +207,14 @@ function DeliveryStore() {
                         <li className="review" onClick={toggleReview}>
                             <a href="#">리뷰</a>
                         </li>
-                        <li className="info">
+                        <li className="info" onClick={toggleInfo}>
                             <a href="#">정보</a>
                         </li>
                     </ul>
                 </MenuButton>
 
-                {menuOpen && (
+                {
+                    menuOpen && (
                     <MenuWrap>
 
                         {
@@ -330,7 +336,8 @@ function DeliveryStore() {
                         }
                     </MenuWrap>
                 )}
-                {reviewOpen && (
+                {
+                    reviewOpen && (
                     <div>
                         {
                             store.length > 0 && rating.length > 0 ? (
@@ -368,6 +375,45 @@ function DeliveryStore() {
                         }
                     </div>
                 )}
+                {
+                    infoOpen && (
+                        <div>
+                            <div>
+                                <img src="/images/store/owner.png"/>
+                                <p>사장님알림</p>
+                                <hr/>
+                                <p>{store[0].content}</p>
+                                <br/>
+                            </div>
+                            <div>
+                                <img src="/images/store/store.png"/>
+                                <p>업체정보</p>
+                                <hr/>
+                                <p>영업시간</p>
+                                <p>{store[0].operationHours}</p>
+                                <p>전화번호</p>
+                                <p>{store[0].phone}</p>
+                                <p>주소</p>
+                                <p>{store[0].address} {store[0].address_detail}</p>
+                                <br/>
+                            </div>
+                            <div>
+                                <img src="/images/store/pay.png"/>
+                                <p>결제정보</p>
+                                <hr/>
+                                <p>현장결제, 카카오페이</p>
+                                <br/>
+                            </div>
+                            <div>
+                                <img src="/images/store/info.png"/>
+                                <p>상호명</p>
+                                <hr/>
+                                <p>{store[0].name}</p>
+                            </div>
+                        </div>
+                    )
+
+                }
             </Wrap>
         </div>
 
