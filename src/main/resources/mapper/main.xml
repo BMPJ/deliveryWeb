@@ -195,7 +195,8 @@
                SUM(CASE WHEN "rating" = 4 THEN 1 ELSE 0 END) AS four,
                SUM(CASE WHEN "rating" = 3 THEN 1 ELSE 0 END) AS three,
                SUM(CASE WHEN "rating" = 2 THEN 1 ELSE 0 END) AS two,
-               SUM(CASE WHEN "rating" = 1 THEN 1 ELSE 0 END) AS one
+               SUM(CASE WHEN "rating" = 1 THEN 1 ELSE 0 END) AS one,
+               round(avg("Reviews"."rating"), 1) AS AVG
         FROM "Reviews"
         WHERE "storeid" = #{storeid}
     </select>
