@@ -216,7 +216,6 @@ function DeliveryStore() {
                 {
                     menuOpen && (
                     <MenuWrap>
-
                         {
                             menu.map(function (a, i) {
                                 return (
@@ -344,11 +343,11 @@ function DeliveryStore() {
                                     <div>
                                         <p>{store[0].name} 리뷰 ( {rating[0].CNT} )</p>
                                         <div>
-                                            <p>5 : {rating[0].FIVE}</p>
-                                            <p>4 : {rating[0].FOUR}</p>
-                                            <p>3 : {rating[0].THREE}</p>
-                                            <p>2 : {rating[0].TWO}</p>
-                                            <p>1 : {rating[0].ONE}</p>
+                                            <p>★★★★★ : {rating[0].FIVE}</p>
+                                            <p>★★★★ : {rating[0].FOUR}</p>
+                                            <p>★★★ : {rating[0].THREE}</p>
+                                            <p>★★ : {rating[0].TWO}</p>
+                                            <p>★ : {rating[0].ONE}</p>
                                         </div>
                                     </div>
                                 )
@@ -412,7 +411,6 @@ function DeliveryStore() {
                             </div>
                         </div>
                     )
-
                 }
             </Wrap>
         </div>
