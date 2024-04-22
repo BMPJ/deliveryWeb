@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import {useNavigate} from "react-router-dom";
-import {Category, Main} from "../../styles/MainDelivery";
+import {Category, Main, Wrap} from "../../styles/MainDelivery";
 import Header from "../include/Header";
 
 function MainDelivery() {
@@ -41,21 +41,22 @@ function MainDelivery() {
     return (
         <div>
             <Header/>
-            {
-                category.map(function (a, i) {
-                    return (
-                        <Main key={i}>
-                            <Category onClick={() => {
-                                navigate(`/main/delivery/category?category=${category[i].category}`)
-                            }}>
-                                <div className="name">{category[i].category}</div>
-                                <img src={`/images/category/${imageNames[i]}`} alt={"category"}/>
-                            </Category>
-                        </Main>
-                    )
-                })
-            }
-
+            <Wrap>
+                {
+                    category.map(function (a, i) {
+                        return (
+                            <div key={i}>
+                                <Category onClick={() => {
+                                    navigate(`/main/delivery/category?category=${category[i].category}`)
+                                }}>
+                                    <div className="name">{category[i].category}</div>
+                                    <img src={`/images/category/${imageNames[i]}`} alt={"category"}/>
+                                </Category>
+                            </div>
+                        )
+                    })
+                }
+            </Wrap>
         </div>
     );
 }
