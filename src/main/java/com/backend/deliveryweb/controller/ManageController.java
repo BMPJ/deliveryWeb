@@ -13,13 +13,8 @@ public class ManageController {
     @Autowired
     private ManageLogic manageLogic;
 
-    @GetMapping("/main")
-    public String getmain(){
-        return "";
-    }
-
     @PostMapping("/join")
-    public String postjoin(@RequestBody Users users){
+    public String postjoin(@RequestBody Users users) {
 
         System.out.println(users);
         int result = manageLogic.join(users);
@@ -27,12 +22,12 @@ public class ManageController {
     }
 
     @GetMapping("/login")
-    public String getLogin(){
+    public String getLogin() {
         return "";
     }
 
-    @GetMapping ("/checkInfo")
-    public String getInfo(@RequestParam String userid){
+    @GetMapping("/checkInfo")
+    public String getInfo(@RequestParam String userid) {
 
         System.out.println(userid);
 
@@ -41,7 +36,7 @@ public class ManageController {
     }
 
     @GetMapping("/getInfo")
-    public String getInfo(@RequestParam Users users){
+    public String getInfo(@RequestParam Users users) {
         System.out.println(users);
         return String.valueOf(manageLogic.getInfo(users));
     }

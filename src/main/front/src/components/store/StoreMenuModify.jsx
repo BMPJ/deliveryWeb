@@ -204,7 +204,8 @@ const StoreMenuModify = () => {
                                             }}>수정
                                             </button>
                                             <button onClick={() =>
-                                                deleteData(menu[i].menuid)}
+                                                deleteData(menu[i].menuid)
+                                            }
                                             >삭제
                                             </button>
                                         </div>

@@ -26,7 +26,6 @@ public class StoreController {
     @PostMapping("/register")
     public String storeRegister(@RequestBody Stores stores) {
 
-        System.out.println(stores);
         int result = storeLogic.register(stores);
         return String.valueOf(result);
 
@@ -34,7 +33,6 @@ public class StoreController {
 
     @GetMapping("/info")
     public String storeInfo(@RequestParam String userid) {
-        //System.out.println(userid);
 
         List<Map<String, Object>> list = storeLogic.info(userid);
 
@@ -44,8 +42,6 @@ public class StoreController {
 
     @GetMapping("/detail")
     public String storeDetail(@RequestParam String storeid, @RequestParam String userid) {
-        System.out.println(storeid);
-        System.out.println(userid);
 
         List<Map<String, Object>> list = storeLogic.detail(storeid, userid);
 
@@ -55,9 +51,6 @@ public class StoreController {
     @PostMapping("/update")
     public String storeUpdate(@RequestBody Stores stores) {
 
-        System.out.println(stores);
-        System.out.println(stores.getName());
-
         int result = storeLogic.update(stores);
 
         return String.valueOf(result);
@@ -65,8 +58,6 @@ public class StoreController {
 
     @PostMapping("/menu/register")
     public String menuRegister(@RequestBody Menu menu) {
-
-        System.out.println(menu);
 
         int result = storeLogic.menuRegister(menu);
 
@@ -77,15 +68,12 @@ public class StoreController {
     @GetMapping("/menu/info")
     public String menuInfo(@RequestParam String storeid) {
 
-
-        System.out.println("스토어아이디" + storeid);
         List<Map<String, Object>> list = storeLogic.menuInfo(storeid);
         return g.toJson(list);
     }
 
     @PostMapping("/menu/update")
     public String menuUpdate(@RequestBody Menu menu) {
-        System.out.println(menu);
 
         int result = storeLogic.menuUpdate(menu);
 
@@ -95,8 +83,6 @@ public class StoreController {
 
     @PostMapping("/menu/delete")
     public String menuDelete(@RequestBody Map<String, Object> menuid) {
-        System.out.println("오냐?");
-        System.out.println(menuid);
         int result = storeLogic.menuDelete(menuid);
         return String.valueOf(result);
     }
@@ -114,8 +100,6 @@ public class StoreController {
 
     @GetMapping("/orderList")
     public String orderList(String storeid) {
-        System.out.println(storeid);
-
         List<Map<String, Object>> list = storeLogic.storeOrderList(storeid);
         System.out.println(list);
 
