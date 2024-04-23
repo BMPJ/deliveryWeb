@@ -15,3 +15,18 @@ export const manageDB = (user) => {
         }
     });
 }
+
+export const manageLoginDB = (user) => {
+    return new Promise((resolve, reject) => {
+        try {
+            const response = axios({
+                method: "get",
+                url: "/manage/login",
+                params: user,
+            });
+            resolve(response);
+        } catch (error) {
+            reject(error);
+        }
+    });
+}

@@ -20,7 +20,7 @@ const ManageMain = () => {
                     (
                         <div>
                             <button onClick={() => navigate('/manage/join')}>판매자회원가입</button>
-                            <button onClick={() => navigate('/main/login')}>판매자로그인</button>
+                            <button onClick={() => navigate('/manage/login')}>판매자로그인</button>
                         </div>
                     ) :
                     (

@@ -6,13 +6,24 @@ import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/manage")
 public class ManageController {
 
+    Gson g = new Gson();
+
     @Autowired
     private ManageLogic manageLogic;
 
+    /**
+     * 사장님 회원가입
+     *
+     * @param users
+     * @return
+     */
     @PostMapping("/join")
     public String postjoin(@RequestBody Users users) {
 
@@ -21,10 +32,19 @@ public class ManageController {
         return String.valueOf(result);
     }
 
+    /**
+     * 사장님 로그인
+     *
+     * @param users
+     * @return
+     */
     @GetMapping("/login")
-    public String getLogin() {
-        return "";
+    public String getLogin(@ModelAttribute Users users) {
+
+        List<Map<String, Object>> list = manageLogic.login(users);
+        return g.toJson(list);
     }
+
 
     @GetMapping("/checkInfo")
     public String getInfo(@RequestParam String userid) {
