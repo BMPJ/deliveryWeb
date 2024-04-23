@@ -16,7 +16,9 @@ import {
 } from "../../styles/DeliveryStoreStyle";
 import Header from "../include/Header";
 
+
 function DeliveryStore() {
+
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const storeid = queryParams.get('storeid');
@@ -35,7 +37,10 @@ function DeliveryStore() {
 
     const [option, setOption] = useState([]);
 
+    const {kakao} = window;
+
     useEffect(() => {
+
         if (storeid) {
             axios.get(`/main/delivery/storeid?storeid=${storeid}`)
                 .then((a) => {
@@ -172,6 +177,34 @@ function DeliveryStore() {
         setReviewOpen(false);
         setMenuOpen(false);
     }
+
+
+
+    useEffect(() => {
+        if(store.length>0) {
+            axios.get('/main/delivery/store/map', {params : {adr : store[0].address + ' ' + store[0].address_detail}})
+                .then((a)=>{
+                    const mapContainer = document.getElementById('map');
+                    if (mapContainer) {
+                        const mapOptions = {
+                            center: new kakao.maps.LatLng(a.data.y, a.data.x),
+                            level: 3
+                        };
+                        const map = new kakao.maps.Map(mapContainer, mapOptions);
+
+                        var coords = new kakao.maps.LatLng(a.data.y, a.data.x);
+
+                        const marker = new kakao.maps.Marker({
+                            map: map,
+                            position: coords
+                        });
+                    }
+                })
+                .catch((err)=>{
+                    console.error(err)
+                })
+        }
+    }, [infoOpen]);
 
     return (
         <div>
@@ -365,7 +398,13 @@ function DeliveryStore() {
                                         <div>
                                             <p>{review[i].nickname}</p>
                                             <p>{review[i].CREATEDDATE}</p>
-                                            <p>{review[i].rating}</p>
+                                            <div>
+                                                {
+                                                    [...Array(review[i].rating)].map((b, index) => (
+                                                    <span key={index}>★</span>
+                                                    ))
+                                                }
+                                            </div>
                                             <p>{review[i].content}</p>
                                         </div>
                                     </div>
@@ -394,6 +433,12 @@ function DeliveryStore() {
                                 <p>{store[0].phone}</p>
                                 <p>주소</p>
                                 <p>{store[0].address} {store[0].address_detail}</p>
+                                <div>
+                                    <div id="map" style={{
+                                        width : '500px',
+                                        height : '400px'
+                                    }}></div>
+                                </div>
                                 <br/>
                             </div>
                             <div>
@@ -419,4 +464,4 @@ function DeliveryStore() {
 }
 
 
-export default DeliveryStore;
+export default DeliveryStore

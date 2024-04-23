@@ -6,9 +6,19 @@ import com.backend.deliveryweb.vo.Orders;
 import com.backend.deliveryweb.vo.Reviews;
 import com.backend.deliveryweb.vo.Users;
 import com.google.gson.Gson;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -163,7 +173,43 @@ public class MainController {
        return g.toJson(mainLogic.reviewCount(storeid));
     }
 
+    @GetMapping("/main/delivery/store/map")
+    public String map(@RequestParam String adr){
 
+        String apikey = "D8D77C59-1BA5-3F41-AFEB-A7BDD7B52198";
+        String searchType = "ROAD";
+        String epsg = "epsg:4326";
+
+        StringBuilder sb = new StringBuilder("https://api.vworld.kr/req/address");
+        sb.append("?service=address");
+        sb.append("&request=getCoord");
+        sb.append("&format=json");
+        sb.append("&crs=" + epsg);
+        sb.append("&key=" + apikey);
+        sb.append("&type=" + searchType);
+        sb.append("&address=" + URLEncoder.encode(adr, StandardCharsets.UTF_8));
+
+        try{
+            URL url = new URL(sb.toString());
+            BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream(), StandardCharsets.UTF_8));
+
+            JSONParser jspa = new JSONParser();
+            JSONObject jsob = (JSONObject) jspa.parse(reader);
+            JSONObject jsrs = (JSONObject) jsob.get("response");
+            JSONObject jsResult = (JSONObject) jsrs.get("result");
+            JSONObject jspoitn = (JSONObject) jsResult.get("point");
+
+            Map<String, Object> map = new HashMap<>();
+
+            map.put("x", jspoitn.get("x"));
+            map.put("y", jspoitn.get("y"));
+
+            return g.toJson(map);
+
+        } catch (IOException | ParseException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 
 

@@ -151,3 +151,7 @@ export const Option = styled.label`
   cursor: pointer;
 `
 
+export const Kakao = styled.div`
+  width: 500px;
+  height: 300px;
+`
