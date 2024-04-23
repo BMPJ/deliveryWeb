@@ -35,14 +35,13 @@ function MainLogin() {
             .then(a => {
                 if (a.data != 0) {
                     console.log(a.data)
-                    session.setItem("userid", a.data[0].userid);
-                    session.setItem("role", a.data[0].role);
-                    session.setItem("storeid", a.data[0].storeid);
-
                     if (a.data[0].role != 1) {
+                        session.setItem("userid", a.data[0].userid);
+                        session.setItem("role", a.data[0].role);
+                        session.setItem("storeid", a.data[0].storeid);
                         navigator("/main")
                     } else {
-                        navigator("/manage/main")
+                        alert("사장님회원입니다!")
                     }
                 } else {
                     alert("로그인실패!")

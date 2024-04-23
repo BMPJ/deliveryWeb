@@ -67,7 +67,7 @@ function Header() {
                                         </div>
                                         <div className="manage" onClick={() => {
                                             navigate('/manage/main')
-                                        }}>판매자
+                                        }}>사장님
                                         </div>
                                     </div>
                                 )
