@@ -20,6 +20,7 @@ import DeliveryOrder from "./components/page/DeliveryOrder";
 import StoreReview from "./components/page/StoreReview";
 import ReviewWrite from "./components/page/ReviewWrite";
 import StoreOrder from "./components/store/StoreOrder";
+import ManageLogin from "./components/page/ManageLogin";
 
 function App() {
     return (
@@ -33,6 +34,7 @@ function App() {
             <Route path="main/delivery/cart" element={<DeliveryCart/>}/>
             <Route path="main/delivery/order" element={<DeliveryOrder/>}/>
             <Route path="/manage/main" element={<ManageMain/>}/>
+            <Route path="/manage/login" element={<ManageLogin/>}/>
             <Route path="/manage/join" element={<ManageJoin/>}/>
             <Route path="/store/register" element={<StoreRegister/>}/>
             <Route path="/store/settingMain" element={<StoreSettingMain/>}/>

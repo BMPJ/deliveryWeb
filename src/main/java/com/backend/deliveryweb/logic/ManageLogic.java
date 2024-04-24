@@ -29,4 +29,8 @@ public class ManageLogic {
 
         return manageDao.getInfo(users);
     }
+
+    public List<Map<String, Object>> login(Users users) {
+        return manageDao.login(users);
+    }
 }

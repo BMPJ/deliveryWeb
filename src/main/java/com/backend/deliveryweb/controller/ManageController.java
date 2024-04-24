@@ -6,33 +6,48 @@ import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/manage")
 public class ManageController {
 
+    Gson g = new Gson();
+
     @Autowired
     private ManageLogic manageLogic;
 
-    @GetMapping("/main")
-    public String getmain(){
-        return "";
-    }
-
+    /**
+     * 사장님 회원가입
+     *
+     * @param users
+     * @return
+     */
     @PostMapping("/join")
-    public String postjoin(@RequestBody Users users){
+    public String postjoin(@RequestBody Users users) {
 
         System.out.println(users);
         int result = manageLogic.join(users);
         return String.valueOf(result);
     }
 
+    /**
+     * 사장님 로그인
+     *
+     * @param users
+     * @return
+     */
     @GetMapping("/login")
-    public String getLogin(){
-        return "";
+    public String getLogin(@ModelAttribute Users users) {
+
+        List<Map<String, Object>> list = manageLogic.login(users);
+        return g.toJson(list);
     }
 
-    @GetMapping ("/checkInfo")
-    public String getInfo(@RequestParam String userid){
+
+    @GetMapping("/checkInfo")
+    public String getInfo(@RequestParam String userid) {
 
         System.out.println(userid);
 
@@ -41,7 +56,7 @@ public class ManageController {
     }
 
     @GetMapping("/getInfo")
-    public String getInfo(@RequestParam Users users){
+    public String getInfo(@RequestParam Users users) {
         System.out.println(users);
         return String.valueOf(manageLogic.getInfo(users));
     }
