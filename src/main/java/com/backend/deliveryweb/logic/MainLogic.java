@@ -52,11 +52,13 @@ public class MainLogic {
         return mainDao.getOption(menuid);
     }
 
-    public int selectCart(String userid) {
-        return mainDao.selectCart(userid);
+    public int checkCart(Carts carts) {
+        return mainDao.checkCart(carts);
     }
 
     public void deleteCart(String userid) { mainDao.deleteCart(userid);}
+
+    public int plusQuantity(Carts carts) { return mainDao.plusQuantity(carts);}
 
     public int cart(Carts carts) {return mainDao.cart(carts); }
 
@@ -82,4 +84,9 @@ public class MainLogic {
     public List<Map<String, Object>> reviewList(String storeid) { return mainDao.reviewList(storeid); }
 
     public List<Map<String, Object>> reviewCount(String storeid) { return mainDao.reviewCount(storeid); }
+
+    public String userAdr(String userid) { return mainDao.userAdr(userid); }
+
+
+    public int cartDeleteMenu(String cartid) { return mainDao.cartDeleteMenu(cartid); }
 }

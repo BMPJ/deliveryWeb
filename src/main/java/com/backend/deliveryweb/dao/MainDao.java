@@ -55,12 +55,16 @@ public class MainDao {
         return sqlSessionTemplate.selectList("getOption", menuid);
     }
 
-    public int selectCart(String userid) {
-        return sqlSessionTemplate.selectOne("selectCart", userid);
+    public int checkCart(Carts carts) {
+        return sqlSessionTemplate.selectOne("checkCart", carts);
     }
 
     public void deleteCart(String userid) {
         sqlSessionTemplate.delete("deleteCart", userid);
+    }
+
+    public int plusQuantity(Carts carts){
+        return sqlSessionTemplate.update("plusQuantity", carts);
     }
 
     public int cart(Carts carts) {
@@ -101,5 +105,13 @@ public class MainDao {
 
     public List<Map<String, Object>> reviewCount(String storeid) {
         return sqlSessionTemplate.selectList("reviewCount", storeid);
+    }
+
+    public String userAdr(String userid) {
+        return sqlSessionTemplate.selectOne("userAdr", userid);
+    }
+
+    public int cartDeleteMenu(String cartid) {
+        return sqlSessionTemplate.delete("cartDeleteMenu", cartid);
     }
 }

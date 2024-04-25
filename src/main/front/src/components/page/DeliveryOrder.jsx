@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import Header from "../include/Header";
 
 function DeliveryOrder(){
+
+    const {kakao} = window;
 
     const userid = sessionStorage.getItem("userid");
     const [order, setOrder] = useState([]);
     const navigator = useNavigate();
+    const [userAdr, setUserAdr] = useState([]);
 
     useEffect(() => {
         axios.get(`/main/delivery/order?userid=${userid}`)
@@ -17,12 +21,42 @@ function DeliveryOrder(){
             .catch((err)=>{
                 console.error(err)
             })
+        axios.get(`/main/userAdr?userid=${userid}`)
+            .then((a)=>{
+                console.log(a.data)
+
+                const userMarker = {
+                    position: new kakao.maps.LatLng(a.data.y, a.data.x),
+                    text: '우리집'
+                };
+
+                const staticMapContainer  = document.getElementById('staticMap'), // 이미지 지도를 표시할 div
+                    staticMapOption = {
+                        center: new kakao.maps.LatLng(a.data.y, a.data.x),
+                        level: 3, // 이미지 지도의 확대 레벨
+                        marker: userMarker // 이미지 지도에 표시할 마커
+                    };
+                const staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption);
+            })
+            .catch((err)=>{
+                console.error(err)
+            })
+
     }, []);
+
+
 
     return(
         <div>
+            <Header/>
             <div>
                 <strong>주문내역</strong>
+            </div>
+            <div>
+                <div id="staticMap" style={{
+                    width : '500px',
+                    height : '400px'
+                }}></div>
             </div>
             <div>
                 {order.length > 0 ? (
@@ -38,7 +72,9 @@ function DeliveryOrder(){
                                             }}>{a.name}</strong>
                                             <p>{a.orderName}</p>
                                             <p>{a.totalPrice} 원</p>
+                                            <button>상세보기</button>
                                         </div>
+                                        <br/>
                                     </div>
                                 </div>
                             );
@@ -72,6 +108,7 @@ function DeliveryOrder(){
                                                     )
 
                                             }
+                                            <br/>
                                     </div>
                                 </div>
                             );

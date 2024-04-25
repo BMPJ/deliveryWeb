@@ -31,6 +31,8 @@ function DeliveryStore() {
     const [menuOpen, setMenuOpen] = useState(true);
     const [reviewOpen, setReviewOpen] = useState(false);
     const [infoOpen, setInfoOpen] = useState(false);
+    const [userCart, setUserCart] = useState([]);
+    const [cartPrice, setCartPrice] = useState(0);
 
     // 각 메뉴 아이템에 대한 모달 열기/닫기 상태를 저장하는 state
     const [orderStates, setOrderStates] = useState(menu.map(() => false));
@@ -74,6 +76,14 @@ function DeliveryStore() {
                 .catch((err) => {
                     console.error(err)
                 });
+            axios.get(`/main/delivery/getCart?userid=${userid}`)
+                .then((a)=>{
+                    console.log(a)
+                    setUserCart(a.data)
+                })
+                .catch((err)=>{
+                    console.error(err)
+                })
         }
     }, [])
 
@@ -137,27 +147,43 @@ function DeliveryStore() {
                 quantity: orderCnt
             })
         )
-    }, [storeid, menuid, menuOptionId, orderCnt, option]);
+
+    }, [storeid, menuid, menuOptionId, orderCnt, option, userCart]);
 
 
     const addCart = () => {
         if (cart) {
-            if (total > store[0].minDeliveryPrice) {
-                axios.post('/main/delivery/cart', cart)
-                    .then((a) => {
-                        console.log(a.data)
-                        if (a.data === 1) {
-                            navigator(`/main/delivery/cart?userid=${userid}`)
-                        } else {
-                            alert("실패")
-                        }
-                    }).catch((err) => {
-                    console.error(err)
-                })
-            } else {
-                alert("최소주문금액보다 작습니다")
-            }
+            axios.post('/main/delivery/cart', cart)
+                .then((a) => {
+                    console.log('cart')
+                    console.log(a.data)
+                    setUserCart(a.data)
+                }).catch((err) => {
+                console.error(err)
+            })
         }
+    }
+
+    const deleteCart = ()=>{
+        axios.get(`/main/delivery/deleteCart?userid=${userid}`)
+            .then((a)=>{
+                console.log(a.data)
+                window.location.reload();
+            })
+            .catch((err)=>{
+                console.error(err)
+            })
+    }
+
+    function deleteMenu(cartid){
+        axios.get(`/main/user/cartDeleteMenu?cartid=${cartid}`)
+            .then((a)=>{
+                console.log(a.data)
+                window.location.reload();
+            })
+            .catch((err)=>{
+                console.error(err)
+            })
     }
 
     const toggleMenu = () => {
@@ -184,21 +210,21 @@ function DeliveryStore() {
         if(store.length>0) {
             axios.get('/main/delivery/store/map', {params : {adr : store[0].address + ' ' + store[0].address_detail}})
                 .then((a)=>{
-                    const mapContainer = document.getElementById('map');
-                    if (mapContainer) {
-                        const mapOptions = {
-                            center: new kakao.maps.LatLng(a.data.y, a.data.x),
-                            level: 3
+                    console.log(a.data)
+
+                    const marker = {
+                        position: new kakao.maps.LatLng(a.data.y, a.data.x),
+                        text: store[0].name // text 옵션을 설정하면 마커 위에 텍스트를 함께 표시할 수 있습니다
+                    };
+
+                    const staticMapContainer  = document.getElementById('staticMap'), // 이미지 지도를 표시할 div
+                        staticMapOption = {
+                            center: new kakao.maps.LatLng(a.data.y, a.data.x), // 이미지 지도의 중심좌표
+                            level: 3, // 이미지 지도의 확대 레벨
+                            marker: marker // 이미지 지도에 표시할 마커
                         };
-                        const map = new kakao.maps.Map(mapContainer, mapOptions);
 
-                        var coords = new kakao.maps.LatLng(a.data.y, a.data.x);
-
-                        const marker = new kakao.maps.Marker({
-                            map: map,
-                            position: coords
-                        });
-                    }
+                    const staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption);
                 })
                 .catch((err)=>{
                     console.error(err)
@@ -317,7 +343,12 @@ function DeliveryStore() {
                                                             </Right>
                                                         </Cnt>
                                                         <DetailFoot>
-                                                            <Button onClick={addCart}>장바구니 담기</Button>
+                                                            <Button onClick={()=>{
+                                                                addCart();
+                                                                const newOrderStates = [...orderStates];
+                                                                newOrderStates[i] = false;
+                                                                setOrderStates(newOrderStates);
+                                                            }}>장바구니 담기</Button>
                                                             <Button onClick={() => {
                                                                 const newOrderStates = [...orderStates];
                                                                 newOrderStates[i] = false;
@@ -434,7 +465,7 @@ function DeliveryStore() {
                                 <p>주소</p>
                                 <p>{store[0].address} {store[0].address_detail}</p>
                                 <div>
-                                    <div id="map" style={{
+                                    <div id="staticMap" style={{
                                         width : '500px',
                                         height : '400px'
                                     }}></div>
@@ -456,6 +487,36 @@ function DeliveryStore() {
                             </div>
                         </div>
                     )
+                }
+
+                {
+                    userCart && userCart.length > 0
+                        ?
+                        (
+                        <div>
+                            <div>주문표</div>
+                            <button onClick={deleteCart}>X</button>
+                            {
+                                userCart.map(function (a,i){
+                                    return(
+                                        <div key={i}>
+                                            <p>{userCart[i].MENUNAME} : {userCart[i].OP}</p>
+                                            <button onClick={() => deleteMenu(userCart[i].cartid)}>X</button>
+                                            <p>{userCart[i].PRICE} 원</p>
+                                            <p>{userCart[i].quantity}</p>
+                                            <hr/>
+                                        </div>
+
+                                    )
+                                })
+                            }
+                            <p>합계 :{userCart[0].SUM} </p>
+                        </div>
+                        )
+                        :
+                        (
+                        <strong>주문표에 담긴 메뉴가 없습니다.</strong>
+                        )
                 }
             </Wrap>
         </div>
