@@ -49,7 +49,7 @@ function Header() {
                                     <div className="button-box">
                                         <div className="logout" onClick={() => logout()}>로그아웃</div>
                                         <div className="orderList" onClick={() => {
-                                            navigate(`/main/delivery/order?userid=${userid}`)
+                                            navigate(`/main/order?userid=${userid}`)
                                         }}>주문내역
                                         </div>
                                     </div>

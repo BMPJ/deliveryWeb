@@ -114,4 +114,6 @@ public class MainDao {
     public int cartDeleteMenu(String cartid) {
         return sqlSessionTemplate.delete("cartDeleteMenu", cartid);
     }
+
+    public List<Map<String, Object>> orderDetail(String orderid) { return sqlSessionTemplate.selectList("orderDetail", orderid); }
 }

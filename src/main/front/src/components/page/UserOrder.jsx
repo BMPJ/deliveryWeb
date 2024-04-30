@@ -3,7 +3,7 @@ import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import Header from "../include/Header";
 
-function DeliveryOrder(){
+function UserOrder(){
 
     const {kakao} = window;
 
@@ -15,7 +15,7 @@ function DeliveryOrder(){
     useEffect(() => {
         axios.get(`/main/delivery/order?userid=${userid}`)
             .then((a)=>{
-                console.log(a)
+                console.log(a.data)
                 setOrder(a.data);
             })
             .catch((err)=>{
@@ -72,7 +72,9 @@ function DeliveryOrder(){
                                             }}>{a.name}</strong>
                                             <p>{a.orderName}</p>
                                             <p>{a.totalPrice} 원</p>
-                                            <button>상세보기</button>
+                                            <button onClick={()=>{
+                                                navigator(`/main/order/detail?orderid=${a.orderid}`)}
+                                            }>상세보기</button>
                                         </div>
                                         <br/>
                                     </div>
@@ -89,6 +91,9 @@ function DeliveryOrder(){
                                             }}>{a.name}</strong>
                                             <p>{a.orderName}</p>
                                             <p>{a.totalPrice} 원</p>
+                                            <button onClick={()=>{
+                                                navigator(`/main/order/detail?orderid=${a.orderid}`)}
+                                            }>상세보기</button>
                                         </div>
                                             {
                                                 a.CNT > 0 ?
@@ -122,4 +127,4 @@ function DeliveryOrder(){
     )
 }
 
-export default DeliveryOrder;
+export default UserOrder;

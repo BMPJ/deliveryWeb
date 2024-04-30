@@ -197,6 +197,8 @@ public class MainController {
     @GetMapping("/main/delivery/store/map")
     public String map(@RequestParam String adr){
 
+        System.out.println(adr);
+
         String apikey = "D8D77C59-1BA5-3F41-AFEB-A7BDD7B52198";
         String searchType = "ROAD";
         String epsg = "epsg:4326";
@@ -224,6 +226,7 @@ public class MainController {
 
             map.put("x", jspoitn.get("x"));
             map.put("y", jspoitn.get("y"));
+            System.out.println(map);
 
             return g.toJson(map);
 
@@ -267,6 +270,12 @@ public class MainController {
         } catch (IOException | ParseException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @GetMapping("/main/order/detail")
+    public String orderDetail(String orderid){
+
+       return g.toJson(mainLogic.orderDetail(orderid));
     }
 
 

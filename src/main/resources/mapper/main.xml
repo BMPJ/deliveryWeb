@@ -212,4 +212,13 @@
         delete "Carts" WHERE "cartid" = #{cartid}
     </delete>
 
+    <select id="orderDetail" parameterType="String" resultType="map">
+        select s."address" storeadr, u."address" useradr, o."status", o."totalPrice", o."orderName", o."paymentMethod", o."requests", to_char(o."orderTime", 'MM"월" DD"일" HH24:MI') ordertime, s."phone" sphone, u."phone" uphone,
+               s."name" storename, s."storeid", u."userid"
+        from "Orders" o
+                 inner join "Stores" s on s."storeid" = o."storeid"
+                 inner join "Users" u on o."userid" = u."userid"
+        where "orderid" = #{orderid}
+    </select>
+
 </mapper>

@@ -87,6 +87,7 @@ public class MainLogic {
 
     public String userAdr(String userid) { return mainDao.userAdr(userid); }
 
-
     public int cartDeleteMenu(String cartid) { return mainDao.cartDeleteMenu(cartid); }
+
+    public List<Map<String, Object>> orderDetail(String orderid) { return mainDao.orderDetail(orderid); }
 }
