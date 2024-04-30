@@ -1,16 +1,19 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {storesInfoDB} from "../../service/storesLogic";
-const StoreSettingMain = () =>{
+import Header from "../include/Header";
+import StoreInfo from "../store/StoreInfo";
+
+const StoreSettingMain = () => {
     const userid = sessionStorage.getItem('userid');
-    const [store,setStore] = useState([]);
+    const [store, setStore] = useState([]);
     const [isOpen, setIsOpen] = useState("");
 
 
     let navigate = useNavigate();
 
 
-    useEffect(()=>{
+    useEffect(() => {
         const db = async () => {
             try {
                 const response = await storesInfoDB(userid);
@@ -24,20 +27,22 @@ const StoreSettingMain = () =>{
             }
         };
         db();
-    },[])
+    }, [])
 
 
-    return(
+    return (
         <>
+            <Header/>
             <div>
-                {store.map((a, i) => (
+                {store && store.map((a, i) => (
                     <div key={i}>
                         <button onClick={() => navigate(`/store/info/${store[i].storeid}`)}>
                             {store[i].name}
                         </button>
                     </div>
-                    ))}
+                ))}
             </div>
+
         </>
     )
 

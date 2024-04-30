@@ -1,9 +1,12 @@
-import React from "react-router-dom";
+import React, {useNavigate} from "react-router-dom";
 import {useState} from "react";
 import {manageLoginDB} from "../../service/manageLogic";
 import {LoginBox, ManageWrap} from "../../styles/LoginStyle";
 
 const ManageLogin = () => {
+
+    const navigator = useNavigate();
+    const session = sessionStorage;
 
     const [user, setUser] = useState({
         userid: '',
@@ -19,7 +22,23 @@ const ManageLogin = () => {
     const login = async () => {
         try {
             const response = await manageLoginDB(user);
-            console.log(response);
+            console.log(response.data);
+
+            if (response.data != null) {
+                console.log(response.data[0].role)
+
+                if (response.data[0].role == 0) {
+                    alert("일반회원입니다")
+                } else {
+                    session.setItem("userid", response.data[0].userid);
+                    session.setItem("role", response.data[0].role);
+                    session.setItem("storeid", response.data[0].storeid);
+                    navigator("/manage/main")
+                }
+
+            } else {
+                alert("없는회원입니다")
+            }
 
         } catch (error) {
             console.log(user)

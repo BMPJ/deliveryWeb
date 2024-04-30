@@ -4,7 +4,7 @@ import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
 
 function Header() {
-    let navigate = useNavigate();
+    const navigate = useNavigate();
     const [userid, setUserid] = useState(null);
     const [nick, setNick] = useState('');
 
@@ -32,6 +32,7 @@ function Header() {
     const logout = () => {
         sessionStorage.removeItem('userid');
         sessionStorage.removeItem('role');
+        navigate("/main")
         window.location.reload();
     }
 
@@ -39,9 +40,17 @@ function Header() {
         <div>
             <HeaderBlock>
                 <div className="block">
-                    <a href="/main">
-                        <img src="/images/logo-yogiyo.png" alt="메인로고"/>
-                    </a>
+                    {
+                        role == 1 ? (
+                            <a className="boss" href="/manage/main">
+                                <img src="/images/yogiyo-boss.png" alt="사장님로고"/>
+                            </a>
+                        ) : (
+                            <a href="/main">
+                                <img src="/images/logo-yogiyo.png" alt="메인로고"/>
+                            </a>
+                        )
+                    }
                     <div className="buttons">
                         {
                             userid ?
@@ -66,7 +75,7 @@ function Header() {
                                         }}>회원가입
                                         </div>
                                         <div className="manage" onClick={() => {
-                                            navigate('/manage/main')
+                                            navigate('/manage/login')
                                         }}>사장님
                                         </div>
                                     </div>
