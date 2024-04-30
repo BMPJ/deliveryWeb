@@ -1,6 +1,7 @@
 import React, {useParams} from "react-router-dom";
 import {useEffect, useRef, useState} from "react";
 import {imgUpdateDB, menuDeleteDB, menuInfoDB, menuUpdateDB} from "../../service/menuLogic";
+import StoreInfo from "./StoreInfo";
 
 
 const StoreMenuModify = () => {
@@ -103,6 +104,7 @@ const StoreMenuModify = () => {
 
     return (
         <>
+            <StoreInfo></StoreInfo>
             {
                 menu.map((a, i) => {
                         return (

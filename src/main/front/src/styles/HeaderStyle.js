@@ -6,6 +6,13 @@ export const HeaderBlock = styled.div`
   background-color: #fa0050;
   overflow: hidden;
 
+  .boss img {
+    position: absolute;
+    width: 200px;
+    height: 100px;
+    top: -10px;
+  }
+
   .block {
     position: relative;
     max-width: 1020px;

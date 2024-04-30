@@ -111,4 +111,8 @@ public class StoreLogic {
         int imageDelete = storeDao.menuImageDelete(menuid);
         return storeDao.menuDelete(menuid);
     }
+
+    public int delete(Map<String, Object> storeid) {
+        return storeDao.delete(storeid);
+    }
 }

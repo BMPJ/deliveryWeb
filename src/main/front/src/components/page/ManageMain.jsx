@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom"
 import Header from "../include/Header";
+import {Main} from "../../styles/ManageStyle";
 
 
 const ManageMain = () => {
@@ -15,29 +16,16 @@ const ManageMain = () => {
     return (
         <>
             <Header/>
-            {
-                info.userid == null ?
-                    (
-                        <div>
-                            <button onClick={() => navigate('/manage/join')}>판매자회원가입</button>
-                            <button onClick={() => navigate('/manage/login')}>판매자로그인</button>
-                        </div>
-                    ) :
-                    (
-                        <div>
-                            <button onClick={() => navigate("/store/register")}>가게등록</button>
-                            <button onClick={() => navigate("/store/settingMain")}>가게관리</button>
-                            <button onClick={() => {
-                                sessionStorage.removeItem('userid');
-                                sessionStorage.removeItem('role');
-                                window.location.reload();
-                                navigate("/manage/main")
-                            }}>로그아웃
-                            </button>
-                        </div>
-
-                    )
-            }
+            <Main>
+                <div className="register" onClick={() => {
+                    navigate("/store/register")
+                }}>
+                </div>
+                <div className="setting" onClick={() => {
+                    navigate("/store/settingMain")
+                }}>
+                </div>
+            </Main>
         </>
     )
 }

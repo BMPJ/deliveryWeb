@@ -1,27 +1,34 @@
 import React, {useEffect, useState} from 'react';
-import {useLocation} from "react-router-dom";
+import {useLocation, useParams} from "react-router-dom";
 import axios from "axios";
+import StoreInfo from "./StoreInfo";
 
-function StoreOrder(){
+function StoreOrder() {
 
+
+    const {id} = useParams();
+
+    console.log(id);
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const storeid = queryParams.get('storeid');
 
     useEffect(() => {
-        axios.get(`/store/orderList?storeid=${storeid}`)
-            .then((a)=>{
-                console.log(a)
-            })
-            .catch((err)=>{
-                console.error(err)
-            })
+        if (id) {
+            axios.get(`/store/orderList?storeid=${id}`)
+                .then((a) => {
+                    console.log(a)
+                })
+                .catch((err) => {
+                    console.error(err)
+                })
+        }
     }, []);
 
-    return(
-
+    return (
         <div>
-            {storeid}
+            <StoreInfo></StoreInfo>
+            {id}
         </div>
 
     )
