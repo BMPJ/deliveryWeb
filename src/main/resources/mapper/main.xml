@@ -53,11 +53,23 @@
         where "menuid" = #{menuid}
     </select>
 
-    <select id="selectCart" parameterType="String" resultType="int">
+    <select id="checkCart" parameterType="com.backend.deliveryweb.vo.Carts" resultType="int">
         select count(*)
         from "Carts"
         where "userid" = #{userid}
+        and "storeid" = #{storeid}
+        and "menuid" = #{menuid}
+        and "menuOptionId" = #{menuOptionId}
     </select>
+
+    <update id="plusQuantity" parameterType="com.backend.deliveryweb.vo.Carts">
+        UPDATE "Carts"
+        SET "quantity" = "quantity" + #{quantity}
+        WHERE "userid" = #{userid}
+          AND "storeid" = #{storeid}
+          AND "menuid" = #{menuid}
+          AND "menuOptionId" = #{menuOptionId}
+    </update>
 
     <delete id="deleteCart" parameterType="String">
         delete
@@ -76,22 +88,11 @@
     </insert>
 
     <select id="getCart" parameterType="String" resultType="map">
-        select c.*,
-               u."name",
-               u."nickname",
-               u."phone",
-               u."address",
-               u."address_detail",
-               s."name" storeName,
-               s."minDeliveryPrice",
-               s."maxDeliveryTime",
-               s."deliveryTip"
+        select m."menuName" menuName, o."option" op, (m."price" + o."price") price, c."quantity", c."cartid", SUM((m."price" + o."price") * c."quantity") over () AS SUM
         from "Carts" c
-                 inner join "Users" u
-                            on u."userid" = c."userid"
-                 inner join "Stores" s
-                            on c."storeid" = s."storeid"
-        where c."userid" = #{userid}
+                 inner join "Menu" m on m."menuid" = c."menuid"
+                 inner join "MenuOption" o on c."menuOptionId" = o."menuOptionId"
+        where "userid" = #{userid}
     </select>
 
     <select id="cartMenu" parameterType="String" resultType="map">
@@ -199,6 +200,25 @@
                round(avg("Reviews"."rating"), 1) AS AVG
         FROM "Reviews"
         WHERE "storeid" = #{storeid}
+    </select>
+
+    <select id="userAdr" parameterType="String" resultType="String">
+        select "address"
+        from "Users"
+        where "userid" = #{userid}
+    </select>
+
+    <delete id="cartDeleteMenu" parameterType="String">
+        delete "Carts" WHERE "cartid" = #{cartid}
+    </delete>
+
+    <select id="orderDetail" parameterType="String" resultType="map">
+        select s."address" storeadr, u."address" useradr, o."status", o."totalPrice", o."orderName", o."paymentMethod", o."requests", to_char(o."orderTime", 'MM"월" DD"일" HH24:MI') ordertime, s."phone" sphone, u."phone" uphone,
+               s."name" storename, s."storeid", u."userid"
+        from "Orders" o
+                 inner join "Stores" s on s."storeid" = o."storeid"
+                 inner join "Users" u on o."userid" = u."userid"
+        where "orderid" = #{orderid}
     </select>
 
 </mapper>

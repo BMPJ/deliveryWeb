@@ -16,11 +16,13 @@ import StoreModify from "./components/store/StoreModify";
 import StoreMenuModify from "./components/store/StoreMenuModify";
 import StoreMenuRegister from "./components/store/StoreMenuRegister";
 import StoreInfo from "./components/store/StoreInfo";
-import DeliveryOrder from "./components/page/DeliveryOrder";
+import UserOrder from "./components/page/UserOrder";
 import StoreReview from "./components/page/StoreReview";
 import ReviewWrite from "./components/page/ReviewWrite";
 import StoreOrder from "./components/store/StoreOrder";
 import ManageLogin from "./components/page/ManageLogin";
+import OrderDetail from "./components/page/OrderDetail";
+import MainTest from "./components/page/MainTest";
 
 function App() {
     return (
@@ -32,7 +34,7 @@ function App() {
             <Route path="/main/delivery/category" element={<MainDeliveryCategory/>}/>
             <Route path="main/delivery/category/storeid" element={<DeliveryStore/>}/>
             <Route path="main/delivery/cart" element={<DeliveryCart/>}/>
-            <Route path="main/delivery/order" element={<DeliveryOrder/>}/>
+            <Route path="main/order" element={<UserOrder/>}/>
             <Route path="/manage/main" element={<ManageMain/>}/>
             <Route path="/manage/login" element={<ManageLogin/>}/>
             <Route path="/manage/join" element={<ManageJoin/>}/>
@@ -45,6 +47,8 @@ function App() {
             <Route path="/main/delivery/store/review" element={<StoreReview/>}/>
             <Route path="/main/delivery/store/reviewWrite" element={<ReviewWrite/>}/>
             <Route path="/store/order" element={<StoreOrder/>}/>
+            <Route path="/main/order/detail" element={<OrderDetail/>}/>
+            <Route path="/main/test" element={<MainTest/>}/>
         </Routes>
     );
 }

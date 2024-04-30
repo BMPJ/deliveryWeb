@@ -99,15 +99,36 @@ public class MainController {
         return g.toJson(list);
     }
 
+    @GetMapping("/main/delivery/getCart")
+    public String getCart(String userid){
+        System.out.println(userid);
+        return g.toJson(mainLogic.getCart(userid));
+    }
     @PostMapping("/main/delivery/cart")
     public String deliveryCart(@RequestBody Carts carts){
 
-       int i = mainLogic.selectCart(carts.getUserid());
+       int i = mainLogic.checkCart(carts);
 
-       if (i >= 0) {
-            mainLogic.deleteCart(carts.getUserid());
+       if(i>0){
+           mainLogic.plusQuantity(carts);
+       }else {
+          mainLogic.cart(carts);
        }
-       return String.valueOf(mainLogic.cart(carts));
+       return g.toJson(mainLogic.getCart(carts.getUserid()));
+    }
+
+    @GetMapping("/main/delivery/deleteCart")
+    public String deleteCart(@RequestParam String userid){
+
+       mainLogic.deleteCart(userid);
+       return "";
+    }
+    @GetMapping("/main/user/cartDeleteMenu")
+    public String cartDeleteMenu(@RequestParam String cartid){
+
+        System.out.println(cartid);
+        mainLogic.cartDeleteMenu(cartid);
+        return "";
     }
 
     @GetMapping("/main/delivery/cart")
@@ -176,6 +197,8 @@ public class MainController {
     @GetMapping("/main/delivery/store/map")
     public String map(@RequestParam String adr){
 
+        System.out.println(adr);
+
         String apikey = "D8D77C59-1BA5-3F41-AFEB-A7BDD7B52198";
         String searchType = "ROAD";
         String epsg = "epsg:4326";
@@ -203,12 +226,56 @@ public class MainController {
 
             map.put("x", jspoitn.get("x"));
             map.put("y", jspoitn.get("y"));
+            System.out.println(map);
 
             return g.toJson(map);
 
         } catch (IOException | ParseException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @GetMapping("/main/userAdr")
+    public String userAdr(String userid){
+
+        String apikey = "D8D77C59-1BA5-3F41-AFEB-A7BDD7B52198";
+        String searchType = "ROAD";
+        String epsg = "epsg:4326";
+
+        StringBuilder sb = new StringBuilder("https://api.vworld.kr/req/address");
+        sb.append("?service=address");
+        sb.append("&request=getCoord");
+        sb.append("&format=json");
+        sb.append("&crs=" + epsg);
+        sb.append("&key=" + apikey);
+        sb.append("&type=" + searchType);
+        sb.append("&address=" + URLEncoder.encode(mainLogic.userAdr(userid), StandardCharsets.UTF_8));
+
+        try {
+            URL url = new URL(sb.toString());
+            BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream(), StandardCharsets.UTF_8));
+
+            JSONParser jspa = new JSONParser();
+            JSONObject jsob = (JSONObject) jspa.parse(reader);
+            JSONObject jsrs = (JSONObject) jsob.get("response");
+            JSONObject jsResult = (JSONObject) jsrs.get("result");
+            JSONObject jspoitn = (JSONObject) jsResult.get("point");
+
+            Map<String, Object> map = new HashMap<>();
+
+            map.put("x", jspoitn.get("x"));
+            map.put("y", jspoitn.get("y"));
+
+            return g.toJson(map);
+        } catch (IOException | ParseException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @GetMapping("/main/order/detail")
+    public String orderDetail(String orderid){
+
+       return g.toJson(mainLogic.orderDetail(orderid));
     }
 
 
