@@ -21,27 +21,6 @@ function UserOrder(){
             .catch((err)=>{
                 console.error(err)
             })
-        axios.get(`/main/userAdr?userid=${userid}`)
-            .then((a)=>{
-                console.log(a.data)
-
-                const userMarker = {
-                    position: new kakao.maps.LatLng(a.data.y, a.data.x),
-                    text: '우리집'
-                };
-
-                const staticMapContainer  = document.getElementById('staticMap'), // 이미지 지도를 표시할 div
-                    staticMapOption = {
-                        center: new kakao.maps.LatLng(a.data.y, a.data.x),
-                        level: 3, // 이미지 지도의 확대 레벨
-                        marker: userMarker // 이미지 지도에 표시할 마커
-                    };
-                const staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption);
-            })
-            .catch((err)=>{
-                console.error(err)
-            })
-
     }, []);
 
 
@@ -51,12 +30,6 @@ function UserOrder(){
             <Header/>
             <div>
                 <strong>주문내역</strong>
-            </div>
-            <div>
-                <div id="staticMap" style={{
-                    width : '500px',
-                    height : '400px'
-                }}></div>
             </div>
             <div>
                 {order.length > 0 ? (

@@ -2,17 +2,17 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {useLocation, useNavigate} from "react-router-dom";
 import {
-    Button,
+    Button, Cart,
     Cnt,
-    DetailFoot,
+    DetailFoot, Info,
     Line,
     Menu, MenuButton, MenuWrap,
     Modal, Option,
     Order,
     OrderCnt,
-    Price,
+    Price, Review,
     Right,
-    Store, Wrap
+    Store, Total, Wrap
 } from "../../styles/DeliveryStoreStyle";
 import Header from "../include/Header";
 
@@ -187,21 +187,40 @@ function DeliveryStore() {
     }
 
     const toggleMenu = () => {
-        setMenuOpen(!menuOpen);
-        setReviewOpen(false);
-        setInfoOpen(false);
+        if(menuOpen === false){
+            setMenuOpen(true)
+            setReviewOpen(false);
+            setInfoOpen(false);
+        }else{
+            setReviewOpen(false);
+            setInfoOpen(false);
+        }
     };
 
     const toggleReview = () => {
-        setReviewOpen(!reviewOpen);
-        setMenuOpen(false);
-        setInfoOpen(false);
+        if(reviewOpen === false){
+            setReviewOpen(true);
+            setMenuOpen(false);
+            setInfoOpen(false);
+        }else {
+            setMenuOpen(false);
+            setInfoOpen(false);
+        }
     };
 
     const toggleInfo = () => {
-        setInfoOpen(!infoOpen);
-        setReviewOpen(false);
-        setMenuOpen(false);
+        if(infoOpen === false){
+            setInfoOpen(true);
+            setReviewOpen(false);
+            setMenuOpen(false);
+        }else{
+            setReviewOpen(false);
+            setMenuOpen(false);
+        }
+    }
+
+    const cartOrder = ()=>{
+        navigator(`/main/delivery/cart?userid=${userid}`)
     }
 
 
@@ -337,10 +356,10 @@ function DeliveryStore() {
                                                         </Cnt>
                                                         <Line/>
                                                         <Cnt>
-                                                            <p>총 주문금액</p>
-                                                            <Right>
-                                                                {total}
-                                                            </Right>
+                                                            <label>총 주문금액</label>
+                                                            <Total>
+                                                                {total}원
+                                                            </Total>
                                                         </Cnt>
                                                         <DetailFoot>
                                                             <Button onClick={()=>{
@@ -401,10 +420,10 @@ function DeliveryStore() {
                 )}
                 {
                     reviewOpen && (
-                    <div>
+                    <Review>
                         {
                             store.length > 0 && rating.length > 0 ? (
-                                    <div>
+                                    <div className="reviewTitle">
                                         <p>{store[0].name} 리뷰 ( {rating[0].CNT} )</p>
                                         <div>
                                             <p>★★★★★ : {rating[0].FIVE}</p>
@@ -425,7 +444,7 @@ function DeliveryStore() {
                         {
                             review.map(function (a, i) {
                                 return (
-                                    <div key={i}>
+                                    <div key={i} className="reviewContent">
                                         <div>
                                             <p>{review[i].nickname}</p>
                                             <p>{review[i].CREATEDDATE}</p>
@@ -442,22 +461,22 @@ function DeliveryStore() {
                                 )
                             })
                         }
-                    </div>
+                    </Review>
                 )}
                 {
                     infoOpen && (
-                        <div>
+                        <Info>
                             <div>
                                 <img src="/images/store/owner.png"/>
-                                <p>사장님알림</p>
-                                <hr/>
+                                <strong>사장님알림</strong>
+                                <Line/>
                                 <p>{store[0].content}</p>
                                 <br/>
                             </div>
                             <div>
                                 <img src="/images/store/store.png"/>
-                                <p>업체정보</p>
-                                <hr/>
+                                <strong>업체정보</strong>
+                                <Line/>
                                 <p>영업시간</p>
                                 <p>{store[0].operationHours}</p>
                                 <p>전화번호</p>
@@ -474,51 +493,58 @@ function DeliveryStore() {
                             </div>
                             <div>
                                 <img src="/images/store/pay.png"/>
-                                <p>결제정보</p>
-                                <hr/>
+                                <strong>결제정보</strong>
+                                <Line/>
                                 <p>현장결제, 카카오페이</p>
                                 <br/>
                             </div>
                             <div>
                                 <img src="/images/store/info.png"/>
-                                <p>상호명</p>
-                                <hr/>
+                                <strong>상호명</strong>
+                                <Line/>
                                 <p>{store[0].name}</p>
                             </div>
-                        </div>
+                        </Info>
                     )
                 }
 
-                {
-                    userCart && userCart.length > 0
-                        ?
-                        (
-                        <div>
-                            <div>주문표</div>
-                            <button onClick={deleteCart}>X</button>
+
+            </Wrap>
+            {
+                userCart && userCart.length > 0
+                    ?
+                    (
+                        <Cart>
+                            <div className="cartTitle">주문표
+                                <img className="xButton" src="/images/store/x.png" onClick={deleteCart}/>
+                            </div>
                             {
                                 userCart.map(function (a,i){
                                     return(
-                                        <div key={i}>
-                                            <p>{userCart[i].MENUNAME} : {userCart[i].OP}</p>
-                                            <button onClick={() => deleteMenu(userCart[i].cartid)}>X</button>
-                                            <p>{userCart[i].PRICE} 원</p>
-                                            <p>{userCart[i].quantity}</p>
-                                            <hr/>
+                                        <div className="cartContent" key={i}>
+                                            <img className="xButton" src="/images/store/x.png" onClick={() => deleteMenu(userCart[i].cartid)}/>
+                                            <p>{userCart[i].menuName} : {userCart[i].op}</p>
+                                            <div className="cartRight">{userCart[i].price} 원</div>
+                                            <div className="cartRight">{userCart[i].quantity} 개</div>
                                         </div>
 
                                     )
                                 })
                             }
-                            <p>합계 :{userCart[0].SUM} </p>
-                        </div>
-                        )
-                        :
-                        (
-                        <strong>주문표에 담긴 메뉴가 없습니다.</strong>
-                        )
-                }
-            </Wrap>
+                            <div className="cartSum">합계 :{userCart[0].SUM} 원</div>
+                            <div className="cartOrder" onClick={cartOrder}>주문하기</div>
+                        </Cart>
+                    )
+                    :
+                    (
+                        <Cart>
+                            <div className="cartTitle">주문표</div>
+                            <div className="noCart">
+                                <p>주문표에 담긴 메뉴가 없습니다.</p>
+                            </div>
+                        </Cart>
+                    )
+            }
         </div>
 
     );

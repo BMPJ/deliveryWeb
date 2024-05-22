@@ -33,6 +33,7 @@ public class MainController {
    @GetMapping("/main")
    public String getMain(@RequestParam String userid){
 
+       System.out.println(userid);
        List<Map<String, Object>> list = mainLogic.userInfo(userid);
 
        return g.toJson(list);
@@ -135,6 +136,7 @@ public class MainController {
     public String deliveryCartGet(@RequestParam String userid){
 
        List<Map<String, Object>> list = mainLogic.getCart(userid);
+        System.out.println(list);
 
        return g.toJson(list);
     }
@@ -157,6 +159,8 @@ public class MainController {
 
     @PostMapping("/main/delivery/cart/pay")
     public String pay(@RequestBody Orders orders){
+
+        System.out.println(orders);
 
        return String.valueOf(mainLogic.deliveryPay(orders));
     }
