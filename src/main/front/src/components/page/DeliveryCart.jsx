@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import Header from "../include/Header";
-import {Order, Pay, Wrab} from "../../styles/DeliveryCartStyle.js";
+import {Order, Pay, Wrab, Wrap} from "../../styles/DeliveryCartStyle.js";
 
 function DeliveryCart() {
     const userid = sessionStorage.getItem("userid");
@@ -37,6 +37,17 @@ function DeliveryCart() {
                 console.error(err)
             })
     }, []);
+
+    const deleteCart = ()=>{
+        axios.get(`/main/delivery/deleteCart?userid=${userid}`)
+            .then((a)=>{
+                console.log(a.data)
+                window.location.reload();
+            })
+            .catch((err)=>{
+                console.error(err)
+            })
+    }
 
 
 
@@ -85,6 +96,7 @@ function DeliveryCart() {
                 axios.post(`/main/delivery/cart/pay`, order)
                     .then((a)=>{
                         console.log(a)
+                        deleteCart()
                         navigator(`/main/order?userid=${userid}`)
                     })
                     .catch((err)=>{
@@ -121,7 +133,8 @@ function DeliveryCart() {
         axios.post(`/main/delivery/cart/pay`, order)
             .then((a)=>{
                 console.log(a)
-                 navigator(`/main/order?userid=${userid}`)
+                deleteCart()
+                navigator(`/main/order?userid=${userid}`)
             })
             .catch((err)=>{
                 console.error(err)
@@ -134,7 +147,7 @@ function DeliveryCart() {
         <div>
             <Header/>
             {cart.length > 0 && user.length > 0 && (
-                <Wrab>
+                <Wrap>
                     <Pay>
                         <div className="title">
                             <p>결제하기</p>
@@ -211,7 +224,7 @@ function DeliveryCart() {
                             </div>
                         </div>
                     </Order>
-                </Wrab>
+                </Wrap>
             )}
 
 

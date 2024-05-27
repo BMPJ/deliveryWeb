@@ -1,7 +1,7 @@
 import styled from "styled-components"
 
 
-export const Wrab = styled.div`
+export const Wrap = styled.div`
   max-width: 1020px;
   margin: 0 auto;
   padding-top: 15px;
