@@ -56,6 +56,14 @@ public class StoreController {
         return String.valueOf(result);
     }
 
+    @PostMapping("/delete")
+    public String storeDelete(@RequestBody Map<String, Object> storeid) {
+
+        int result = storeLogic.delete(storeid);
+
+        return String.valueOf(result);
+    }
+
     @PostMapping("/menu/register")
     public String menuRegister(@RequestBody Menu menu) {
 
@@ -100,11 +108,11 @@ public class StoreController {
 
     @GetMapping("/orderList")
     public String orderList(String storeid) {
+        System.out.println(storeid);
         List<Map<String, Object>> list = storeLogic.storeOrderList(storeid);
         System.out.println(list);
 
         return "";
     }
-
 
 }

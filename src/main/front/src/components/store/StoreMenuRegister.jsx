@@ -2,6 +2,7 @@ import React, {useNavigate, useParams} from "react-router-dom";
 import {useState} from "react";
 import {storesRegisterDB} from "../../service/storesLogic";
 import {menuRegisterDB} from "../../service/menuLogic";
+import StoreInfo from "./StoreInfo";
 
 const StoreMenuRegister = () => {
 
@@ -42,6 +43,7 @@ const StoreMenuRegister = () => {
 
     return (
         <>
+            <StoreInfo></StoreInfo>
             <div>
                 <label>카테고리</label>
                 <input

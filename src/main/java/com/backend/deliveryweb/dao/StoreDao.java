@@ -71,4 +71,8 @@ public class StoreDao {
     public int menuImageDelete(Map<String, Object> menuid) {
         return sqlSessionTemplate.update("menuImageDelete", menuid);
     }
+
+    public int delete(Map<String, Object> storeid) {
+        return sqlSessionTemplate.update("storeDelete", storeid);
+    }
 }

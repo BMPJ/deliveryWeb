@@ -65,4 +65,18 @@ export const storesUpdateDB = (store, datas) => {
     });
 }
 
+export const storeDeleteDB = (storeid) => {
+    return new Promise((resolve, reject) => {
+        try {
+            const response = axios({
+                method: "post",
+                url: "/store/delete",
+                data: {storeid}
+            });
+            resolve(response);
+        } catch (error) {
+            reject(error);
+        }
+    });
 
+}

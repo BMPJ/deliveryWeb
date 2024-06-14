@@ -23,6 +23,7 @@ import StoreOrder from "./components/store/StoreOrder";
 import ManageLogin from "./components/page/ManageLogin";
 import OrderDetail from "./components/page/OrderDetail";
 import MainTest from "./components/page/MainTest";
+import NavTest from "./components/page/NavTest";
 
 function App() {
     return (
@@ -46,9 +47,10 @@ function App() {
             <Route path="/store/info/:id" element={<StoreInfo/>}/>
             <Route path="/main/delivery/store/review" element={<StoreReview/>}/>
             <Route path="/main/delivery/store/reviewWrite" element={<ReviewWrite/>}/>
-            <Route path="/store/order" element={<StoreOrder/>}/>
             <Route path="/main/order/detail" element={<OrderDetail/>}/>
             <Route path="/main/test" element={<MainTest/>}/>
+            <Route path="/store/order/:id" element={<StoreOrder/>}/>
+            <Route path="/store/test" element={<NavTest/>}/>
         </Routes>
     );
 }

@@ -75,6 +75,12 @@
           AND "storeid" = #{storeid}
     </update>
 
+    <delete id="storeDelete" parameterType="map">
+        DELETE
+        FROM "Stores"
+        WHERE "storeid" = #{storeid}
+    </delete>
+
     <insert id="menuRegister" parameterType="com.backend.deliveryweb.vo.Stores">
         INSERT
         ALL
