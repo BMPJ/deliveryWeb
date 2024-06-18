@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {useLocation, useNavigate} from "react-router-dom";
+import Header from "../include/Header";
+import {Wrap} from "../../styles/ReviewWriteStyle";
 
 function ReviewWrite(){
 
@@ -65,8 +67,9 @@ function ReviewWrite(){
 
     return(
         <div>
-            <div>
-                <strong>리뷰작성</strong>
+            <Header/>
+            <Wrap>
+                <div className="title">리뷰작성</div>
                 {
                     order.length>0 ?
                     <div>
@@ -100,7 +103,7 @@ function ReviewWrite(){
                         <p>Loading....</p>
                     </div>
                 }
-            </div>
+            </Wrap>
         </div>
     )
 

@@ -88,11 +88,24 @@
     </insert>
 
     <select id="getCart" parameterType="String" resultType="map">
-        select m."menuName" menuName, o."option" op, (m."price" + o."price") price, c."quantity", c."cartid", SUM((m."price" + o."price") * c."quantity") over () AS SUM
-        from "Carts" c
-                 inner join "Menu" m on m."menuid" = c."menuid"
-                 inner join "MenuOption" o on c."menuOptionId" = o."menuOptionId"
-        where "userid" = #{userid}
+        SELECT
+            m."menuName" AS "menuName",
+            o."option" AS "op",
+            (m."price" + o."price") AS "price",
+            c."quantity",
+            c."cartid",
+            SUM((m."price" + o."price") * c."quantity") OVER () AS "SUM",
+            s."name", s."storeid"
+        FROM
+            "Carts" c
+                INNER JOIN
+            "Menu" m ON m."menuid" = c."menuid"
+                INNER JOIN
+            "MenuOption" o ON c."menuOptionId" = o."menuOptionId"
+                INNER JOIN
+            "Stores" s ON c."storeid" = s."storeid"
+        WHERE
+            c."userid" = #{userid}
     </select>
 
     <select id="cartMenu" parameterType="String" resultType="map">

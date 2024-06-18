@@ -53,24 +53,52 @@ function OrderDetail(){
     }, [order]);
 
     useEffect(() => {
-        if (userAddress && userAddress.y && userAddress.x && storeAddress && storeAddress.y && storeAddress.x){
-            const userMarker = {
-                position: new kakao.maps.LatLng(userAddress.y, userAddress.x),
-                text: '우리집'
+        if (storeAddress && storeAddress.y && storeAddress.x && userAddress && userAddress.y && userAddress.x) {
+
+            const x1 = parseFloat(storeAddress.x);
+            const x2 = parseFloat(userAddress.x);
+            const y1 = parseFloat(storeAddress.y);
+            const y2 = parseFloat(userAddress.y);
+
+            const centerX = (x1 + x2) / 2;
+            const centerY = (y1 + y2) / 2;
+
+            const staticMapContainer = document.getElementById('staticMap');
+            const mapOption = {
+                center: new kakao.maps.LatLng(centerY, centerX),
+                level: 3
             };
-            const storeMarker = {
-                position: new kakao.maps.LatLng(storeAddress.y, storeAddress.x),
-                text: '우리집'
-            }
-            const staticMapContainer  = document.getElementById('staticMap'), // 이미지 지도를 표시할 div
-                staticMapOption = {
-                    center: new kakao.maps.LatLng(37.500281555, 126.867133098),
-                    level: 3, // 이미지 지도의 확대 레벨
-                    marker: userMarker, storeMarker // 이미지 지도에 표시할 마커
-                };
-            const staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption);
+            const map = new kakao.maps.Map(staticMapContainer, mapOption);
+
+            const storeMarkerPosition = new kakao.maps.LatLng(y1, x1);
+            const storeMarker = new kakao.maps.Marker({
+                position: storeMarkerPosition
+            });
+            storeMarker.setMap(map);
+
+            const userMarkerPosition = new kakao.maps.LatLng(y2, x2);
+            const userMarker = new kakao.maps.Marker({
+                position: userMarkerPosition
+            });
+            userMarker.setMap(map);
+
+            const storeOverlayContent = `<div style="padding:5px; background-color:white; border:1px solid black;">${order.STORENAME}</div>`;
+            const storeOverlay = new kakao.maps.CustomOverlay({
+                position: storeMarkerPosition,
+                content: storeOverlayContent,
+                yAnchor: 1.8
+            });
+            storeOverlay.setMap(map);
+
+            const userOverlayContent = '<div style="padding:5px; background-color:white; border:1px solid black;">우리집</div>';
+            const userOverlay = new kakao.maps.CustomOverlay({
+                position: userMarkerPosition,
+                content: userOverlayContent,
+                yAnchor: 1.8
+            });
+            userOverlay.setMap(map);
         }
-    }, [userAddress, storeAddress, order]);
+    }, [userAddress, storeAddress]);
 
     return(
         <div>

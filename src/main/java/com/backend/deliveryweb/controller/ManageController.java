@@ -41,7 +41,9 @@ public class ManageController {
     @GetMapping("/login")
     public String getLogin(@ModelAttribute Users users) {
 
+        System.out.println(users);
         List<Map<String, Object>> list = manageLogic.login(users);
+        System.out.println(list);
         return g.toJson(list);
     }
 

@@ -34,7 +34,7 @@ function App() {
             <Route path="/main/delivery" element={<MainDelivery/>}/>
             <Route path="/main/delivery/category" element={<MainDeliveryCategory/>}/>
             <Route path="main/delivery/category/storeid" element={<DeliveryStore/>}/>
-            <Route path="main/delivery/cart" element={<DeliveryCart/>}/>
+            <Route path="/main/delivery/cart" element={<DeliveryCart/>}/>
             <Route path="main/order" element={<UserOrder/>}/>
             <Route path="/manage/main" element={<ManageMain/>}/>
             <Route path="/manage/login" element={<ManageLogin/>}/>

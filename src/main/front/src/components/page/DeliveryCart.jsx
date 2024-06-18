@@ -1,22 +1,20 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import Header from "../include/Header";
+import {Order, Pay, Wrab, Wrap} from "../../styles/DeliveryCartStyle.js";
 
 function DeliveryCart() {
     const userid = sessionStorage.getItem("userid");
     const [cart, setCart] = useState([]);
-    const [menuid, setMenuid] = useState(null);
-    const [menuOptionId, setMenuOptionId] = useState(null);
     const [menu, setMenu] = useState([]);
     const [menuOption, setMenuOption] = useState([]);
-    const [loading, setLoading] = useState(true);
     const [price, setPrice] = useState(0);
-    const [menuPrice, setMenuPrice] = useState(0)
-    const [menuOptionPrice, setMenuOptionPrice] = useState(0)
     const [quantity, setQuantity] = useState(0)
     const [request, setRequest] = useState('');
     const navigator = useNavigate();
-
+    const [user, setUser] = useState([]);
+    const [storeid, setStoreid] = useState();
 
     useEffect(() => {
         axios
@@ -24,74 +22,56 @@ function DeliveryCart() {
             .then((a) => {
                 console.log(a.data);
                 setCart(a.data);
-                setQuantity(a.data[0].quantity)
-                setLoading(false); // 데이터가 가져와진 후 로딩 상태를 false로 설정
+                setPrice(a.data[0].SUM)
+                setStoreid(a.data[0].storeid)
             })
             .catch((err) => {
                 console.error(err);
-                setLoading(false); // 에러 발생 시 로딩 상태를 false로 설정
             });
-
+        axios.get(`/main?userid=${userid}`)
+            .then((a)=>{
+                setUser(a.data)
+                console.log(a.data)
+            })
+            .catch((err)=>{
+                console.error(err)
+            })
     }, []);
 
-
-
-    useEffect(() => {
-        if (cart.length > 0) {
-            const menuidParam = cart[0].menuid;
-            const menuOptionIdParam = cart[0].menuOptionId;
-            setMenuid(menuidParam);
-            setMenuOptionId(menuOptionIdParam);
-        }
-    }, [cart]);
-
-    useEffect(() => {
-        if (menuid != null) {
-            axios
-                .get(`/main/delivery/cart/menu?menuid=${menuid}`)
-                .then((a) => {
-                    console.log(a.data);
-                    setMenu(a.data);
-                    setMenuPrice(a.data[0].price)
-                })
-                .catch((err) => {
-                    console.error(err);
-                });
-        }
-        if (menuOptionId != null) {
-            axios
-                .get(`/main/delivery/cart/menuOptionId?menuOptionId=${menuOptionId}`)
-                .then((a) => {
-                    console.log(a.data);
-                    setMenuOption(a.data);
-                    setMenuOptionPrice(a.data[0].price)
-                })
-                .catch((err) => {
-                    console.error(err);
-                });
-        }
-    }, [menuid, menuOptionId]);
-
-    useEffect(()=> {
-        setPrice( (menuPrice + menuOptionPrice) * quantity )
-
-    },[menuPrice, menuOptionPrice, quantity])
-
-    if (loading) {
-        return <p>Loading...</p>;
+    const deleteCart = ()=>{
+        axios.get(`/main/delivery/deleteCart?userid=${userid}`)
+            .then((a)=>{
+                console.log(a.data)
+                window.location.reload();
+            })
+            .catch((err)=>{
+                console.error(err)
+            })
     }
+
 
 
     const kakaopay = () => {
         const { IMP } = window;
         IMP.init('imp11118386');
 
+        let menu = "";
+        if(cart) {
+            for (let i = 0; i < cart.length; i++) {
+                menu += cart[i].menuName + "+" + cart[i].op + " " + cart[i].quantity + "개"
+                if(i!==cart.length-1){
+                    menu += " & "
+                }
+            }
+        }
+        console.log(menu)
+
         const data = {
             pg: 'kakaopay',
             pay_method: 'kakaopay',
             merchant_uid: `mid_${new Date().getTime()}`,
             amount: price,
-            name: menu[0].menuName + menuOption[0].option,
+            name: menu,
             custom_data:request
         }
 
@@ -102,25 +82,22 @@ function DeliveryCart() {
                 error_msg,
             } = response;
 
-            const orderName = (quantity === 1) ?
-                menu[0].menuName + " + " + menuOption[0].option + '1개' :
-                menu[0].menuName + ' + ' + menuOption[0].option + quantity + '개';
-
             const order = {
-                storeid : cart[0].storeid,
+                storeid : storeid,
                 userid : userid,
                 paymentMethod : 'kakaopay',
                 totalPrice : price,
                 requests : request,
                 status : 0,
-                orderName : orderName
+                orderName : menu
             }
 
             if (success) {
                 axios.post(`/main/delivery/cart/pay`, order)
                     .then((a)=>{
                         console.log(a)
-                        navigator(`/main/delivery/order?userid=${userid}`)
+                        deleteCart()
+                        navigator(`/main/order?userid=${userid}`)
                     })
                     .catch((err)=>{
                         console.error(err)
@@ -133,78 +110,69 @@ function DeliveryCart() {
 
     const onside = () => {
 
-        const orderName = (quantity === 1) ?
-            menu[0].menuName + " + " + menuOption[0].option + '1개' :
-            menu[0].menuName + ' + ' + menuOption[0].option + quantity + ' 개';
+        let menu = "";
+        if(cart) {
+            for (let i = 0; i < cart.length; i++) {
+                menu += cart[i].menuName + "+" + cart[i].op + " " + cart[i].quantity + "개"
+                if(i!==cart.length-1){
+                    menu += " & "
+                }
+            }
+        }
 
         const order = {
-            storeid: cart[0].storeid,
+            storeid: storeid,
             userid: userid,
             paymentMethod: 'onside',
             totalPrice: price,
             requests: request,
             status: 0,
-            orderName : orderName
+            orderName : menu
         }
         
         axios.post(`/main/delivery/cart/pay`, order)
             .then((a)=>{
                 console.log(a)
-                 navigator(`/main/delivery/order?userid=${userid}`)
+                deleteCart()
+                navigator(`/main/order?userid=${userid}`)
             })
             .catch((err)=>{
                 console.error(err)
             })
     }
 
-    function MenuName(){
-        if(quantity===1){
-            return <p>{menu[0].menuName} + {menuOption[0].option} 1개</p>
-        }else if(quantity>=2){
-            return <p>{menu[0].menuName} + {menuOption[0].option} {quantity}개</p>
-        }
-    }
+
+
     return (
         <div>
-            {cart.length > 0 && menuOption.length > 0 && (
-                <div>
-                    <div>
-                        <div>
-                            <p>주문내역</p>
-                        </div>
-                        <div>
-                            <p>{cart[0].nickname}</p>
-                        </div>
-                        <div>
-                            <p>{cart[0].storeName}</p>
-                        </div>
-                        <div>
-                            {MenuName()}
-                            <p>{price} 원</p>
-                        </div>
-                    </div>
-                    <div>
-                        <div>
+            <Header/>
+            {cart.length > 0 && user.length > 0 && (
+                <Wrap>
+                    <Pay>
+                        <div className="title">
                             <p>결제하기</p>
                         </div>
-                        <div>
+                        <div className="info">
                             <p>배달정보</p>
                         </div>
-                        <div>
-                            <label>주소</label>
-                            <div>{cart[0].address}</div>
-                            <div>{cart[0].address_detail}</div>
+                        <div className="detail">
+                            <div className="form">
+                                <label className="userinfo">주소</label>
+                                <div className="user">{user[0].address}</div>
+                                <div className="user">{user[0].address_detail}</div>
+                            </div>
+                            <div className="form">
+                                <label className="userinfo">휴대전화번호</label>
+                                <div className="user">{user[0].phone}</div>
+                            </div>
                         </div>
                         <div>
-                            <label>휴대전화번호</label>
-                            <div>{cart[0].phone}</div>
-                        </div>
-                        <div>
-                            <div>
+                            <div className="request">
                                 <p>주문시 요청사항</p>
                             </div>
-                            <div>
+                            <div className="detail">
                                 <textarea
+                                    className="text"
                                     placeholder={"요청사항을 남겨주세요"}
                                     name="request"
                                     onChange={(e)=>
@@ -212,17 +180,53 @@ function DeliveryCart() {
                                 }/>
                             </div>
                         </div>
-                    </div>
-                </div>
+                        <div>
+                            <div className="info">
+                                <p>결제수단선택</p>
+                            </div>
+                            <div className="payment">
+                                <div onClick={onside}>현장결제</div>
+                            </div>
+                            <div className="payment">
+                                <div onClick={kakaopay}>카카오페이</div>
+                            </div>
+                        </div>
+                    </Pay>
+                    <Order>
+                        <div className="title">주문내역</div>
+                        <div className="store">
+                            {cart[0].name}
+                        </div>
+                        <div>
+                            <div className="map">
+                            {
+                                cart.map(function (a,i){
+                                    return(
+                                        <div key={i} className="menu">
+                                            <div className="name">
+                                                <span>{cart[i].menuName} x {cart[i].quantity}개</span>
+                                            </div>
+                                            <div className="price">
+                                                <p>{cart[i].price} 원</p>
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                            }
+                            </div>
+                            <div className="total">
+                                <div className="name">
+                                    <span>총 결재 금액</span>
+                                </div>
+                                <div className="price">
+                                    <span>{cart[0].SUM} 원</span>
+                                </div>
+                            </div>
+                        </div>
+                    </Order>
+                </Wrap>
             )}
-            <div>
-                <div>
-                    <div onClick={onside}>현장결제</div>
-                </div>
-                <div>
-                    <div onClick={kakaopay}>카카오페이</div>
-                </div>
-            </div>
+
 
         </div>
     );

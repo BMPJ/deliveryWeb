@@ -1,14 +1,22 @@
 import styled from "styled-components"
 
+
 export const Wrap = styled.div`
-  width: 100%;
+    max-width: 1700px;
+    margin : 0 auto;
+`
+export const Main = styled.div`
+  width: 80%;
   height: 100%;
   overflow-x: hidden;
+  float: left;
+  max-width: 1330px;
 `
 export const Store = styled.div`
   width: 1035px;
-  padding: 10px 10px 0 10px;
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: 0;
+  margin-top: 10px;
 
   .storeName,
   .storeInfo {
@@ -30,9 +38,10 @@ export const Store = styled.div`
   }
 `
 export const MenuButton = styled.div`
-  width: 1015px;
+  width: 1035px;
   border: 1px solid lightgray;
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: 0;
   margin-top: 10px;
 
   ul {
@@ -59,9 +68,10 @@ export const MenuButton = styled.div`
   }
 `
 export const MenuWrap = styled.div`
-  width: 1015px;
+  width: 1035px;
   border: 1px solid lightgray;
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: 0;
   margin-top: 10px;
 `
 
@@ -133,25 +143,107 @@ export const OrderCnt = styled.input`
 export const Cnt = styled.div`
   display: flex;
   align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
 `
 export const Right = styled.div`
   display: flex;
   align-items: center;
-  margin-left: 248px;
+  margin-left: 244px;
+`
+export const Total = styled.div`
+  display: flex;
+  align-items: center;
+  margin-left: 192px;
 `
 export const DetailFoot = styled.div`
   margin-top: 3px;
 `
 export const Button = styled.button`
-  width: 170px;
+  width: 168px;
   height: 60px;
   border-color: white;
+  margin-top: 50px;
 `
 export const Option = styled.label`
   cursor: pointer;
 `
 
-export const Kakao = styled.div`
-  width: 500px;
-  height: 300px;
+export const Review = styled.div`
+  width: 1035px;
+  border: 1px solid lightgray;
+  margin-left: auto;
+  margin-right: 0;
+  margin-top: 10px;
+  
+  .reviewTitle{
+    margin: 5px;
+  }
+  
+  .reviewContent{
+    margin : 5px;
+    border-top:1px solid lightgray;
+  }
 `
+
+export const Info = styled.div`
+  width: 1035px;
+  border: 1px solid lightgray;
+  margin-left: auto;
+  margin-right: 0;
+  margin-top: 10px;
+`
+
+export const Cart = styled.div`
+  float: right;
+  height: 330px;
+  min-width: 330px;
+  
+  .cartTitle{
+    background-color: #333;
+    color: #fff;
+    height: 40px;
+    font-size:110%;
+    padding: 10px 10px 10px 15px;
+  }
+  .cartContent{
+    border: 1px solid lightgray;
+    padding: 10px 15px;
+  }
+  .xButton{
+    height: 25px;
+    cursor: pointer;
+    float: right;
+  }
+  .cartSum{
+    background-color: #fff8eb;
+    height: 44px;
+    color: #fa0050;
+    text-align: right;
+    font-size: 110%;
+    font-weight: bold;
+    border: 1px solid lightgray;
+    padding: 10px 12px;
+  }
+  
+  .noCart{
+    border: 1px solid lightgray;
+    font-size: small;
+    padding: 50px 0;
+    text-align: center;
+  }
+  .cartOrder{
+    color: #fff;
+    background-color: #fa0050;
+    border-color: #fa0050;
+    border-radius: 0;
+    padding: 10px 16px;
+    font-size: 18px;
+    line-height: 1.3333333;
+    text-align: center;
+    margin-top: 5px;
+    cursor: pointer;
+  }
+
+ 
+    `
