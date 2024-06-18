@@ -30,70 +30,72 @@ public class MainController {
 
     Gson g = new Gson();
 
-   @GetMapping("/main")
-   public String getMain(@RequestParam String userid){
+    @GetMapping("/main")
+    public String getMain(@RequestParam String userid) {
 
-       System.out.println(userid);
-       List<Map<String, Object>> list = mainLogic.userInfo(userid);
+        System.out.println(userid);
+        List<Map<String, Object>> list = mainLogic.userInfo(userid);
 
-       return g.toJson(list);
-   }
+        return g.toJson(list);
+    }
 
     @PostMapping("/main/join")
-    public String postjoin(@RequestBody Users users){
+    public String postjoin(@RequestBody Users users) {
 
         return String.valueOf(mainLogic.join(users));
     }
 
     //로그인+세션
     @PostMapping("/main/login")
-    public String postLogin(@RequestBody Users users){
+    public String postLogin(@RequestBody Users users) {
 
-       int login = mainLogic.login(users);
+        int login = mainLogic.login(users);
 
-       List<String> session = mainLogic.session(users.getUserid());
+        List<String> session = mainLogic.session(users.getUserid());
 
-       if(login==1){
-           return g.toJson(session);
-       }else{
-           return "" ;
-       }
+        if (login == 1) {
+            return g.toJson(session);
+        } else {
+            return "";
+        }
     }
 
     @GetMapping("/main/delivery")
-    public String getDelivery(int type){
+    public String getDelivery(int type) {
 
-       List<Map<String, Object>> list = mainLogic.category(type);
+        List<Map<String, Object>> list = mainLogic.category(type);
 
-       return g.toJson(list);
+        return g.toJson(list);
     }
 
     @GetMapping("/main/delivery/category")
     public String deliveryGetCategory(@RequestParam("category") String category) {
 
-       List<Map<String, Object>> list = mainLogic.getDeliveryStores(category);
+        System.out.println(category);
 
-       return g.toJson(list);
+        List<Map<String, Object>> list = mainLogic.getDeliveryStores(category);
+
+        return g.toJson(list);
     }
 
     @GetMapping("/main/delivery/storeid")
-    public String deliveryStoreid(@RequestParam ("storeid") String storeid){
+    public String deliveryStoreid(@RequestParam("storeid") String storeid) {
 
-       List<Map<String, Object>> list = mainLogic.getStores(storeid);
+        List<Map<String, Object>> list = mainLogic.getStores(storeid);
 
-       return g.toJson(list);
+        return g.toJson(list);
     }
 
     @GetMapping("/main/delivery/storeMenu")
-    public String deliveryStoreMenu(@RequestParam ("storeid") String storeid){
+    public String deliveryStoreMenu(@RequestParam("storeid") String storeid) {
 
-       List<Map<String, Object>> list = mainLogic.getMenu(storeid);
+        List<Map<String, Object>> list = mainLogic.getMenu(storeid);
 
-       return g.toJson(list);
+        return g.toJson(list);
     }
 
     @GetMapping("/main/delivery/menuOption")
-    public String deliveryMenuOption(@RequestParam ("menuid") String menuid){
+    public String deliveryMenuOption(@RequestParam("menuid") String menuid) {
 
         List<Map<String, Object>> list = mainLogic.getOption(menuid);
 
@@ -101,31 +103,33 @@ public class MainController {
     }
 
     @GetMapping("/main/delivery/getCart")
-    public String getCart(String userid){
+    public String getCart(String userid) {
         System.out.println(userid);
         return g.toJson(mainLogic.getCart(userid));
     }
+
     @PostMapping("/main/delivery/cart")
-    public String deliveryCart(@RequestBody Carts carts){
+    public String deliveryCart(@RequestBody Carts carts) {
 
-       int i = mainLogic.checkCart(carts);
+        int i = mainLogic.checkCart(carts);
 
-       if(i>0){
-           mainLogic.plusQuantity(carts);
-       }else {
-          mainLogic.cart(carts);
-       }
-       return g.toJson(mainLogic.getCart(carts.getUserid()));
+        if (i > 0) {
+            mainLogic.plusQuantity(carts);
+        } else {
+            mainLogic.cart(carts);
+        }
+        return g.toJson(mainLogic.getCart(carts.getUserid()));
     }
 
     @GetMapping("/main/delivery/deleteCart")
-    public String deleteCart(@RequestParam String userid){
+    public String deleteCart(@RequestParam String userid) {
 
-       mainLogic.deleteCart(userid);
-       return "";
+        mainLogic.deleteCart(userid);
+        return "";
     }
+
     @GetMapping("/main/user/cartDeleteMenu")
-    public String cartDeleteMenu(@RequestParam String cartid){
+    public String cartDeleteMenu(@RequestParam String cartid) {
 
         System.out.println(cartid);
         mainLogic.cartDeleteMenu(cartid);
@@ -133,24 +137,24 @@ public class MainController {
     }
 
     @GetMapping("/main/delivery/cart")
-    public String deliveryCartGet(@RequestParam String userid){
+    public String deliveryCartGet(@RequestParam String userid) {
 
-       List<Map<String, Object>> list = mainLogic.getCart(userid);
+        List<Map<String, Object>> list = mainLogic.getCart(userid);
         System.out.println(list);
 
-       return g.toJson(list);
+        return g.toJson(list);
     }
 
     @GetMapping("/main/delivery/cart/menu")
-    public String getMenu(@RequestParam String menuid){
+    public String getMenu(@RequestParam String menuid) {
 
-       List<Map<String, Object>> list = mainLogic.cartMenu(menuid);
+        List<Map<String, Object>> list = mainLogic.cartMenu(menuid);
 
-       return g.toJson(list);
+        return g.toJson(list);
     }
 
     @GetMapping("/main/delivery/cart/menuOptionId")
-    public String getOption(@RequestParam String menuOptionId){
+    public String getOption(@RequestParam String menuOptionId) {
 
         List<Map<String, Object>> list = mainLogic.cartMenuOption(menuOptionId);
 
@@ -158,48 +162,49 @@ public class MainController {
     }
 
     @PostMapping("/main/delivery/cart/pay")
-    public String pay(@RequestBody Orders orders){
+    public String pay(@RequestBody Orders orders) {
 
         System.out.println(orders);
 
-       return String.valueOf(mainLogic.deliveryPay(orders));
+        return String.valueOf(mainLogic.deliveryPay(orders));
     }
 
     @GetMapping("/main/delivery/order")
-    public String order(@RequestParam String userid){
+    public String order(@RequestParam String userid) {
 
         System.out.println(mainLogic.orderList(userid));
 
-       return g.toJson(mainLogic.orderList(userid));
+        return g.toJson(mainLogic.orderList(userid));
     }
 
     @GetMapping("/main/delivery/getOrder")
-    public String getOrder(String orderid){
+    public String getOrder(String orderid) {
 
-       return g.toJson(mainLogic.getOrder(orderid));
+        return g.toJson(mainLogic.getOrder(orderid));
     }
 
     @PostMapping("/main/delivery/reviewWrite")
-    public String reviewWrite(@RequestBody Reviews reviews){
+    public String reviewWrite(@RequestBody Reviews reviews) {
 
         System.out.println(reviews);
 
-       return String.valueOf(mainLogic.reviewWrite(reviews));
+        return String.valueOf(mainLogic.reviewWrite(reviews));
     }
 
     @GetMapping("/main/delivery/reviewList")
-    public String reviewList(String storeid){
+    public String reviewList(String storeid) {
 
-       return g.toJson(mainLogic.reviewList(storeid));
+        return g.toJson(mainLogic.reviewList(storeid));
     }
-    @GetMapping("/main/delivery/reviewCount")
-    public String reviewCount(String storeid){
 
-       return g.toJson(mainLogic.reviewCount(storeid));
+    @GetMapping("/main/delivery/reviewCount")
+    public String reviewCount(String storeid) {
+
+        return g.toJson(mainLogic.reviewCount(storeid));
     }
 
     @GetMapping("/main/delivery/store/map")
-    public String map(@RequestParam String adr){
+    public String map(@RequestParam String adr) {
 
         System.out.println(adr);
 
@@ -216,7 +221,7 @@ public class MainController {
         sb.append("&type=" + searchType);
         sb.append("&address=" + URLEncoder.encode(adr, StandardCharsets.UTF_8));
 
-        try{
+        try {
             URL url = new URL(sb.toString());
             BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream(), StandardCharsets.UTF_8));
 
@@ -240,7 +245,7 @@ public class MainController {
     }
 
     @GetMapping("/main/userAdr")
-    public String userAdr(String userid){
+    public String userAdr(String userid) {
 
         String apikey = "D8D77C59-1BA5-3F41-AFEB-A7BDD7B52198";
         String searchType = "ROAD";
@@ -277,11 +282,10 @@ public class MainController {
     }
 
     @GetMapping("/main/order/detail")
-    public String orderDetail(String orderid){
+    public String orderDetail(String orderid) {
 
-       return g.toJson(mainLogic.orderDetail(orderid));
+        return g.toJson(mainLogic.orderDetail(orderid));
     }
-
 
 
 }

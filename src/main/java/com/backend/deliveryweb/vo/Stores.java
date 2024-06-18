@@ -17,7 +17,6 @@ public class Stores {
     private String category;
     private String address;
     private String address_detail;
-    private String storePictureUrl;
     private String phone;
     private String content;
     private int minDeliveryPrice;

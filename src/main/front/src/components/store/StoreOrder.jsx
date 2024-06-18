@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useLocation, useParams} from "react-router-dom";
 import axios from "axios";
 import StoreInfo from "./StoreInfo";
+import {DetailBox, MainBox} from "../../styles/ManageStyle";
 
 function StoreOrder() {
 
@@ -27,8 +28,12 @@ function StoreOrder() {
 
     return (
         <div>
-            <StoreInfo></StoreInfo>
-            {id}
+            <MainBox>
+                <StoreInfo></StoreInfo>
+                <DetailBox>
+                    {id}
+                </DetailBox>
+            </MainBox>
         </div>
 
     )

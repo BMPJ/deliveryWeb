@@ -10,6 +10,7 @@ const MainDeliveryCategory = () => {
     const [stores, setStores] = useState([]);
     const navigator = useNavigate();
 
+
     useEffect(() => {
         if (categoryParam) {
             const category = decodeURIComponent(categoryParam);
@@ -28,12 +29,14 @@ const MainDeliveryCategory = () => {
         <div>
             <Header/>
             {
-                stores.map(function (a, i){
-                    return(
+                stores.map(function (a, i) {
+                    return (
                         <div key={i}>
-                            <div onClick={()=>{navigator(`/main/delivery/category/storeid?storeid=${stores[i].storeid}`)}}>
+                            <div onClick={() => {
+                                navigator(`/main/delivery/category/storeid?storeid=${stores[i].storeid}`)
+                            }}>
                                 <div>{stores[i].name}</div>
-                                <img src={"/"}/>
+                                <img src={"http://localhost:8000/" + stores[i].storeImgName}/>
                             </div>
                         </div>
                     )

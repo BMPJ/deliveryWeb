@@ -30,6 +30,11 @@ public class StoreDao {
 
     }
 
+    public int logoImage(Map<String, Object> image) {
+        System.out.println(image);
+        return sqlSessionTemplate.update("registerImg", image);
+    }
+
     //가게 리스트 조회
     public List<Map<String, Object>> info(String userid) {
         return sqlSessionTemplate.selectList("info", userid);
@@ -75,4 +80,6 @@ public class StoreDao {
     public int delete(Map<String, Object> storeid) {
         return sqlSessionTemplate.update("storeDelete", storeid);
     }
+
+
 }
