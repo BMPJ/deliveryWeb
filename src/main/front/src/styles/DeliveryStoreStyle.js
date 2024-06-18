@@ -1,6 +1,11 @@
 import styled from "styled-components"
 
+
 export const Wrap = styled.div`
+    max-width: 1700px;
+    margin : 0 auto;
+`
+export const Main = styled.div`
   width: 80%;
   height: 100%;
   overflow-x: hidden;

@@ -42,6 +42,7 @@ export const Wrap = styled.div`
     max-width: 90px;
     float: right;
     cursor: pointer;
+    
     height: 40px;
     background-color: aquamarine;
   }

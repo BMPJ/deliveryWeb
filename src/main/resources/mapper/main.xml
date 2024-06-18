@@ -95,7 +95,7 @@
             c."quantity",
             c."cartid",
             SUM((m."price" + o."price") * c."quantity") OVER () AS "SUM",
-                s."name", s."storeid"
+            s."name", s."storeid"
         FROM
             "Carts" c
                 INNER JOIN
