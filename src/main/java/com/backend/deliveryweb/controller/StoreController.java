@@ -3,11 +3,13 @@ package com.backend.deliveryweb.controller;
 import com.backend.deliveryweb.logic.StoreLogic;
 import com.backend.deliveryweb.vo.Menu;
 import com.backend.deliveryweb.vo.Stores;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -24,12 +26,33 @@ public class StoreController {
 
     //가게 등록
     @PostMapping("/register")
+    public String storeRegister(@RequestPart("file") MultipartFile file, @RequestPart("store") String storeJson) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        Stores stores;
+        try {
+            stores = objectMapper.readValue(storeJson, Stores.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "Error parsing JSON";
+        }
+
+        System.out.println("컨트롤러파일:" + file);
+        System.out.println("컨트롤러스토어:" + stores);
+
+        int result = storeLogic.register(stores);
+        String result1 = storeLogic.logoImage(file);
+
+        return "";
+    }
+/*
+    @PostMapping("/register")
     public String storeRegister(@RequestBody Stores stores) {
 
         int result = storeLogic.register(stores);
         return String.valueOf(result);
 
     }
+*/
 
     @GetMapping("/info")
     public String storeInfo(@RequestParam String userid) {

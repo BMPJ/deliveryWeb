@@ -5,6 +5,7 @@ import {menuInfoDB} from "../../service/menuLogic";
 import StoreSettingMain from "../page/StoreSettingMain";
 import Header from "../include/Header";
 import SidebarItem from "../page/SidebarItem";
+import {MenuBox, NavStyle} from "../../styles/ManageStyle";
 
 //sidebar
 const StoreInfo = () => {
@@ -72,21 +73,28 @@ const StoreInfo = () => {
     return (
         <>
             <Header/>
-            <div>
-                {storeName}
-            </div>
-            {Menu.map((a, i) => {
-                return (
-                    <NavLink to={a.path}>
-                        <SidebarItem
-                            tab={a}
-                            isActive={path === a.path}
-                        />
-                    </NavLink>
-                )
+            <MenuBox>
+                {
+                    storeName ?
+                        <div className="storelogo">
+                            {storeName}
+                        </div>
+                        : <div>
+                            <p>loading</p>
+                        </div>
+                }
+                {Menu.map((a, i) => {
+                    return (
+                        <NavStyle to={a.path}>
+                            <SidebarItem
+                                tab={a}
+                                isActive={path === a.path}
+                            />
+                        </NavStyle>
+                    )
 
-            })}
-
+                })}
+            </MenuBox>
         </>
     )
 

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import {NavLink} from "react-router-dom";
 
 export const Main = styled.div`
   height: 700px;
@@ -54,3 +55,37 @@ export const Main = styled.div`
   }
 
 `
+
+export const MenuBox = styled.div`
+  width: 200px;
+
+`
+
+export const NavStyle = styled(NavLink)`
+  color: black;
+
+  //&:link {
+  //  transition: 0.5s;
+  //  text-decoration: none;
+  //}
+  //
+  //&:hover {
+  //  color: aquamarine;
+  //}
+  //
+  //&.active {
+  //  color: aqua;
+  //  position: relative;
+  //  top: 2px;
+  //}
+`
+export const MainBox = styled.div`
+`
+
+
+export const DetailBox = styled.div`
+  margin-left: 200px;
+  margin-top: -130px;
+
+`
+

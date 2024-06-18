@@ -1,13 +1,16 @@
 import axios from "axios";
 
 //가게등록 , post 일때는 data, get일땐 param
-export const storesRegisterDB = (store) => {
+export const storesRegisterDB = (formData) => {
     return new Promise((resolve, reject) => {
         try {
             const response = axios({
                 method: "post",
                 url: "/store/register",
-                data: store,
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+                data: formData,
             });
             resolve(response);
         } catch (error) {

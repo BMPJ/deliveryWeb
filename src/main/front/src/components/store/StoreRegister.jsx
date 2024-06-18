@@ -12,6 +12,8 @@ const StoreRegister = () => {
 
     const [role] = useState(window.sessionStorage.getItem('role'));
 
+    const [file, setFile] = useState();
+    const formData = new FormData();
 
     const [openHours, setOpenHours] = useState("");
     const [closeHours, setCloseHours] = useState("");
@@ -23,7 +25,6 @@ const StoreRegister = () => {
         category: '',
         address: '',
         address_detail: '',
-        storePictureUrl: '',
         phone: '',
         content: '',
         minDeliveryPrice: '',
@@ -72,16 +73,25 @@ const StoreRegister = () => {
         setStore({...store, [id]: value});
     }
 
+    const saveFile = (e) => {
+        setFile(e.target.files[0]);
+    }
+
     const register = async () => {
         try {
-            const response = await storesRegisterDB(store)
+
+            formData.append('file', file);
+            formData.append('store', JSON.stringify(store));
+
+
+            //const response = await storesRegisterDB(store)
+            const response = await storesRegisterDB(formData);
             // navigate('/manage/main')
             console.log(response);
-            console.log(store.operationHours)
             console.log(store)
         } catch (error) {
             alert("실패");
-            console.log(store.operationHours)
+            console.log(file)
             console.log(store)
             console.error('서버로 데이터 전송 중 오류 발생:', error);
         }
@@ -161,12 +171,9 @@ const StoreRegister = () => {
                 <div>
                     <label>사진등록:</label>
                     <input
-                        type="text"
                         id="storePictureUrl"
-                        value={store.storePictureUrl}
-                        onChange={(e) => {
-                            info(e)
-                        }}
+                        type="file"
+                        onChange={saveFile}
                     />
                 </div>
 

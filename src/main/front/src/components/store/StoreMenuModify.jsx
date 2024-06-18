@@ -2,6 +2,7 @@ import React, {useParams} from "react-router-dom";
 import {useEffect, useRef, useState} from "react";
 import {imgUpdateDB, menuDeleteDB, menuInfoDB, menuUpdateDB} from "../../service/menuLogic";
 import StoreInfo from "./StoreInfo";
+import {DetailBox, MainBox} from "../../styles/ManageStyle";
 
 
 const StoreMenuModify = () => {
@@ -104,122 +105,128 @@ const StoreMenuModify = () => {
 
     return (
         <>
-            <StoreInfo></StoreInfo>
-            {
-                menu.map((a, i) => {
-                        return (
-                            <div key={i}>
-                                <div>
-                                    {
-                                        inputStatus === menu[i].menuid
-                                            ?
-                                            <div>메뉴이름=<input id="menuName"
-                                                             value={newMenu.menuName}
-                                                             onChange={
-                                                                 (e) => info(e)
-                                                             }/></div>
-                                            :
-                                            <div>메뉴이름={menu[i].menuName}</div>
-                                    }
-                                </div>
-                                <div>
-                                    {
-                                        inputStatus === menu[i].menuid
-                                            ?
-                                            <div>카테고리=<input id="category"
-                                                             value={newMenu.category}
-                                                             onChange={(e) => info(e)
-                                                             }/></div>
-                                            :
-                                            <div>카테고리={menu[i].category}</div>
-                                    }
-                                </div>
-                                <div>
-                                    {
-                                        inputStatus === menu[i].menuid
-                                            ?
-                                            <div>메뉴가격=<input id="price"
-                                                             value={newMenu.price}
-                                                             onChange={(e) => info(e)
-                                                             }/></div>
-                                            :
-                                            <div>메뉴가격={menu[i].price}</div>
-                                    }
-                                </div>
-                                <div>
-                                    {
-                                        inputStatus === menu[i].menuid
-                                            ?
-                                            <div>메뉴사진=<input id="menuPictureUrl"
-                                                             type="file"
-                                                             onChange={saveFile}
-                                            />
-                                            </div>
-                                            :
-                                            menu[i].menuImgName == null ?
-                                                <div>메뉴사진=
-                                                    <img alt="디폴트이미지"
-                                                         src="/images/menu/defaultmenuimg.png">
-                                                    </img>
+            <MainBox>
+
+
+                <StoreInfo></StoreInfo>
+                <DetailBox>
+                    {
+                        menu.map((a, i) => {
+                                return (
+                                    <div key={i}>
+                                        <div>
+                                            {
+                                                inputStatus === menu[i].menuid
+                                                    ?
+                                                    <div>메뉴이름=<input id="menuName"
+                                                                     value={newMenu.menuName}
+                                                                     onChange={
+                                                                         (e) => info(e)
+                                                                     }/></div>
+                                                    :
+                                                    <div>메뉴이름={menu[i].menuName}</div>
+                                            }
+                                        </div>
+                                        <div>
+                                            {
+                                                inputStatus === menu[i].menuid
+                                                    ?
+                                                    <div>카테고리=<input id="category"
+                                                                     value={newMenu.category}
+                                                                     onChange={(e) => info(e)
+                                                                     }/></div>
+                                                    :
+                                                    <div>카테고리={menu[i].category}</div>
+                                            }
+                                        </div>
+                                        <div>
+                                            {
+                                                inputStatus === menu[i].menuid
+                                                    ?
+                                                    <div>메뉴가격=<input id="price"
+                                                                     value={newMenu.price}
+                                                                     onChange={(e) => info(e)
+                                                                     }/></div>
+                                                    :
+                                                    <div>메뉴가격={menu[i].price}</div>
+                                            }
+                                        </div>
+                                        <div>
+                                            {
+                                                inputStatus === menu[i].menuid
+                                                    ?
+                                                    <div>메뉴사진=<input id="menuPictureUrl"
+                                                                     type="file"
+                                                                     onChange={saveFile}
+                                                    />
+                                                    </div>
+                                                    :
+                                                    menu[i].menuImgName == null ?
+                                                        <div>메뉴사진=
+                                                            <img alt="디폴트이미지"
+                                                                 src="/images/menu/defaultmenuimg.png">
+                                                            </img>
+                                                        </div>
+                                                        :
+                                                        <div>메뉴사진=
+                                                            <img alt="#"
+                                                                 src={"http://localhost:8000/" + menu[i].menuImgName}>
+                                                            </img>
+                                                        </div>
+                                            }
+                                        </div>
+                                        <div>
+                                            {
+                                                inputStatus === menu[i].menuid
+                                                    ?
+                                                    <div>메뉴설명=<input id="menuContents"
+                                                                     value={newMenu.menuContents}
+                                                                     onChange={(e) => info(e)
+                                                                     }/></div>
+                                                    :
+                                                    <div>메뉴설명={menu[i].menuContents}</div>
+                                            }
+                                        </div>
+                                        <div>
+                                            {
+                                                inputStatus === menu[i].menuid
+                                                    ?
+                                                    <div>판매상태=<input id="status"
+                                                                     value={newMenu.status}
+                                                                     onChange={(e) => info(e)
+                                                                     }/></div>
+                                                    :
+                                                    <div>판매상태={menu[i].status}</div>
+                                            }
+                                        </div>
+
+                                        {
+                                            inputStatus === "" || inputStatus !== menu[i].menuid
+                                                ?
+                                                <div>
+                                                    <button onClick={() => {
+                                                        modifyHandler(menu[i].menuid)
+                                                        setMenuid(menu[i].menuid)
+                                                        setNewMenu(menu[i])
+                                                    }}>수정
+                                                    </button>
+                                                    <button onClick={() =>
+                                                        deleteData(menu[i].menuid)
+                                                    }
+                                                    >삭제
+                                                    </button>
                                                 </div>
                                                 :
-                                                <div>메뉴사진=
-                                                    <img alt="#"
-                                                         src={"http://localhost:8000/" + menu[i].menuImgName}>
-                                                    </img>
-                                                </div>
-                                    }
-                                </div>
-                                <div>
-                                    {
-                                        inputStatus === menu[i].menuid
-                                            ?
-                                            <div>메뉴설명=<input id="menuContents"
-                                                             value={newMenu.menuContents}
-                                                             onChange={(e) => info(e)
-                                                             }/></div>
-                                            :
-                                            <div>메뉴설명={menu[i].menuContents}</div>
-                                    }
-                                </div>
-                                <div>
-                                    {
-                                        inputStatus === menu[i].menuid
-                                            ?
-                                            <div>판매상태=<input id="status"
-                                                             value={newMenu.status}
-                                                             onChange={(e) => info(e)
-                                                             }/></div>
-                                            :
-                                            <div>판매상태={menu[i].status}</div>
-                                    }
-                                </div>
+                                                <button onClick={() => sendData()}>수정완료</button>
+                                        }
+                                    </div>
 
-                                {
-                                    inputStatus === "" || inputStatus !== menu[i].menuid
-                                        ?
-                                        <div>
-                                            <button onClick={() => {
-                                                modifyHandler(menu[i].menuid)
-                                                setMenuid(menu[i].menuid)
-                                                setNewMenu(menu[i])
-                                            }}>수정
-                                            </button>
-                                            <button onClick={() =>
-                                                deleteData(menu[i].menuid)
-                                            }
-                                            >삭제
-                                            </button>
-                                        </div>
-                                        :
-                                        <button onClick={() => sendData()}>수정완료</button>
-                                }
-                            </div>
-
+                                )
+                            }
                         )
                     }
-                )
-            }
+                </DetailBox>
+            </MainBox>
         </>
     )
 }

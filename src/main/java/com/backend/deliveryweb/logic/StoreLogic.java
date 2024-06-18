@@ -71,6 +71,8 @@ public class StoreLogic {
 
 
     public int register(Stores stores) {
+
+        System.out.println("여기는 출력됨?");
         return storeDao.register(stores);
     }
 
@@ -105,8 +107,6 @@ public class StoreLogic {
     }
 
     @Transactional
-    //애노테이션은 주로 서비스 계층의 메서드에 적용되며, 해당 메서드에서 수행되는 모든 작업을 하나의 트랜잭션으로 묶어줍니다.
-    // 따라서 데이터베이스 작업을 실행하는 서비스 메서드에서 데이터의 일관성과 안정성을 보장하기 위해 사용
     public int menuDelete(Map<String, Object> menuid) {
         int imageDelete = storeDao.menuImageDelete(menuid);
         return storeDao.menuDelete(menuid);
@@ -114,5 +114,40 @@ public class StoreLogic {
 
     public int delete(Map<String, Object> storeid) {
         return storeDao.delete(storeid);
+    }
+
+
+    public String logoImage(MultipartFile file) {
+
+        Map<String, Object> image = new HashMap<>();
+
+        String filename = null;
+        String fullPath = null;
+        double d_size = 0.0;
+        if (!file.isEmpty()) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+            Calendar time = Calendar.getInstance();
+            filename = sdf.format(time.getTime()) + "-" + file.getOriginalFilename().replaceAll(" ", "_");
+
+            String saveFolder = "D:\\bproject\\delivery_web\\src\\main\\webapp\\pds";
+            fullPath = saveFolder + "\\" + filename;
+            try {
+                File files = new File(fullPath);
+                byte[] bytes = file.getBytes();
+                BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(files));
+                bos.write(bytes);
+                bos.close();
+                d_size = Math.floor(files.length() / (1024.00) * 10) / 10;
+                image.put("file_name", filename);
+                image.put("file_url", fullPath);
+                image.put("file_size", d_size);
+
+                int result = storeDao.logoImage(image);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return "";
     }
 }

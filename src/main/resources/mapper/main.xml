@@ -27,17 +27,34 @@
         order by "category" desc
     </select>
 
-    <select id="getDeliveryStores" parameterType="String" resultType="map">
+    <!--<select id="getDeliveryStores" parameterType="String" resultType="map">
         select *
         from "Stores"
         where "category" = #{category}
           and "type" = 0
+    </select>-->
+
+    <select id="getDeliveryStores" parameterType="String" resultType="map">
+        select s.*, i.*
+        from "Stores" s
+                 LEFT JOIN "StoreImage" i
+                           ON s."storeid" = i."storeid"
+        where s."category" = #{category}
+          and s."type" = 0
     </select>
 
-    <select id="getStores" parameterType="String" resultType="map">
+    <!--<select id="getStores" parameterType="String" resultType="map">
         select *
         from "Stores"
         where "storeid" = #{storeid}
+    </select>
+-->
+    <select id="getStores" parameterType="String" resultType="map">
+        select s.*, i.*
+        from "Stores" s
+                 LEFT JOIN "StoreImage" i
+                           ON s."storeid" = i."storeid"
+        where s."storeid" = #{storeid}
     </select>
 
     <select id="getMenu" parameterType="String" resultType="map">
@@ -57,9 +74,9 @@
         select count(*)
         from "Carts"
         where "userid" = #{userid}
-        and "storeid" = #{storeid}
-        and "menuid" = #{menuid}
-        and "menuOptionId" = #{menuOptionId}
+          and "storeid" = #{storeid}
+          and "menuid" = #{menuid}
+          and "menuOptionId" = #{menuOptionId}
     </select>
 
     <update id="plusQuantity" parameterType="com.backend.deliveryweb.vo.Carts">
@@ -88,24 +105,22 @@
     </insert>
 
     <select id="getCart" parameterType="String" resultType="map">
-        SELECT
-            m."menuName" AS "menuName",
-            o."option" AS "op",
-            (m."price" + o."price") AS "price",
-            c."quantity",
-            c."cartid",
-            SUM((m."price" + o."price") * c."quantity") OVER () AS "SUM",
-            s."name", s."storeid"
-        FROM
-            "Carts" c
-                INNER JOIN
-            "Menu" m ON m."menuid" = c."menuid"
-                INNER JOIN
-            "MenuOption" o ON c."menuOptionId" = o."menuOptionId"
-                INNER JOIN
-            "Stores" s ON c."storeid" = s."storeid"
-        WHERE
-            c."userid" = #{userid}
+        SELECT m."menuName"                                        AS "menuName",
+               o."option"                                          AS "op",
+               (m."price" + o."price")                             AS "price",
+               c."quantity",
+               c."cartid",
+               SUM((m."price" + o."price") * c."quantity") OVER () AS "SUM",
+               s."name",
+               s."storeid"
+        FROM "Carts" c
+                 INNER JOIN
+             "Menu" m ON m."menuid" = c."menuid"
+                 INNER JOIN
+             "MenuOption" o ON c."menuOptionId" = o."menuOptionId"
+                 INNER JOIN
+             "Stores" s ON c."storeid" = s."storeid"
+        WHERE c."userid" = #{userid}
     </select>
 
     <select id="cartMenu" parameterType="String" resultType="map">
@@ -210,7 +225,7 @@
                SUM(CASE WHEN "rating" = 3 THEN 1 ELSE 0 END) AS three,
                SUM(CASE WHEN "rating" = 2 THEN 1 ELSE 0 END) AS two,
                SUM(CASE WHEN "rating" = 1 THEN 1 ELSE 0 END) AS one,
-               round(avg("Reviews"."rating"), 1) AS AVG
+               round(avg("Reviews"."rating"), 1)             AS AVG
         FROM "Reviews"
         WHERE "storeid" = #{storeid}
     </select>
@@ -222,12 +237,24 @@
     </select>
 
     <delete id="cartDeleteMenu" parameterType="String">
-        delete "Carts" WHERE "cartid" = #{cartid}
+        delete "Carts"
+        WHERE "cartid" = #{cartid}
     </delete>
 
     <select id="orderDetail" parameterType="String" resultType="map">
-        select s."address" storeadr, u."address" useradr, o."status", o."totalPrice", o."orderName", o."paymentMethod", o."requests", to_char(o."orderTime", 'MM"월" DD"일" HH24:MI') ordertime, s."phone" sphone, u."phone" uphone,
-               s."name" storename, s."storeid", u."userid"
+        select s."address"                                   storeadr,
+               u."address"                                   useradr,
+               o."status",
+               o."totalPrice",
+               o."orderName",
+               o."paymentMethod",
+               o."requests",
+               to_char(o."orderTime", 'MM"월" DD"일" HH24:MI') ordertime,
+               s."phone"                                     sphone,
+               u."phone"                                     uphone,
+               s."name"                                      storename,
+               s."storeid",
+               u."userid"
         from "Orders" o
                  inner join "Stores" s on s."storeid" = o."storeid"
                  inner join "Users" u on o."userid" = u."userid"

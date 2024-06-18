@@ -9,7 +9,6 @@
                              "category",
                              "address",
                              "address_detail",
-                             "storePictureUrl",
                              "phone",
                              "content",
                              "minDeliveryPrice",
@@ -27,7 +26,6 @@
                 #{category},
                 #{address},
                 #{address_detail},
-                #{storePictureUrl},
                 #{phone},
                 #{content},
                 #{minDeliveryPrice},
@@ -40,17 +38,42 @@
                 #{status})
     </insert>
 
+    <insert id="registerImg" parameterType="map">
+        INSERT INTO "StoreImage"("storeid",
+                                 "storePictureUrl",
+                                 "storeImgSize",
+                                 "storeImgName")
+        VALUES (seq_stores.CURRVAL, #{file_url}, #{file_size}, #{file_name})
+    </insert>
+
     <select id="info" parameterType="string" resultType="map">
         SELECT *
         FROM "Stores"
         WHERE "userid" = #{userid}
     </select>
 
+    <!--    <select id="detail" parameterType="map" resultType="map">-->
+    <!--        SELECT *-->
+    <!--        FROM "Stores"-->
+    <!--        WHERE "userid" = #{userid}-->
+    <!--          and "storeid" = #{storeid}-->
+    <!--    </select>-->
+    <!--userid가 필요한 경우 쿼리문-->
+    <!--    <select id="detail" parameterType="map" resultType="map">-->
+    <!--        SELECT s.*, i."storeImgName"-->
+    <!--        FROM "Stores" s-->
+    <!--                 INNER JOIN "StoreImage" i-->
+    <!--                            ON s."storeid" = i."storeid"-->
+    <!--        WHERE s."userid" = #{userid}-->
+    <!--          and i."storeid" = #{storeid}-->
+    <!--    </select>-->
+
     <select id="detail" parameterType="map" resultType="map">
-        SELECT *
-        FROM "Stores"
-        WHERE "userid" = #{userid}
-          and "storeid" = #{storeid}
+        SELECT s.*, i."storeImgName"
+        FROM "Stores" s
+                 INNER JOIN "StoreImage" i
+                            ON s."storeid" = i."storeid"
+        WHERE i."storeid" = #{storeid}
     </select>
 
     <update id="update" parameterType="map">
@@ -60,7 +83,6 @@
             "category"         = #{category},
             "address"          = #{address},
             "address_detail"   = #{address_detail},
-            "storePictureUrl"  = #{storePictureUrl},
             "phone"            = #{phone},
             "content"          = #{content},
             "minDeliveryPrice" = #{minDeliveryPrice},
@@ -84,8 +106,8 @@
     <insert id="menuRegister" parameterType="com.backend.deliveryweb.vo.Stores">
         INSERT
         ALL
-        INTO "Menu"
-        VALUES (seq_menu.nextval,
+                INTO "Menu"
+                VALUES (seq_menu.nextval,
         #{storeid},
         #{category},
         #{menuName},
