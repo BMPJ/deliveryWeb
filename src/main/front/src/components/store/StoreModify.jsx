@@ -54,8 +54,8 @@ const StoreModify = () => {
                     console.log(response);
                     console.log(response.data[0]);
                     setStore(response.data[0]);
-                    setOpenHours(response.data[0].operationHours.split('~')[0]);
-                    setCloseHours(response.data[0].operationHours.split('~')[1]);
+                    //setOpenHours(response.data[0].operationHours.split('~')[0]);
+                    //setCloseHours(response.data[0].operationHours.split('~')[1]);
                 } catch (error) {
                     console.error('서버로 데이터 전송 중 오류 발생:', error);
                 }
@@ -160,7 +160,7 @@ const StoreModify = () => {
                                     <option value="한식">한식</option>
                                     <option value="일식/돈까스">일식/돈까스</option>
                                     <option value="족발/보쌈">족발/보쌈</option>
-                                    <option value="양식">양식</option>
+                                    <option value="야식">야식</option>
                                     <option value="분식">분식</option>
                                     <option value="카페/디저트">카페/디저트</option>
                                 </select>

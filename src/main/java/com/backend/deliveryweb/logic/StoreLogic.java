@@ -72,7 +72,6 @@ public class StoreLogic {
 
     public int register(Stores stores) {
 
-        System.out.println("여기는 출력됨?");
         return storeDao.register(stores);
     }
 
