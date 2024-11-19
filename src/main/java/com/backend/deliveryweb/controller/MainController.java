@@ -208,7 +208,7 @@ public class MainController {
 
         System.out.println(adr);
 
-        String apikey = "D8D77C59-1BA5-3F41-AFEB-A7BDD7B52198";
+        String apikey = "9474747D-9B8B-3BFF-B776-875814CC867F";
         String searchType = "ROAD";
         String epsg = "epsg:4326";
 
@@ -247,7 +247,7 @@ public class MainController {
     @GetMapping("/main/userAdr")
     public String userAdr(String userid) {
 
-        String apikey = "D8D77C59-1BA5-3F41-AFEB-A7BDD7B52198";
+        String apikey = "9474747D-9B8B-3BFF-B776-875814CC867F";
         String searchType = "ROAD";
         String epsg = "epsg:4326";
 

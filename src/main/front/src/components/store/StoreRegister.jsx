@@ -142,7 +142,7 @@ const StoreRegister = () => {
                         <option value="한식">한식</option>
                         <option value="일식/돈까스">일식/돈까스</option>
                         <option value="족발/보쌈">족발/보쌈</option>
-                        <option value="양식">양식</option>
+                        <option value="야식">야식</option>
                         <option value="분식">분식</option>
                         <option value="카페/디저트">카페/디저트</option>
                     </select>

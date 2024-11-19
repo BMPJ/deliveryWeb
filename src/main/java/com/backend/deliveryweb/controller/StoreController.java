@@ -59,7 +59,6 @@ public class StoreController {
 
         List<Map<String, Object>> list = storeLogic.info(userid);
 
-
         return g.toJson(list);
     }
 
